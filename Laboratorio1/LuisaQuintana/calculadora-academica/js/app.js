@@ -33,6 +33,7 @@ function convertirNota(input, etiqueta) {
 function calcularPromedio(nota1, nota2, nota3) {
  return (nota1 + nota2 + nota3) / 3;
 }
+
 function obtenerEstado(promedio) {
  if (promedio >= 18) {
  return "Excelente";
@@ -43,13 +44,21 @@ function obtenerEstado(promedio) {
  if (promedio >= NOTA_APROBATORIA) {
  return "Aprobado";
  }
- return "Requiere refuerzo";
+ /* edicion para el reto 1 */
+ if (promedio >= 8) {
+    return "Requiere refuerzo";
+ }
+
+ return "En riesgo";
 }
+
 function obtenerClaseEstado(promedio) {
  if (promedio >= 18) return "estado--excelente";
  if (promedio >= 15) return "estado--logrado";
  if (promedio >= NOTA_APROBATORIA) return "estado--aprobado";
- return "estado--refuerzo";
+ /* edicion para el reto 1 */
+ if (promedio >= 8) return "estado--refuerzo";
+ return "estado--riesgo";
 }
 function limpiarMensajeError() {
  mensajeError.textContent = "";

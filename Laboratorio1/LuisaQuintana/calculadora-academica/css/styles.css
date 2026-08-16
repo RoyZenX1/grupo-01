@@ -191,6 +191,12 @@ input:focus {
 .estado--logrado { color: var(--color-logrado); }
 .estado--aprobado { color: var(--color-aprobado); }
 .estado--refuerzo { color: var(--color-refuerzo); }
+
+/* edicion para el reto 1 */
+.estado--riesgo {
+    color: var(--color-refuerzo);
+}
+
 .barra {
  height: 0.6rem;
  overflow: hidden;
