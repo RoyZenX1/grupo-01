@@ -14,7 +14,7 @@
         <div class="encabezado__contenido">
             <p class="etiqueta">JavaScript · Semana 1</p>
             <h1>Calculadora académica</h1>
-            <p>Registra tres notas y obtén un diagnóstico inmediato.</p>
+            <p>Registra cuatro notas y obtén un diagnóstico inmediato.</p>
         </div>
     </header>
     <main class="contenedor">
@@ -48,6 +48,11 @@
                         <input id="nota3" name="nota3" type="number" min="0" max="20" step="0.01" inputmode="decimal"
                             required>
                     </div>
+                    <div class="campo">
+                        <label for="nota4">Nota 4</label>
+                        <input id="nota4" name="nota4" type="number" min="0" max="20" step="0.01" inputmode="decimal"
+                            required>
+                    </div>
                 </div>
                 <p id="mensajeError" class="mensaje-error" role="alert" hidden></p>
                 <div class="acciones">
@@ -68,7 +73,7 @@
             <div class="resultado__datos">
                 <div>
                     <span>Promedio</span>
-                    <output id="promedioResultado" for="nota1 nota2 nota3">-</output>
+                    <output id="promedioResultado" for="nota1 nota2 nota3 nota4">-</output>
                 </div>
                 <p id="estadoResultado" class="resultado__estado"></p>
             </div>
