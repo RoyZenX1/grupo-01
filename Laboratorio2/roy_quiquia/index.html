@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Cotizador didáctico para practicar números y operadores en JavaScript.">
+  <title>Cotizador comercial inteligente</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="encabezado">
+    <div class="contenedor">
+      <p class="etiqueta">JavaScript Avanzado · Laboratorio 02</p>
+      <h1>Cotizador comercial inteligente</h1>
+      <p class="bajada">
+        Calcula importes monetarios con operadores, enteros en céntimos y reglas explícitas.
+      </p>
+    </div>
+  </header>
+
+  <main class="contenedor cuadricula">
+    <section class="tarjeta" aria-labelledby="titulo-formulario">
+      <p class="etiqueta">Datos de entrada</p>
+      <h2 id="titulo-formulario">Configura la cotización</h2>
+
+      <form id="formCotizacion" novalidate>
+        <div class="campo campo--completo">
+          <label for="producto">Producto o servicio</label>
+          <input id="producto" name="producto" type="text" maxlength="60"
+            placeholder="Ej.: Monitor profesional" required>
+        </div>
+
+        <div class="campo">
+          <label for="precio">Precio unitario (S/)</label>
+          <input id="precio" name="precio" type="number" min="0.01"
+            max="1000000" step="0.01" inputmode="decimal"
+            placeholder="0.00" required>
+        </div>
+
+        <div class="campo">
+          <label for="cantidad">Cantidad</label>
+          <input id="cantidad" name="cantidad" type="number" min="1"
+            max="10000" step="1" value="1" required>
+        </div>
+
+        <div class="campo campo--completo">
+          <label for="descuento">Descuento solicitado (%)</label>
+          <input id="descuento" name="descuento" type="number" min="0"
+            max="50" step="1" value="0" required>
+          <small>El descuento máximo permitido es 50 %.</small>
+        </div>
+
+        <fieldset class="opciones campo--completo">
+          <legend>Opciones comerciales</legend>
+          <label class="opcion">
+            <input id="clienteFrecuente" type="checkbox">
+            Cliente frecuente (mínimo 5 % de descuento)
+          </label>
+          <label class="opcion">
+            <input id="envioExpres" type="checkbox">
+            Entrega express (S/ 15.00)
+          </label>
+        </fieldset>
+
+        <p id="mensajeError" class="mensaje-error" role="alert" hidden></p>
+
+        <div class="acciones campo--completo">
+          <button type="submit">Calcular cotización</button>
+          <button type="reset" class="boton-secundario">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="panelResultado" class="tarjeta resultado"
+      aria-labelledby="titulo-resultado" aria-live="polite" hidden>
+      <p class="etiqueta">Resultado</p>
+      <h2 id="titulo-resultado">Resumen de la cotización</h2>
+      <p class="operacion">
+        Operación <output id="idOperacion"></output>
+      </p>
+      <p id="productoResultado" class="producto-resultado"></p>
+      <dl class="resumen">
+        <div><dt>Subtotal</dt><dd><output id="subtotalResultado"></output></dd></div>
+        <div><dt>Descuento</dt><dd><output id="descuentoResultado"></output></dd></div>
+        <div><dt>Base imponible</dt><dd><output id="baseResultado"></output></dd></div>
+        <div><dt>IGV (18 %)</dt><dd><output id="igvResultado"></output></dd></div>
+        <div><dt>Envío</dt><dd><output id="envioResultado"></output></dd></div>
+        <div class="total"><dt>Total</dt><dd><output id="totalResultado"></output></dd></div>
+      </dl>
+      <p id="explicacionBanderas" class="detalle-banderas"></p>
+    </section>
+
+    <aside class="tarjeta nota campo--completo" aria-labelledby="titulo-precision">
+      <h2 id="titulo-precision">¿Por qué se calcula en céntimos?</h2>
+      <p>
+        JavaScript representa los valores <code>Number</code> con punto flotante binario.
+        La aplicación convierte el precio a un entero de céntimos antes de operar y solo
+        vuelve a soles al presentar el resultado.
+      </p>
+    </aside>
+  </main>
+
+  <footer>
+    <div class="contenedor">UTP · JavaScript Avanzado · Semana 2</div>
+  </footer>
+</body>
+</html>
