@@ -1,22 +1,92 @@
 <!doctype html>
 <html lang="es">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Analizador de perfiles</title>
- <link rel="stylesheet" href="./css/styles.css">
- <script src="./js/app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de perfiles</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/app.js" defer></script>
 </head>
+
 <body>
- <header class="encabezado">
- <div class="contenedor">
- <p class="etiqueta">JavaScript Avanzado · Semana 3</p>
- <h1>Analizador y normalizador de perfiles</h1>
- <p class="introduccion">
- Practica cadenas, Unicode y expresiones regulares con datos reales.
- </p>
- </div>
- </header>
- <main class="contenedor cuadricula">
- <section class="panel" aria-labelledby="titulo-formulario">
- <h2 id="titulo-formulario">Datos del perfil</h2>
+    <header class="encabezado">
+        <div class="contenedor">
+            <p class="etiqueta">JavaScript Avanzado · Semana 3</p>
+            <h1>Analizador y normalizador de perfiles</h1>
+            <p class="introduccion">
+                Practica cadenas, Unicode y expresiones regulares con datos reales.
+            </p>
+        </div>
+    </header>
+    <main class="contenedor cuadricula">
+        <section class="panel" aria-labelledby="titulo-formulario">
+            <h2 id="titulo-formulario">Datos del perfil</h2>
+
+            <form id="formPerfil" novalidate>
+                <div class="campo">
+                    <label for="nombre">Nombre completo</label>
+                    <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="80"
+                        placeholder=" ana maría pérez " required>
+                    <small>Se normalizarán los espacios y las mayúsculas.</small>
+                </div>
+                <div class="campo">
+                    <label for="correo">Correo electrónico</label>
+                    <input id="correo" name="correo" type="email" autocomplete="email" maxlength="120"
+                        placeholder="ana.perez@utp.edu.pe" required>
+                </div>
+                <div class="campo">
+                    <label for="telefono">Teléfono peruano</label>
+                    <input id="telefono" name="telefono" type="tel" autocomplete="tel" maxlength="20"
+                        placeholder="987 654 321" required>
+                    <small>Acepta 9 dígitos, con espacios o guiones.</small>
+                </div>
+
+
+                <div class="campo">
+                    <label for="biografia">Biografía breve</label>
+                    <textarea id="biografia" name="biografia" rows="6" maxlength="300"
+                        placeholder="Desarrolladora web interesada en #JavaScript y #UX."></textarea>
+                    <div class="contador">
+                        <span id="contadorCaracteres">0</span>/300 unidades UTF-16
+                    </div>
+                </div>
+                <div class="acciones">
+                    <button type="submit">Analizar perfil</button>
+                    <button type="reset" class="secundario">Limpiar</button>
+                </div>
+            </form>
+        </section>
+        <section class="panel resultado" aria-labelledby="titulo-resultado">
+            <h2 id="titulo-resultado">Resultado</h2>
+            <div id="mensajes" class="mensajes" role="alert" hidden></div>
+            <article id="tarjetaPerfil" hidden>
+                <p class="etiqueta">Vista normalizada</p>
+                <h3 id="salidaNombre"></h3>
+
+                <p id="salidaContacto"></p>
+                <p id="salidaBiografia"></p>
+                <dl class="metricas">
+                    <div>
+                        <dt>Palabras</dt>
+                        <dd id="totalPalabras">0</dd>
+                    </div>
+                    <div>
+                        <dt>Puntos Unicode</dt>
+                        <dd id="totalPuntos">0</dd>
+                    </div>
+                    <div>
+                        <dt>Etiquetas</dt>
+                        <dd id="totalEtiquetas">0</dd>
+                    </div>
+                </dl>
+                <div>
+                    <h4>Etiquetas encontradas</h4>
+                    <ul id="listaEtiquetas" class="etiquetas"></ul>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+
+</html>
