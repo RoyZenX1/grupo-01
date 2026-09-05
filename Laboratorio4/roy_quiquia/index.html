@@ -1,0 +1,208 @@
+<!doctype html>
+<!--
+  GESTOR INTELIGENTE DE INVENTARIO
+  ---------------------------------
+  Este archivo es solo ESTRUCTURA (HTML). No contiene lógica de negocio:
+  toda la validación, cálculos y manipulación de datos vive en js/app.js.
+  El HTML se limita a: formulario de entrada, filtros, tabla vacía
+  (que JS llenará dinámicamente) e indicadores de resumen.
+-->
+<html lang="es"> <!-- lang="es" ayuda a lectores de pantalla y al SEO -->
+<head>
+  <meta charset="UTF-8"> <!-- Codificación de caracteres (tildes, ñ, etc.) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ^ Hace que la página sea responsiva en móviles: usa el ancho real del dispositivo -->
+
+  <title>Gestor inteligente de inventario</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+  <!-- CSS externo: separa presentación de estructura -->
+
+  <script src="./js/app.js" defer></script>
+  <!--
+    "defer" es CLAVE: le dice al navegador que descargue el script en paralelo
+    pero lo EJECUTE solo después de parsear todo el HTML.
+    Sin "defer", app.js podría ejecutarse antes de que existan los elementos
+    del DOM que busca con document.querySelector(...), y todo fallaría.
+  -->
+</head>
+<body>
+
+  <!-- ============ ENCABEZADO ============ -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <p class="etiqueta">JavaScript Avanzado · Semana 4</p>
+      <h1>Gestor inteligente de inventario</h1>
+      <p class="introduccion">
+        Objetos, arreglos, clases, colecciones y JSON aplicados a una solución web.
+      </p>
+    </div>
+  </header>
+
+  <main class="contenedor contenido">
+
+    <!-- ============ SECCIÓN 1: FORMULARIO DE REGISTRO ============ -->
+    <section class="panel" aria-labelledby="titulo-registro">
+      <!-- aria-labelledby conecta la sección con su título para accesibilidad -->
+      <h2 id="titulo-registro">Registrar producto</h2>
+
+      <form id="formProducto" novalidate>
+        <!--
+          novalidate: desactivamos la validación nativa del navegador
+          porque queremos controlar los mensajes de error nosotros mismos
+          desde JavaScript (más flexible y con mejor UX).
+        -->
+        <div class="campos">
+          <div class="campo campo-amplio">
+            <!-- "for" del label debe coincidir con el "id" del input: accesibilidad -->
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" maxlength="60"
+              placeholder="Teclado mecánico" required>
+          </div>
+
+          <div class="campo">
+            <label for="categoria">Categoría</label>
+            <input id="categoria" name="categoria" type="text" maxlength="30"
+              placeholder="Periféricos" required>
+          </div>
+
+          <div class="campo">
+            <label for="precio">Precio (S/)</label>
+            <!--
+              type="number" + step="0.01": permite decimales de céntimos.
+              min/max acotan el rango válido directamente en el HTML,
+              aunque la validación "real" (la que importa) ocurre en JS.
+            -->
+            <input id="precio" name="precio" type="number" min="0.01"
+              max="999999.99" step="0.01" placeholder="149.90" required>
+          </div>
+
+          <div class="campo">
+            <label for="stock">Stock</label>
+            <!-- step="1": solo enteros, coherente con "stock" (no hay medio producto) -->
+            <input id="stock" name="stock" type="number" min="0"
+              max="99999" step="1" placeholder="12" required>
+          </div>
+        </div>
+
+        <div class="acciones">
+          <button type="submit">Agregar producto</button>
+          <!-- type="button" evita que este botón dispare el submit del form -->
+          <button id="btnRestaurar" type="button" class="secundario">Restaurar datos</button>
+        </div>
+      </form>
+
+      <!--
+        Contenedor de mensajes de error/éxito.
+        "hidden" lo oculta por defecto; JS le quita el atributo cuando hay algo que mostrar.
+        role="alert": los lectores de pantalla anuncian el cambio automáticamente.
+      -->
+      <div id="mensajes" class="mensajes" role="alert" hidden></div>
+    </section>
+
+    <!-- ============ SECCIÓN 2: CATÁLOGO (filtros + tabla) ============ -->
+    <section class="panel" aria-labelledby="titulo-catalogo">
+      <div class="cabecera-seccion">
+        <div>
+          <p class="etiqueta">Catálogo</p>
+          <h2 id="titulo-catalogo">Productos registrados</h2>
+        </div>
+        <!-- Este contador lo actualiza JS cada vez que cambian los filtros -->
+        <span id="resumenVisible" class="insignia">0 productos</span>
+      </div>
+
+      <div class="filtros">
+        <div class="campo campo-amplio">
+          <label for="busqueda">Buscar</label>
+          <!-- type="search" da una semántica correcta (algunos navegadores añaden una "x" para limpiar) -->
+          <input id="busqueda" type="search" placeholder="Nombre o categoría">
+        </div>
+
+        <div class="campo">
+          <label for="filtroCategoria">Categoría</label>
+          <!--
+            Este <select> arranca solo con la opción "Todas".
+            JS lo rellena dinámicamente a partir de las categorías
+            realmente presentes en el inventario (usando un Set, ver app.js).
+          -->
+          <select id="filtroCategoria">
+            <option value="">Todas</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="orden">Ordenar</label>
+          <select id="orden">
+            <option value="nombre">Nombre A–Z</option>
+            <option value="precio-desc">Mayor precio</option>
+            <option value="stock-asc">Menor stock</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- overflow-x:auto en CSS permite desplazar la tabla en pantallas pequeñas -->
+      <div class="tabla-contenedor">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th class="numero">Precio</th>
+              <th class="numero">Stock</th>
+              <th class="numero">Valor</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <!--
+            tbody VACÍO a propósito: nunca escribimos filas "a mano" en el HTML.
+            JavaScript genera cada <tr> dinámicamente a partir del arreglo "inventario".
+            Esto evita que HTML y estado se desincronicen.
+          -->
+          <tbody id="cuerpoInventario"></tbody>
+        </table>
+      </div>
+
+      <!-- Mensaje alternativo cuando el filtro no encuentra nada -->
+      <p id="estadoVacio" class="estado-vacio" hidden>No se encontraron productos.</p>
+    </section>
+
+    <!-- ============ SECCIÓN 3: RESUMEN / INDICADORES ============ -->
+    <section class="panel" aria-labelledby="titulo-resumen">
+      <h2 id="titulo-resumen">Resumen del inventario</h2>
+      <!--
+        <dl> (description list) es la etiqueta semánticamente correcta
+        para pares término–valor, mejor que divs genéricos.
+      -->
+      <dl class="metricas">
+        <div><dt>Productos</dt><dd id="totalProductos">0</dd></div>
+        <div><dt>Unidades</dt><dd id="totalUnidades">0</dd></div>
+        <div><dt>Valor total</dt><dd id="valorTotal">S/ 0.00</dd></div>
+        <div><dt>Stock bajo</dt><dd id="stockBajo">0</dd></div>
+      </dl>
+      <!-- role="status": anuncia cambios sin interrumpir tan agresivamente como role="alert" -->
+      <p id="alertaStock" class="alerta" role="status"></p>
+    </section>
+
+    <!-- ============ SECCIÓN 4: EXPORTAR / IMPORTAR JSON ============ -->
+    <section class="panel" aria-labelledby="titulo-json">
+      <h2 id="titulo-json">Intercambio mediante JSON</h2>
+      <p>Exporta los objetos actuales o pega un arreglo JSON válido para reconstruir el inventario.</p>
+
+      <label for="areaJson">Datos JSON</label>
+      <!--
+        spellcheck="false": evita el subrayado rojo del corrector en texto que es código, no prosa.
+        IMPORTANTE: este textarea SOLO contiene texto plano. No se "ejecuta" nada aquí;
+        JS deberá pasar ese texto por JSON.parse() (nunca por eval()) para usarlo.
+      -->
+      <textarea id="areaJson" rows="10" spellcheck="false"
+        placeholder='[{"id":"PRD1001","nombre":"Monitor","categoria":"Pantallas","precio":899.9,"stock":4}]'></textarea>
+
+      <div class="acciones">
+        <button id="btnExportar" type="button">Exportar</button>
+        <button id="btnImportar" type="button" class="secundario">Importar</button>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
