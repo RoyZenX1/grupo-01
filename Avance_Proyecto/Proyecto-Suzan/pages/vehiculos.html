@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vehículos | NexoCargo</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="logo">
+            <h2>NexoCargo</h2>
+            <p>Gestión logística</p>
+        </div>
+
+        <nav class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="clientes.html">
+                Clientes
+            </a>
+
+            <a href="cotizaciones.html">
+                Cotizaciones
+            </a>
+
+            <a href="vehiculos.html" class="activo">
+                Vehículos
+            </a>
+
+            <a href="ordenes.html">
+                Órdenes
+            </a>
+
+            <a href="reportes.html">
+                Reportes
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+    <main class="contenido">
+
+        <header class="encabezado">
+
+            <h1>Gestión de Vehículos</h1>
+
+            <p>
+                Registra y administra los vehículos
+                disponibles para las operaciones de transporte.
+            </p>
+
+        </header>
+
+
+        <!-- =========================
+             TARJETAS
+        ========================== -->
+
+        <section class="grid-tarjetas">
+
+            <article class="tarjeta">
+
+                <h3>Total de vehículos</h3>
+
+                <p
+                    class="numero"
+                    id="totalVehiculos"
+                >
+                    0
+                </p>
+
+            </article>
+
+
+            <article class="tarjeta">
+
+                <h3>Disponibles</h3>
+
+                <p
+                    class="numero"
+                    id="vehiculosDisponibles"
+                >
+                    0
+                </p>
+
+            </article>
+
+
+            <article class="tarjeta">
+
+                <h3>En ruta</h3>
+
+                <p
+                    class="numero"
+                    id="vehiculosRuta"
+                >
+                    0
+                </p>
+
+            </article>
+
+        </section>
+
+
+        <!-- =========================
+             REGISTRO
+        ========================== -->
+
+        <section class="panel">
+
+            <h2>Registrar vehículo</h2>
+
+            <form
+                id="formVehiculo"
+                class="formulario"
+            >
+
+                <div class="campo">
+
+                    <label for="idVehiculo">
+                        ID del vehículo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="idVehiculo"
+                        placeholder="V001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="placa">
+                        Placa
+                    </label>
+
+                    <input
+                        type="text"
+                        id="placa"
+                        placeholder="ABC-123"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="tipo">
+                        Tipo de vehículo
+                    </label>
+
+                    <select id="tipo" required>
+
+                        <option value="">
+                            Seleccionar
+                        </option>
+
+                        <option value="Camión">
+                            Camión
+                        </option>
+
+                        <option value="Furgón">
+                            Furgón
+                        </option>
+
+                        <option value="Camioneta">
+                            Camioneta
+                        </option>
+
+                        <option value="Tráiler">
+                            Tráiler
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="capacidad">
+                        Capacidad (toneladas)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="capacidad"
+                        min="1"
+                        placeholder="10"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-completo">
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Registrar vehículo
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="mensajeVehiculo"
+                class="mensaje"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             TABLA
+        ========================== -->
+
+        <section class="panel">
+
+            <h2>Vehículos registrados</h2>
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Placa</th>
+                            <th>Tipo</th>
+                            <th>Capacidad</th>
+                            <th>Estado</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaVehiculos">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TARIFAS
+        ========================== -->
+
+        <section class="panel">
+
+            <h2>Consultar tarifa de transporte</h2>
+
+            <form
+                id="formTarifa"
+                class="formulario"
+            >
+
+                <div class="campo">
+
+                    <label for="distancia">
+                        Distancia (km)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="distancia"
+                        min="1"
+                        placeholder="80"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="peso">
+                        Peso (toneladas)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="peso"
+                        min="1"
+                        placeholder="5"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-completo">
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Calcular tarifa
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="resultadoTarifa"
+                class="resultado"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/app.js" defer></script>
+
+<script
+    src="../js/modules/vehiculos/vehiculos.js"
+    defer
+></script>
+
+<script
+    src="../js/modules/vehiculos/vehiculos.ui.js"
+    defer
+></script>
+
+</body>
+
+</html>

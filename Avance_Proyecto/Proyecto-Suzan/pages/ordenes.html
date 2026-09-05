@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Órdenes | NexoCargo</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+<body>
+
+<div class="layout">
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
+
+
+        <div class="logo">
+            <h2>NexoCargo</h2>
+            <p>Gestión logística</p>
+        </div>
+
+        <nav class="menu">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="clientes.html">
+                Clientes
+            </a>
+
+            <a href="cotizaciones.html">
+                Cotizaciones
+            </a>
+
+            <a href="vehiculos.html">
+                Vehículos
+            </a>
+
+            <a href="ordenes.html" class="activo">
+                Órdenes
+            </a>
+
+            <a href="reportes.html">
+                Reportes
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         CONTENIDO
+    ========================== -->
+
+    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+    <main class="contenido">
+
+        <header class="encabezado">
+
+            <h1>Órdenes de Transporte</h1>
+
+            <p>
+                Registra y administra las operaciones
+                de transporte derivadas de cotizaciones.
+            </p>
+
+        </header>
+
+
+        <!-- =========================
+             REGISTRO
+        ========================== -->
+
+        <section class="panel">
+
+            <h2>Registrar nueva orden</h2>
+
+            <form
+                id="formOrden"
+                class="formulario"
+            >
+
+                <div class="campo">
+
+                    <label for="idOrden">
+                        ID de orden
+                    </label>
+
+                    <input
+                        type="text"
+                        id="idOrden"
+                        placeholder="ORD001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="cotizacionId">
+                        ID de cotización
+                    </label>
+
+                    <input
+                        type="text"
+                        id="cotizacionId"
+                        placeholder="COT001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="vehiculoId">
+                        ID de vehículo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="vehiculoId"
+                        placeholder="V001"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="origen">
+                        Origen
+                    </label>
+
+                    <input
+                        type="text"
+                        id="origen"
+                        placeholder="Lima"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="destino">
+                        Destino
+                    </label>
+
+                    <input
+                        type="text"
+                        id="destino"
+                        placeholder="Arequipa"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="distanciaOrden">
+                        Distancia (km)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="distanciaOrden"
+                        min="1"
+                        placeholder="80"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="pesoOrden">
+                        Peso (toneladas)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="pesoOrden"
+                        min="1"
+                        placeholder="5"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="campo-completo">
+
+                    <button
+                        type="submit"
+                        class="btn"
+                    >
+                        Registrar orden
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div
+                id="mensajeOrden"
+                class="mensaje"
+                aria-live="polite"
+            ></div>
+
+        </section>
+
+
+        <!-- =========================
+             TABLA DE ÓRDENES
+        ========================== -->
+
+        <section class="panel">
+
+            <h2>Órdenes registradas</h2>
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Cotización</th>
+                            <th>Vehículo</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Tarifa</th>
+                            <th>Estado</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tablaOrdenes">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="../js/app.js" defer></script>
+
+<script
+    src="../js/modules/ordenes/vehiculos.js"
+    defer
+></script>
+
+<script
+    src="../js/modules/ordenes/ordenes.js"
+    defer
+></script>
+
+<script
+    src="../js/modules/ordenes/ordenes.ui.js"
+    defer
+></script>
+
+</body>
+
+</html>
