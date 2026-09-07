@@ -1,20 +1,137 @@
 <!doctype html>
 <html lang="es">
+
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Gestor inteligente de inventario</title>
- <link rel="stylesheet" href="./css/styles.css">
- <script src="./js/app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor inteligente de inventario</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="./js/app.js" defer></script>
 </head>
+
 <body>
- <header class="encabezado">
- <div class="contenedor">
- <p class="etiqueta">JavaScript Avanzado · Semana 4</p>
- <h1>Gestor inteligente de inventario</h1>
- <p class="introduccion">
- Objetos, arreglos, clases, colecciones y JSON aplicados a una solución web.
- </p>
- </div>
- </header>
- <main class="contenedor contenido">
+    <header class="encabezado">
+        <div class="contenedor">
+            <p class="etiqueta">JavaScript Avanzado · Semana 4</p>
+            <h1>Gestor inteligente de inventario</h1>
+            <p class="introduccion">
+                Objetos, arreglos, clases, colecciones y JSON aplicados a una solución web.
+            </p>
+        </div>
+    </header>
+    <main class="contenedor contenido">
+        <section class="panel" aria-labelledby="titulo-registro">
+            <h2 id="titulo-registro">Registrar producto</h2>
+            <form id="formProducto" novalidate>
+                <div class="campos">
+                    <div class="campo campo-amplio">
+                        <label for="nombre">Nombre</label>
+                        <input id="nombre" name="nombre" type="text" maxlength="60" placeholder="Teclado mecánico"
+                            required>
+                    </div>
+                    <div class="campo">
+                        <label for="categoria">Categoría</label>
+                        <input id="categoria" name="categoria" type="text" maxlength="30" placeholder="Periféricos"
+                            required>
+                    </div>
+                    <div class="campo">
+                        <label for="precio">Precio (S/)</label>
+                        <input id="precio" name="precio" type="number" min="0.01" max="999999.99" step="0.01"
+                            placeholder="149.90" required>
+                    </div>
+                    <div class="campo">
+                        <label for="stock">Stock</label>
+                        <input id="stock" name="stock" type="number" min="0" max="99999" step="1" placeholder="12"
+                            required>
+                    </div>
+                </div>
+                <div class="acciones">
+                    <button type="submit">Agregar producto</button>
+                    <button id="btnRestaurar" type="button" class="secundario">Restaurar datos</button>
+                </div>
+            </form>
+            <div id="mensajes" class="mensajes" role="alert" hidden></div>
+        </section>
+        <section class="panel" aria-labelledby="titulo-catalogo">
+            <div class="cabecera-seccion">
+                <div>
+                    <p class="etiqueta">Catálogo</p>
+                    <h2 id="titulo-catalogo">Productos registrados</h2>
+                </div>
+                <span id="resumenVisible" class="insignia">0 productos</span>
+            </div>
+            <div class="filtros">
+                <div class="campo campo-amplio">
+                    <label for="busqueda">Buscar</label>
+                    <input id="busqueda" type="search" placeholder="Nombre o categoría">
+                </div>
+                <div class="campo">
+                    <label for="filtroCategoria">Categoría</label>
+                    <select id="filtroCategoria">
+                        <option value="">Todas</option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label for="orden">Ordenar</label>
+                    <select id="orden">
+                        <option value="nombre">Nombre A–Z</option>
+                        <option value="precio-desc">Mayor precio</option>
+                        <option value="stock-asc">Menor stock</option>
+                    </select>
+                </div>
+            </div>
+            <div class="tabla-contenedor">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th class="numero">Precio</th>
+                            <th class="numero">Stock</th>
+                            <th class="numero">Valor</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoInventario"></tbody>
+                </table>
+            </div>
+            <p id="estadoVacio" class="estado-vacio" hidden>No se encontraron productos.</p>
+        </section>
+        <section class="panel" aria-labelledby="titulo-resumen">
+            <h2 id="titulo-resumen">Resumen del inventario</h2>
+            <dl class="metricas">
+                <div>
+                    <dt>Productos</dt>
+                    <dd id="totalProductos">0</dd>
+                </div>
+                <div>
+                    <dt>Unidades</dt>
+                    <dd id="totalUnidades">0</dd>
+                </div>
+                <div>
+                    <dt>Valor total</dt>
+                    <dd id="valorTotal">S/ 0.00</dd>
+                </div>
+                <div>
+                    <dt>Stock bajo</dt>
+                    <dd id="stockBajo">0</dd>
+                </div>
+            </dl>
+            <p id="alertaStock" class="alerta" role="status"></p>
+        </section>
+        <section class="panel" aria-labelledby="titulo-json">
+            <h2 id="titulo-json">Intercambio mediante JSON</h2>
+            <p>Exporta los objetos actuales o pega un arreglo JSON válido para reconstruir el
+                inventario.</p>
+            <label for="areaJson">Datos JSON</label>
+            <textarea id="areaJson" rows="10" spellcheck="false"
+                placeholder='[{"id":"PRD1001","nombre":"Monitor","categoria":"Pantallas","precio":899.9,"stock":4}]'></textarea>
+            <div class="acciones">
+                <button id="btnExportar" type="button">Exportar</button>
+                <button id="btnImportar" type="button" class="secundario">Importar</button>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
