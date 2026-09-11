@@ -10,6 +10,9 @@ const tablaOrdenes =
 const mensajeOrden =
     document.getElementById("mensajeOrden");
 
+const btnRestaurarOrdenes =
+    document.getElementById("btnRestaurarOrdenes");
+
 
 /* =========================
    MOSTRAR MENSAJE
@@ -37,11 +40,9 @@ function mostrarMensajeOrden(
 ========================= */
 
 function mostrarOrdenes() {
-
     tablaOrdenes.innerHTML = "";
 
     ordenes.forEach(orden => {
-
         const fila = document.createElement("tr");
 
         fila.innerHTML = `
@@ -52,11 +53,50 @@ function mostrarOrdenes() {
             <td>${orden.destino}</td>
             <td>S/ ${orden.tarifa}</td>
             <td>${orden.estado}</td>
+            <td>
+                <button
+                    type="button"
+                    class="btn-eliminar-orden"
+                    data-id="${orden.id}"
+                >
+                    Eliminar
+                </button>
+            </td>
         `;
 
         tablaOrdenes.appendChild(fila);
+
     });
 }
+
+tablaOrdenes.addEventListener("click", function (event) {
+    if (!event.target.classList.contains("btn-eliminar-orden")) {
+        return;
+    }
+
+    const id = event.target.dataset.id;
+    const indice = ordenes.findIndex(orden => orden.id === id);
+
+    if (indice !== -1) {
+        ordenes.splice(indice, 1);
+        mostrarOrdenes();
+
+        mostrarMensajeOrden(
+            "Orden eliminada correctamente.",
+            "exito"
+        );
+    }
+});
+
+btnRestaurarOrdenes.addEventListener("click", function () {
+    restaurarOrdenes();
+    mostrarOrdenes();
+
+    mostrarMensajeOrden(
+        "Datos de órdenes restaurados correctamente.",
+        "exito"
+    );
+});
 
 
 /* =========================
@@ -65,7 +105,7 @@ function mostrarOrdenes() {
 
 formularioOrden.addEventListener(
     "submit",
-    function(event) {
+    function (event) {
 
         event.preventDefault();
 
@@ -128,3 +168,6 @@ formularioOrden.addEventListener(
         }
     }
 );
+
+restaurarOrdenes();
+mostrarOrdenes();

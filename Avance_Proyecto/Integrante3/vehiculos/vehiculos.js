@@ -34,7 +34,29 @@ class Tarifa {
    DATOS
 ========================= */
 
-const vehiculos = [];
+const DATOS_INICIALES_VEHICULOS = [
+    new Vehiculo("V001", "ABC-123", "Camión", 10),
+    new Vehiculo("V002", "DEF-456", "Furgón", 7),
+    new Vehiculo("V003", "GHI-789", "Camioneta", 3)
+];
+
+let vehiculos = crearCopiaDeVehiculosIniciales();
+
+function crearCopiaDeVehiculosIniciales() {
+    return DATOS_INICIALES_VEHICULOS.map(
+        vehiculo => new Vehiculo(
+            vehiculo.id,
+            vehiculo.placa,
+            vehiculo.tipo,
+            vehiculo.capacidad,
+            vehiculo.estado
+        )
+    );
+}
+
+function restaurarVehiculos() {
+    vehiculos = crearCopiaDeVehiculosIniciales();
+}
 
 const matrizTarifas = [
     [100, 150, 200],

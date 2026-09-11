@@ -7,6 +7,50 @@
 
 const ordenes = [];
 
+const DATOS_INICIALES_ORDENES = [
+    {
+        id: "O001",
+        cotizacionId: "C001",
+        vehiculoId: "V001",
+        origen: "Lima",
+        destino: "Callao",
+        distancia: 25,
+        peso: 2,
+        tarifa: 100,
+        estado: "Pendiente"
+    },
+    {
+        id: "O002",
+        cotizacionId: "C002",
+        vehiculoId: "V002",
+        origen: "Ate",
+        destino: "Miraflores",
+        distancia: 50,
+        peso: 5,
+        tarifa: 230,
+        estado: "Programada"
+    },
+    {
+        id: "O003",
+        cotizacionId: "C003",
+        vehiculoId: "V003",
+        origen: "Lima",
+        destino: "Chorrillos",
+        distancia: 80,
+        peso: 3,
+        tarifa: 150,
+        estado: "En ruta"
+    }
+];
+
+function restaurarOrdenes() {
+    ordenes.length = 0;
+
+    DATOS_INICIALES_ORDENES.forEach(orden => {
+        ordenes.push({ ...orden });
+    });
+}
+
 
 /* =========================
    ESTADOS

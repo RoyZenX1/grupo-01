@@ -5,378 +5,311 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Vehículos | NexoCargo</title>
 
-    <link
-        rel="stylesheet"
-        href="css/styles.css"
-    >
+    <link rel="stylesheet" href="css/styles.css">
 
 </head>
 
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-    <!-- =========================
+        <!-- =========================
          SIDEBAR
     ========================== -->
 
-    <aside class="sidebar">
+        <aside class="sidebar">
 
-        <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
-            <span></span><span></span><span></span>
-        </button>
+            <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+                <span></span><span></span><span></span>
+            </button>
 
-        <div class="logo">
-            <h2>NexoCargo</h2>
-            <p>Gestión logística</p>
-        </div>
+            <div class="logo">
+                <h2>NexoCargo</h2>
+                <p>Gestión logística</p>
+            </div>
 
-        <nav class="menu">
+            <nav class="menu">
 
-            <a href="dashboard.html">
-                Dashboard
-            </a>
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
 
-            <a href="clientes.html">
-                Clientes
-            </a>
+                <a href="clientes.html">
+                    Clientes
+                </a>
 
-            <a href="cotizaciones.html">
-                Cotizaciones
-            </a>
+                <a href="cotizaciones.html">
+                    Cotizaciones
+                </a>
 
-            <a href="vehiculos.html" class="activo">
-                Vehículos
-            </a>
+                <a href="vehiculos.html" class="activo">
+                    Vehículos
+                </a>
 
-            <a href="ordenes.html">
-                Órdenes
-            </a>
+                <a href="ordenes.html">
+                    Órdenes
+                </a>
 
-            <a href="reportes.html">
-                Reportes
-            </a>
+                <a href="reportes.html">
+                    Reportes
+                </a>
 
-        </nav>
+            </nav>
 
-    </aside>
+        </aside>
 
 
-    <!-- =========================
+        <!-- =========================
          CONTENIDO
     ========================== -->
 
-    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+        <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
 
-    <main class="contenido">
+        <main class="contenido">
 
-        <header class="encabezado">
+            <header class="encabezado">
 
-            <h1>Gestión de Vehículos</h1>
+                <h1>Gestión de Vehículos</h1>
 
-            <p>
-                Registra y administra los vehículos
-                disponibles para las operaciones de transporte.
-            </p>
+                <p>
+                    Registra y administra los vehículos
+                    disponibles para las operaciones de transporte.
+                </p>
 
-        </header>
+            </header>
 
 
-        <!-- =========================
+            <!-- =========================
              TARJETAS
         ========================== -->
 
-        <section class="grid-tarjetas">
+            <section class="grid-tarjetas">
 
-            <article class="tarjeta">
+                <article class="tarjeta">
 
-                <h3>Total de vehículos</h3>
+                    <h3>Total de vehículos</h3>
 
-                <p
-                    class="numero"
-                    id="totalVehiculos"
-                >
-                    0
-                </p>
+                    <p class="numero" id="totalVehiculos">
+                        0
+                    </p>
 
-            </article>
+                </article>
 
 
-            <article class="tarjeta">
+                <article class="tarjeta">
 
-                <h3>Disponibles</h3>
+                    <h3>Disponibles</h3>
 
-                <p
-                    class="numero"
-                    id="vehiculosDisponibles"
-                >
-                    0
-                </p>
+                    <p class="numero" id="vehiculosDisponibles">
+                        0
+                    </p>
 
-            </article>
+                </article>
 
 
-            <article class="tarjeta">
+                <article class="tarjeta">
 
-                <h3>En ruta</h3>
+                    <h3>En ruta</h3>
 
-                <p
-                    class="numero"
-                    id="vehiculosRuta"
-                >
-                    0
-                </p>
+                    <p class="numero" id="vehiculosRuta">
+                        0
+                    </p>
 
-            </article>
+                </article>
 
-        </section>
+            </section>
 
 
-        <!-- =========================
+            <!-- =========================
              REGISTRO
         ========================== -->
 
-        <section class="panel">
+            <section class="panel">
 
-            <h2>Registrar vehículo</h2>
+                <h2>Registrar vehículo</h2>
 
-            <form
-                id="formVehiculo"
-                class="formulario"
-            >
+                <form id="formVehiculo" class="formulario">
 
-                <div class="campo">
+                    <div class="campo">
 
-                    <label for="idVehiculo">
-                        ID del vehículo
-                    </label>
+                        <label for="idVehiculo">
+                            ID del vehículo
+                        </label>
 
-                    <input
-                        type="text"
-                        id="idVehiculo"
-                        placeholder="V001"
-                        required
-                    >
+                        <input type="text" id="idVehiculo" placeholder="V001" required>
 
-                </div>
+                    </div>
 
 
-                <div class="campo">
+                    <div class="campo">
 
-                    <label for="placa">
-                        Placa
-                    </label>
+                        <label for="placa">
+                            Placa
+                        </label>
 
-                    <input
-                        type="text"
-                        id="placa"
-                        placeholder="ABC-123"
-                        required
-                    >
+                        <input type="text" id="placa" placeholder="ABC-123" required>
 
-                </div>
+                    </div>
 
 
-                <div class="campo">
+                    <div class="campo">
 
-                    <label for="tipo">
-                        Tipo de vehículo
-                    </label>
+                        <label for="tipo">
+                            Tipo de vehículo
+                        </label>
 
-                    <select id="tipo" required>
+                        <select id="tipo" required>
 
-                        <option value="">
-                            Seleccionar
-                        </option>
+                            <option value="">
+                                Seleccionar
+                            </option>
 
-                        <option value="Camión">
-                            Camión
-                        </option>
+                            <option value="Camión">
+                                Camión
+                            </option>
 
-                        <option value="Furgón">
-                            Furgón
-                        </option>
+                            <option value="Furgón">
+                                Furgón
+                            </option>
 
-                        <option value="Camioneta">
-                            Camioneta
-                        </option>
+                            <option value="Camioneta">
+                                Camioneta
+                            </option>
 
-                        <option value="Tráiler">
-                            Tráiler
-                        </option>
+                            <option value="Tráiler">
+                                Tráiler
+                            </option>
 
-                    </select>
+                        </select>
 
-                </div>
-
-
-                <div class="campo">
-
-                    <label for="capacidad">
-                        Capacidad (toneladas)
-                    </label>
-
-                    <input
-                        type="number"
-                        id="capacidad"
-                        min="1"
-                        placeholder="10"
-                        required
-                    >
-
-                </div>
+                    </div>
 
 
-                <div class="campo-completo">
+                    <div class="campo">
 
-                    <button
-                        type="submit"
-                        class="btn"
-                    >
-                        Registrar vehículo
-                    </button>
+                        <label for="capacidad">
+                            Capacidad (toneladas)
+                        </label>
 
-                </div>
+                        <input type="number" id="capacidad" min="1" placeholder="10" required>
 
-            </form>
+                    </div>
 
 
-            <div
-                id="mensajeVehiculo"
-                class="mensaje"
-                aria-live="polite"
-            ></div>
+                    <div class="campo-completo">
 
-        </section>
+                        <button type="submit" class="btn">
+                            Registrar vehículo
+                        </button>
+
+                        <button type="button" class="btn-restaurar" id="btnRestaurarVehiculos">
+                            Restaurar datos
+                        </button>
+                    </div>
+
+                </form>
 
 
-        <!-- =========================
+    <div id="mensajeVehiculo" class="mensaje" aria-live="polite"></div>
+
+            </section>
+
+
+    <!-- =========================
              TABLA
         ========================== -->
 
-        <section class="panel">
+            <section class="panel">
 
-            <h2>Vehículos registrados</h2>
+        <h2>Vehículos registrados</h2>
 
-            <div class="tabla-contenedor">
+        <div class="tabla-contenedor">
 
-                <table>
+            <table>
 
-                    <thead>
+                <thead>
 
-                        <tr>
+                    <tr>
 
-                            <th>ID</th>
-                            <th>Placa</th>
-                            <th>Tipo</th>
-                            <th>Capacidad</th>
-                            <th>Estado</th>
+                        <th>ID</th>
+                        <th>Placa</th>
+                        <th>Tipo</th>
+                        <th>Capacidad</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
 
-                        </tr>
+                    </tr>
 
-                    </thead>
+                </thead>
 
-                    <tbody id="tablaVehiculos">
-                    </tbody>
+                <tbody id="tablaVehiculos">
+                </tbody>
 
-                </table>
+            </table>
 
-            </div>
+        </div>
 
-        </section>
+            </section>
 
 
-        <!-- =========================
+    <!-- =========================
              TARIFAS
         ========================== -->
 
-        <section class="panel">
+            <section class="panel">
 
-            <h2>Consultar tarifa de transporte</h2>
+        <h2>Consultar tarifa de transporte</h2>
 
-            <form
-                id="formTarifa"
-                class="formulario"
-            >
+        <form id="formTarifa" class="formulario">
 
-                <div class="campo">
+            <div class="campo">
 
-                    <label for="distancia">
-                        Distancia (km)
-                    </label>
+                <label for="distancia">
+                    Distancia (km)
+                </label>
 
-                    <input
-                        type="number"
-                        id="distancia"
-                        min="1"
-                        placeholder="80"
-                        required
-                    >
+                <input type="number" id="distancia" min="1" placeholder="80" required>
 
-                </div>
+            </div>
 
 
-                <div class="campo">
+            <div class="campo">
 
-                    <label for="peso">
-                        Peso (toneladas)
-                    </label>
+                <label for="peso">
+                    Peso (toneladas)
+                </label>
 
-                    <input
-                        type="number"
-                        id="peso"
-                        min="1"
-                        placeholder="5"
-                        required
-                    >
+                <input type="number" id="peso" min="1" placeholder="5" required>
 
-                </div>
+            </div>
 
 
-                <div class="campo-completo">
+            <div class="campo-completo">
 
-                    <button
-                        type="submit"
-                        class="btn"
-                    >
-                        Calcular tarifa
-                    </button>
+                <button type="submit" class="btn">
+                    Calcular tarifa
+                </button>
 
-                </div>
+            </div>
 
-            </form>
+        </form>
 
 
-            <div
-                id="resultadoTarifa"
-                class="resultado"
-                aria-live="polite"
-            ></div>
+        <div id="resultadoTarifa" class="resultado" aria-live="polite"></div>
 
-        </section>
+            </section>
 
-    </main>
+        </main>
 
-</div>
+    </div>
 
-<script src="../js/app.js" defer></script>
-
-<script
-    src="../js/modules/vehiculos/vehiculos.js"
-    defer
-></script>
-
-<script
-    src="../js/modules/vehiculos/vehiculos.ui.js"
-    defer
-></script>
+    <script src="app.js" defer></script>
+    <script src="vehiculos/vehiculos.js" defer></script>
+    <script src="vehiculos/vehiculos.ui.js" defer></script>
 
 </body>
 

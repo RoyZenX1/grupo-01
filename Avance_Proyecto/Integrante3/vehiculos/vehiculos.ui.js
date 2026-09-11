@@ -16,6 +16,15 @@ const formularioTarifa =
 const resultadoTarifa =
     document.getElementById("resultadoTarifa");
 
+const btnRestaurarVehiculos =
+    document.getElementById("btnRestaurarVehiculos");
+
+const resumenVehiculos = {
+    total: document.getElementById("totalVehiculos"),
+    disponibles: document.getElementById("vehiculosDisponibles"),
+    enRuta: document.getElementById("vehiculosRuta")
+};
+
 
 /* =========================
    MOSTRAR MENSAJE
@@ -40,11 +49,9 @@ function mostrarMensaje(mensaje, tipo = "error") {
 ========================= */
 
 function mostrarVehiculos() {
-
     tablaVehiculos.innerHTML = "";
 
     vehiculos.forEach(vehiculo => {
-
         const fila = document.createElement("tr");
 
         fila.innerHTML = `
@@ -52,13 +59,56 @@ function mostrarVehiculos() {
             <td>${vehiculo.placa}</td>
             <td>${vehiculo.tipo}</td>
             <td>${vehiculo.capacidad} t</td>
-            <td>${vehiculo.estado}</td>
+            <td><span class="estado">${vehiculo.estado}</span></td>
+            <td>
+                <button
+                    type="button"
+                    class="btn-eliminar"
+                    data-id="${vehiculo.id}"
+                >
+                    Eliminar
+                </button>
+            </td>
         `;
 
         tablaVehiculos.appendChild(fila);
     });
+
+    actualizarResumen();
 }
 
+function actualizarResumen() {
+    resumenVehiculos.total.textContent = vehiculos.length;
+    resumenVehiculos.disponibles.textContent =
+        vehiculos.filter(vehiculo => vehiculo.estado === "Disponible").length;
+    resumenVehiculos.enRuta.textContent =
+        vehiculos.filter(vehiculo => vehiculo.estado === "En ruta").length;
+}
+
+tablaVehiculos.addEventListener("click", event => {
+    const boton = event.target.closest(".btn-eliminar");
+
+    if (!boton) {
+        return;
+    }
+
+    try {
+        eliminarVehiculo(boton.dataset.id);
+        mostrarVehiculos();
+        mostrarMensaje("Vehículo eliminado correctamente.", "exito");
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
+});
+
+btnRestaurarVehiculos.addEventListener("click", () => {
+    restaurarVehiculos();
+    mostrarVehiculos();
+    mostrarMensaje(
+        "Datos de vehículos restaurados correctamente.",
+        "exito"
+    );
+});
 
 /* =========================
    EVENTO REGISTRAR
@@ -66,7 +116,7 @@ function mostrarVehiculos() {
 
 formularioVehiculo.addEventListener(
     "submit",
-    function(event) {
+    function (event) {
 
         event.preventDefault();
 
@@ -114,7 +164,7 @@ formularioVehiculo.addEventListener(
 
 formularioTarifa.addEventListener(
     "submit",
-    function(event) {
+    function (event) {
 
         event.preventDefault();
 
@@ -152,3 +202,5 @@ formularioTarifa.addEventListener(
         }
     }
 );
+
+mostrarVehiculos();
