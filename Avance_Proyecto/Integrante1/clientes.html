@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NexoCargo | Clientes</title>
+
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <script type="module" src="./clientes.ui.js" defer></script>
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <aside class="sidebar">
+
+            <button class="menu-toggle" type="button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div class="logo">
+                <h2>NexoCargo</h2>
+                <p>Gestión logística</p>
+            </div>
+
+            <nav class="menu">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="clientes.html" class="activo">
+                    Clientes
+                </a>
+
+                <a href="cotizaciones.html">
+                    Cotizaciones
+                </a>
+
+                <a href="vehiculos.html">
+                    Vehículos
+                </a>
+
+                <a href="ordenes.html">
+                    Órdenes
+                </a>
+
+                <a href="reportes.html">
+                    Reportes
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <button class="mobile-menu-toggle" type="button">
+            ☰
+        </button>
+
+        <main class="contenido">
+
+            <header class="encabezado">
+
+                <div>
+                    <h1>Gestión de Clientes</h1>
+
+                    <p>
+                        Registra, consulta, actualiza y elimina clientes.
+                    </p>
+                </div>
+
+            </header>
+
+            <!-- FORMULARIO -->
+
+            <section class="panel">
+
+                <h2 id="tituloFormulario">
+                    Registrar cliente
+                </h2>
+
+                <form id="formCliente" class="formulario">
+
+                    <div class="campo">
+
+                        <label for="nombre">
+                            Nombre completo
+                        </label>
+
+                        <input id="nombre" name="nombre" type="text" placeholder="Ej.: Juan Pérez" required>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="identificacion">
+                            DNI / RUC
+                        </label>
+
+                        <input id="identificacion" name="identificacion" type="text" placeholder="Ej.: 12345678"
+                            required>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="email">
+                            Correo electrónico
+                        </label>
+
+                        <input id="email" name="email" type="email" placeholder="Ej.: cliente@gmail.com" required>
+
+                    </div>
+
+                    <div class="campo">
+
+                        <label for="telefono">
+                            Teléfono
+                        </label>
+
+                        <input id="telefono" name="telefono" type="text" placeholder="Ej.: 987654321" required>
+
+                    </div>
+
+                    <div class="campo campo-completo">
+
+                        <button id="btnGuardar" class="btn" type="submit">
+                            Registrar cliente
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <p id="mensaje" class="mensaje" hidden></p>
+
+            </section>
+
+
+            <!-- BÚSQUEDA -->
+
+            <section class="panel">
+
+                <h2>Buscar clientes</h2>
+
+                <div class="campo">
+
+                    <label for="busqueda">
+                        Nombre o identificación
+                    </label>
+
+                    <input id="busqueda" type="search" placeholder="Buscar cliente...">
+
+                </div>
+
+            </section>
+
+
+            <!-- TABLA -->
+
+            <section class="panel">
+
+                <h2>Clientes registrados</h2>
+
+                <div class="tabla-contenedor">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Nombre</th>
+                                <th>DNI / RUC</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Acciones</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tablaClientes">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <p id="mensajeVacio" class="mensaje" hidden>
+                    No se encontraron clientes.
+                </p>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
