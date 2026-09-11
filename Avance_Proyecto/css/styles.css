@@ -540,6 +540,97 @@ tbody tr:hover {
     font-weight: bold;
 }
 
+.estado-vehiculo {
+    border: 1px solid transparent;
+}
+
+.selector-estado-vehiculo[data-estado="Disponible"] {
+    background-color: #dcfce7;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.selector-estado-vehiculo[data-estado="En ruta"] {
+    background-color: #e5f7ef;
+    border-color: #8bd5b2;
+    color: #197044;
+}
+
+.selector-estado-vehiculo[data-estado="Mantenimiento"] {
+    background-color: #fff4d6;
+    border-color: #f0c85a;
+    color: #946c00;
+}
+
+.selector-estado-vehiculo[data-estado="Fuera de servicio"] {
+    background-color: #fde4e4;
+    border-color: #efaaaa;
+    color: #a33131;
+}
+
+.selector-estado-orden,
+.selector-estado-vehiculo {
+    min-width: 122px;
+    padding: 7px 30px 7px 12px;
+    border: 1px solid transparent;
+    border-radius: 18px;
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, currentColor 50%),
+        linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position:
+        calc(100% - 14px) 50%,
+        calc(100% - 9px) 50%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: box-shadow 160ms ease, transform 160ms ease;
+}
+
+.selector-estado-orden:hover,
+.selector-estado-vehiculo:hover {
+    transform: translateY(-1px);
+}
+
+.selector-estado-orden:focus,
+.selector-estado-vehiculo:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(43, 63, 82, 0.16);
+}
+
+.selector-estado-orden[data-estado="Pendiente"] {
+    background-color: #fff4d6;
+    border-color: #f0c85a;
+    color: #946c00;
+}
+
+.selector-estado-orden[data-estado="Programada"] {
+    background-color: #e7f0ff;
+    border-color: #9bbcf2;
+    color: #285b9f;
+}
+
+.selector-estado-orden[data-estado="En ruta"] {
+    background-color: #e5f7ef;
+    border-color: #8bd5b2;
+    color: #197044;
+}
+
+.selector-estado-orden[data-estado="Completada"] {
+    background-color: #dcfce7;
+    border-color: #86efac;
+    color: #166534;
+}
+
+.selector-estado-orden[data-estado="Cancelada"] {
+    background-color: #fde4e4;
+    border-color: #efaaaa;
+    color: #a33131;
+}
+
 /* =========================
    RESULTADOS
 ========================= */

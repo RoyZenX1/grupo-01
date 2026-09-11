@@ -157,7 +157,8 @@ function cambiarEstadoVehiculo(id, nuevoEstado) {
     const estadosPermitidos = [
         "Disponible",
         "En ruta",
-        "Mantenimiento"
+        "Mantenimiento",
+        "Fuera de servicio"
     ];
 
     if (!estadosPermitidos.includes(nuevoEstado)) {

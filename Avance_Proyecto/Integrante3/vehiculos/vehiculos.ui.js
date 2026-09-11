@@ -53,13 +53,35 @@ function mostrarVehiculos() {
 
     vehiculos.forEach(vehiculo => {
         const fila = document.createElement("tr");
+        const estadosPermitidos = [
+            "Disponible",
+            "En ruta",
+            "Mantenimiento",
+            "Fuera de servicio"
+        ];
+        const opcionesEstado = estadosPermitidos
+            .map(estado => `
+                <option value="${estado}" ${estado === vehiculo.estado ? "selected" : ""}>
+                    ${estado}
+                </option>
+            `)
+            .join("");
 
         fila.innerHTML = `
             <td>${vehiculo.id}</td>
             <td>${vehiculo.placa}</td>
             <td>${vehiculo.tipo}</td>
             <td>${vehiculo.capacidad} t</td>
-            <td><span class="estado">${vehiculo.estado}</span></td>
+            <td>
+                <select
+                    class="selector-estado-vehiculo estado-vehiculo"
+                    data-id="${vehiculo.id}"
+                    data-estado="${vehiculo.estado}"
+                    aria-label="Estado del vehículo ${vehiculo.id}"
+                >
+                    ${opcionesEstado}
+                </select>
+            </td>
             <td>
                 <button
                     type="button"
@@ -84,6 +106,28 @@ function actualizarResumen() {
     resumenVehiculos.enRuta.textContent =
         vehiculos.filter(vehiculo => vehiculo.estado === "En ruta").length;
 }
+
+tablaVehiculos.addEventListener("change", event => {
+    const selector = event.target.closest(".selector-estado-vehiculo");
+
+    if (!selector) {
+        return;
+    }
+
+    try {
+        cambiarEstadoVehiculo(
+            selector.dataset.id,
+            selector.value
+        );
+        mostrarVehiculos();
+        mostrarMensaje(
+            "Estado del vehículo actualizado correctamente.",
+            "exito"
+        );
+    } catch (error) {
+        mostrarMensaje(error.message);
+    }
+});
 
 tablaVehiculos.addEventListener("click", event => {
     const boton = event.target.closest(".btn-eliminar");

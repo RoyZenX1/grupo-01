@@ -44,6 +44,13 @@ function mostrarOrdenes() {
 
     ordenes.forEach(orden => {
         const fila = document.createElement("tr");
+        const opcionesEstado = estadosOrden
+            .map(estado => `
+                <option value="${estado}" ${estado === orden.estado ? "selected" : ""}>
+                    ${estado}
+                </option>
+            `)
+            .join("");
 
         fila.innerHTML = `
             <td>${orden.id}</td>
@@ -52,7 +59,16 @@ function mostrarOrdenes() {
             <td>${orden.origen}</td>
             <td>${orden.destino}</td>
             <td>S/ ${orden.tarifa}</td>
-            <td>${orden.estado}</td>
+            <td>
+                <select
+                    class="selector-estado-orden"
+                    data-id="${orden.id}"
+                    data-estado="${orden.estado}"
+                    aria-label="Estado de la orden ${orden.id}"
+                >
+                    ${opcionesEstado}
+                </select>
+            </td>
             <td>
                 <button
                     type="button"
@@ -68,6 +84,28 @@ function mostrarOrdenes() {
 
     });
 }
+
+tablaOrdenes.addEventListener("change", function (event) {
+    if (!event.target.classList.contains("selector-estado-orden")) {
+        return;
+    }
+
+    try {
+        cambiarEstadoOrden(
+            event.target.dataset.id,
+            event.target.value
+        );
+
+        mostrarOrdenes();
+
+        mostrarMensajeOrden(
+            "Estado de la orden actualizado correctamente.",
+            "exito"
+        );
+    } catch (error) {
+        mostrarMensajeOrden(error.message);
+    }
+});
 
 tablaOrdenes.addEventListener("click", function (event) {
     if (!event.target.classList.contains("btn-eliminar-orden")) {
