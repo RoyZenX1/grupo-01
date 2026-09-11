@@ -4,19 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Cotizaciones | NexoCargo</title>
 
     <link rel="stylesheet" href="../css/styles.css">
 
-    <script type="module" src="./cotizaciones.ui.js" defer></script>
+    <script src="./cotizaciones.js" defer></script>
 </head>
 
 <body>
 
     <div class="layout">
 
+
         <aside class="sidebar">
-            <button class="menu-toggle" type="button" aria-label="Contraer menú">
+
+            <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -28,97 +31,294 @@
             </div>
 
             <nav class="menu">
-                <a href="../Integrante5/dashboard.html">Dashboard</a>
-                <a href="../Integrante1/clientes.html">Clientes</a>
-                <a href="./cotizaciones.html" class="activo">Cotizaciones</a>
-                <a href="../Integrante3/vehiculos.html">Vehículos</a>
-                <a href="../Integrante3/ordenes.html">Órdenes</a>
-                <a href="../Integrante4/factura (1).html">Facturas</a>
-                <a href="../Integrante4/reportes.html">Reportes</a>
+
+                <a href="../Integrante5/dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="../Integrante1/clientes.html">
+                    Clientes
+                </a>
+
+                <a href="./cotizaciones.html" class="activo">
+                    Cotizaciones
+                </a>
+
+                <a href="../Integrante3/vehiculos.html">
+                    Vehículos
+                </a>
+
+                <a href="../Integrante3/ordenes.html">
+                    Órdenes
+                </a>
+
+                <a href="../Integrante4/factura.html">
+                    Facturas
+                </a>
+
+                <a href="../Integrante4/reportes.html">
+                    Reportes
+                </a>
+
             </nav>
+
         </aside>
 
-        <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+        <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">
+            ☰
+        </button>
+
 
         <main class="contenido">
 
             <header class="encabezado">
-                <h1>Módulo de Cotizaciones</h1>
-                <p>Calcula y genera propuestas de servicios logísticos para los clientes.</p>
+
+                <div>
+
+                    <h1>Cotizaciones</h1>
+
+                    <p>
+                        Calcula el costo de servicios logísticos y
+                        transporte antes de generar una orden.
+                    </p>
+
+                </div>
+
             </header>
 
-            <section class="panel">
-                <h2>Registrar Nueva Cotización</h2>
 
-                <form id="formCotizacion" class="formulario" novalidate>
-                    <div class="campo campo-completo">
-                        <label for="producto">Servicio de transporte / Carga</label>
-                        <input id="producto" name="producto" type="text" placeholder="Ej.: Envío de contenedores Lima - Arequipa" required>
+            <section class="cotizador-grid">
+
+                <article class="panel cotizador-formulario">
+
+                    <div class="seccion-etiqueta">
+                        NUEVA COTIZACIÓN
                     </div>
 
-                    <div class="campo">
-                        <label for="precio">Precio unitario (S/)</label>
-                        <input id="precio" name="precio" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+                    <h2>
+                        Datos del servicio
+                    </h2>
+
+                    <p class="descripcion-panel">
+                        Ingresa la información del servicio para calcular
+                        el importe de la cotización.
+                    </p>
+
+
+                    <form id="formCotizacion" class="formulario" novalidate>
+
+                        <div class="campo campo-completo">
+
+                            <label for="producto">
+                                Servicio o ruta
+                            </label>
+
+                            <input id="producto" name="producto" type="text" maxlength="60"
+                                placeholder="Ej.: Transporte Lima - Trujillo" required>
+
+                        </div>
+
+                        <div class="campo">
+
+                            <label for="precio">
+                                Precio unitario (S/)
+                            </label>
+
+                            <input id="precio" name="precio" type="number" min="0.01" max="1000000" step="0.01"
+                                inputmode="decimal" placeholder="0.00" required>
+
+                        </div>
+
+
+                        <div class="campo">
+
+                            <label for="cantidad">
+                                Cantidad / unidades
+                            </label>
+
+                            <input id="cantidad" name="cantidad" type="number" min="1" max="10000" step="1" value="1"
+                                required>
+
+                        </div>
+
+
+                        <div class="campo campo-completo">
+
+                            <label for="descuento">
+                                Descuento corporativo (%)
+                            </label>
+
+                            <input id="descuento" name="descuento" type="number" min="0" max="50" step="1" value="0"
+                                required>
+
+                            <small>
+                                El descuento máximo permitido es 50%.
+                            </small>
+
+                        </div>
+
+                        <p id="mensajeError" class="mensaje-error" role="alert" hidden></p>
+
+
+                        <div class="acciones cotizador-acciones campo-completo">
+
+                            <button type="submit" class="btn">
+                                Calcular cotización
+                            </button>
+
+                            <button type="reset" class="btn-secundario">
+                                Limpiar
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </article>
+
+                <article id="panelResultado" class="panel cotizador-resultado" aria-live="polite">
+
+                    <div class="seccion-etiqueta">
+                        RESUMEN
                     </div>
 
-                    <div class="campo">
-                        <label for="cantidad">Cantidad</label>
-                        <input id="cantidad" name="cantidad" type="number" min="1" value="1" required>
+                    <h2>
+                        Resumen de la cotización
+                    </h2>
+
+
+                    <div id="resultadoVacio" class="resultado-vacio">
+
+                        <div class="resultado-icono">
+                            S/
+                        </div>
+
+                        <h3>
+                            Aún no hay una cotización
+                        </h3>
+
+                        <p>
+                            Ingresa los datos del servicio y selecciona
+                            "Calcular cotización" para obtener el resultado.
+                        </p>
+
                     </div>
 
-                    <div class="campo campo-completo">
-                        <label for="descuento">Descuento aplicable (%)</label>
-                        <input id="descuento" name="descuento" type="number" min="0" max="100" value="0" required>
+
+                    <div id="resultadoCalculado" class="resultado-calculado" hidden>
+
+                        <div class="servicio-resumen">
+
+                            <span>
+                                Servicio
+                            </span>
+
+                            <strong id="productoResultado">
+                            </strong>
+
+                            <small id="cantidadResultado">
+                            </small>
+
+                        </div>
+
+
+                        <dl class="resumen">
+
+                            <div class="resumen-fila">
+
+                                <dt>
+                                    Subtotal
+                                </dt>
+
+                                <dd>
+                                    <output id="subtotalResultado">
+                                    </output>
+                                </dd>
+
+                            </div>
+
+
+                            <div class="resumen-fila">
+
+                                <dt>
+                                    Descuento
+                                </dt>
+
+                                <dd>
+                                    <output id="descuentoResultado">
+                                    </output>
+                                </dd>
+
+                            </div>
+
+
+                            <div class="resumen-fila">
+
+                                <dt>
+                                    Base imponible
+                                </dt>
+
+                                <dd>
+                                    <output id="baseResultado">
+                                    </output>
+                                </dd>
+
+                            </div>
+
+
+                            <div class="resumen-fila">
+
+                                <dt>
+                                    IGV (18%)
+                                </dt>
+
+                                <dd>
+                                    <output id="igvResultado">
+                                    </output>
+                                </dd>
+
+                            </div>
+
+
+                            <div class="resumen-total">
+
+                                <dt>
+                                    Total
+                                </dt>
+
+                                <dd>
+                                    <output id="totalResultado">
+                                    </output>
+                                </dd>
+
+                            </div>
+
+                        </dl>
+
+
+                        <div class="cotizacion-nota">
+
+                            <strong>
+                                Cotización calculada
+                            </strong>
+
+                            <p>
+                                El importe mostrado incluye el IGV
+                                correspondiente al servicio.
+                            </p>
+
+                        </div>
+
                     </div>
 
-                    <div class="campo campo-completo">
-                        <button id="btnGuardar" class="btn" type="submit">Calcular Cotización</button>
-                    </div>
-                </form>
+                </article>
 
-                <p id="mensajeError" class="mensaje mensaje-error" role="alert" hidden></p>
-            </section>
-
-            <section id="panelResultado" class="panel resultado" aria-live="polite" hidden>
-                <h2>Detalle del Cálculo</h2>
-                <p id="productoResultado" class="resultado_nombre"></p>
-                
-                <div class="tabla-contenedor">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Concepto</th>
-                                <th>Importe</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Subtotal</td>
-                                <td><output id="subtotalResultado">-</output></td>
-                            </tr>
-                            <tr>
-                                <td>Descuento</td>
-                                <td><output id="descuentoResultado">-</output></td>
-                            </tr>
-                            <tr>
-                                <td>Base Imponible</td>
-                                <td><output id="baseResultado">-</output></td>
-                            </tr>
-                            <tr>
-                                <td>IGV (18%)</td>
-                                <td><output id="igvResultado">-</output></td>
-                            </tr>
-                            <tr>
-                                <td><strong>Total a Pagar</strong></td>
-                                <td><strong><output id="totalResultado">-</output></strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </section>
 
         </main>
+
     </div>
 
 </body>
+
 </html>

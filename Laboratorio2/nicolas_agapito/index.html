@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cotizador didáctico para practicar números y operadores en 
+    <meta name="description" content="Cotizador didáctico para practicar números y operadores en
 JavaScript.">
     <title>Cotizador comercial inteligente</title>
     <link rel="stylesheet" href="./css/styles.css">
@@ -21,7 +21,6 @@ JavaScript.">
             </p>
         </div>
     </header>
-
     <main class="contenedor cuadricula">
         <section class="tarjeta" aria-labelledby="titulo-formulario">
             <p class="etiqueta">Datos de entrada</p>
@@ -32,18 +31,15 @@ JavaScript.">
                     <input id="producto" name="producto" type="text" maxlength="60"
                         placeholder="Ej.: Monitor profesional" required>
                 </div>
-
                 <div class="campo">
                     <label for="precio">Precio unitario (S/)</label>
                     <input id="precio" name="precio" type="number" min="0.01" max="1000000" step="0.01"
                         inputmode="decimal" placeholder="0.00" required>
                 </div>
-
                 <div class="campo">
                     <label for="cantidad">Cantidad</label>
                     <input id="cantidad" name="cantidad" type="number" min="1" max="10000" step="1" value="1" required>
                 </div>
-
                 <div class="campo campo--completo">
                     <label for="descuento">Descuento solicitado (%)</label>
                     <input id="descuento" name="descuento" type="number" min="0" max="50" step="1" value="0" required>
@@ -61,16 +57,13 @@ JavaScript.">
                         Entrega express (S/ 15.00)
                     </label>
                 </fieldset>
-
                 <p id="mensajeError" class="mensaje-error" role="alert" hidden></p>
-
                 <div class="acciones campo--completo">
                     <button type="submit">Calcular cotización</button>
                     <button type="reset" class="boton-secundario">Limpiar</button>
                 </div>
             </form>
         </section>
-
         <section id="panelResultado" class="tarjeta resultado" aria-labelledby="titulo-resultado" aria-live="polite"
             hidden>
             <p class="etiqueta">Resultado</p>
@@ -80,7 +73,6 @@ JavaScript.">
                 Operación <output id="idOperacion"></output>
             </p>
             <p id="productoResultado" class="producto-resultado"></p>
-
             <dl class="resumen">
                 <div>
                     <dt>Subtotal</dt>
@@ -107,10 +99,8 @@ JavaScript.">
                     <dd><output id="totalResultado"></output></dd>
                 </div>
             </dl>
-
             <p id="explicacionBanderas" class="detalle-banderas"></p>
         </section>
-
         <aside class="tarjeta nota campo--completo" aria-labelledby="titulo-precision">
             <h2 id="titulo-precision">¿Por qué se calcula en céntimos?</h2>
             <p>
@@ -120,7 +110,6 @@ JavaScript.">
             </p>
         </aside>
     </main>
-
     <footer>
         <div class="contenedor">UTP · JavaScript Avanzado · Semana 2</div>
     </footer>
