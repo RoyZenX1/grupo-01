@@ -1,0 +1,192 @@
+:root {
+    --azul: #233342;
+    --azul-oscuro: #2b3f52;
+    --naranja: #f5b83d;
+    --naranja-claro: #fff7df;
+    --fondo: #f5f6f8;
+    --blanco: #ffffff;
+    --texto: #252934;
+    --gris: #8b909c;
+    --borde: #e8eaf0;
+    --sombra: 0 5px 16px rgba(35, 51, 66, 0.07);
+    --rojo: #d64545;
+    --amarillo: #c98a1d;
+}
+
+.reportes-container {
+    width: 100%;
+    display: grid;
+    gap: 1.5rem;
+}
+
+.reportes-container section {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: var(--sombra);
+}
+
+.reportes-container section h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: var(--azul);
+    border-bottom: 1px solid var(--borde);
+    padding-bottom: 0.7rem;
+    margin-bottom: 1rem;
+}
+
+/* ---------- Filtros (bitwise flags) ---------- */
+.filtros-barra {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.chip-filtro {
+    background: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    padding: 0.45rem 0.95rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chip-filtro.activo {
+    background-color: var(--azul);
+    border-color: var(--azul);
+    color: white;
+}
+
+.btn-limpiar {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--rojo);
+    color: var(--rojo);
+    border-radius: 6px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.btn-limpiar:hover {
+    background-color: var(--rojo);
+    color: white;
+}
+
+.orden-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.orden-selector select {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+}
+
+#contadorResultados {
+    margin-left: auto;
+    color: var(--gris);
+    font-size: 0.85rem;
+}
+
+/* ---------- Tarjetas de métricas ---------- */
+.grid-metricas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.tarjeta-metrica {
+    background-color: var(--fondo);
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.tarjeta-metrica .valor {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--azul);
+}
+
+.tarjeta-metrica .etiqueta {
+    font-size: 0.8rem;
+    color: var(--gris);
+    margin-top: 0.3rem;
+}
+
+/* ---------- Tablas ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+}
+
+th, td {
+    text-align: left;
+    padding: 0.7rem 0.5rem;
+    border-bottom: 1px solid var(--borde);
+    font-size: 0.9rem;
+}
+
+th {
+    color: var(--gris);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: #f8fafb;
+}
+
+.fila-urgente { background-color: #fff4e5; }
+.fila-urgente td:first-child { border-left: 3px solid var(--amarillo); }
+
+.vacio {
+    text-align: center;
+    color: #888;
+    padding: 1.2rem !important;
+}
+
+/* ---------- Top clientes (barras) ---------- */
+.barra-fila {
+    display: grid;
+    grid-template-columns: 200px 1fr 110px;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.85rem;
+}
+
+.barra-etiqueta span { color: var(--gris); font-size: 0.8rem; }
+
+.barra-fondo {
+    background-color: var(--fondo);
+    border-radius: 6px;
+    overflow: hidden;
+    height: 14px;
+}
+
+.barra-relleno {
+    background-color: var(--naranja);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.barra-valor {
+    text-align: right;
+    font-weight: 600;
+    color: var(--azul);
+}
+
+@media (max-width: 900px) {
+    .barra-fila {
+        grid-template-columns: 1fr;
+    }
+}

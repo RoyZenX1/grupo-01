@@ -5,109 +5,134 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NexoCargo | Facturación</title>
 
+<link rel="stylesheet" href="../Integrante3/css/styles.css">
 <link rel="stylesheet" href="factura.css">
 </head>
 <body>
 
-<header>
-    <a href="../index.html">&larr; Volver al inicio</a>
-    <h1>NexoCargo · Módulo de Facturación</h1>
-    <span></span>
-</header>
+<div class="layout">
+    <aside class="sidebar">
+        <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
 
-<main class="factura-container">
-
-    <!-- DATOS DEL CLIENTE -->
-    <section class="datos-cliente">
-        <h2>Datos del cliente</h2>
-
-        <div class="campo">
-            <label for="tipoComprobante">Tipo de comprobante</label>
-            <select id="tipoComprobante" onchange="actualizarSerie()">
-                <option value="boleta">Boleta</option>
-                <option value="factura">Factura</option>
-            </select>
+        <div class="logo">
+            <h2>NexoCargo</h2>
+            <p>Gestión logística</p>
         </div>
 
-        <div class="campo">
-            <label for="nombreCliente">Nombre / Razón social</label>
-            <input type="text" id="nombreCliente" placeholder="Ej. Transportes del Sur S.A.C.">
+        <nav class="menu">
+            <a href="../Integrante5/dashboard.html">Dashboard</a>
+            <a href="../Integrante1/clientes.html">Clientes</a>
+            <a href="../Integrante3/cotizaciones.html">Cotizaciones</a>
+            <a href="../Integrante3/vehiculos.html">Vehículos</a>
+            <a href="../Integrante3/ordenes.html">Órdenes</a>
+            <a href="./factura (1).html" class="activo">Facturas</a>
+            <a href="./reportes.html">Reportes</a>
+        </nav>
+    </aside>
+
+    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+    <main class="contenido">
+        <header class="encabezado">
+            <h1>Módulo de Facturación</h1>
+            <p>Genera comprobantes y consulta el detalle financiero.</p>
+        </header>
+
+        <div class="factura-container">
+            <!-- DATOS DEL CLIENTE -->
+            <section class="datos-cliente">
+                <h2>Datos del cliente</h2>
+
+                <div class="campo">
+                    <label for="tipoComprobante">Tipo de comprobante</label>
+                    <select id="tipoComprobante" onchange="actualizarSerie()">
+                        <option value="boleta">Boleta</option>
+                        <option value="factura">Factura</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="nombreCliente">Nombre / Razón social</label>
+                    <input type="text" id="nombreCliente" placeholder="Ej. Transportes del Sur S.A.C.">
+                </div>
+
+                <div class="campo-fila">
+                    <div class="campo">
+                        <label id="labelDocumento" for="numeroDocumento">DNI</label>
+                        <input type="text" id="numeroDocumento" placeholder="Número de documento">
+                    </div>
+                    <div class="campo">
+                        <label for="numeroComprobante">N° de comprobante</label>
+                        <input type="text" id="numeroComprobante" readonly>
+                    </div>
+                </div>
+
+                <div class="campo">
+                    <label for="fechaEmision">Fecha de emisión</label>
+                    <input type="text" id="fechaEmision" readonly>
+                </div>
+            </section>
+
+            <!-- AGREGAR SERVICIO -->
+            <section class="agregar-item">
+                <h2>Agregar servicio de transporte</h2>
+
+                <div class="campo">
+                    <label for="descripcionItem">Descripción del servicio</label>
+                    <input type="text" id="descripcionItem" placeholder="Ej. Transporte de carga Lima - Trujillo">
+                </div>
+
+                <div class="campo-fila">
+                    <div class="campo">
+                        <label for="cantidadItem">Cantidad</label>
+                        <input type="number" id="cantidadItem" min="1" value="1">
+                    </div>
+                    <div class="campo">
+                        <label for="precioItem">Precio unitario (S/)</label>
+                        <input type="number" id="precioItem" min="0" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <button class="btn" onclick="agregarItem()">Agregar a la factura</button>
+            </section>
+
+            <!-- DETALLE Y TOTALES -->
+            <section class="detalle-factura">
+                <h2>Detalle del comprobante</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Descripción</th>
+                            <th>Cant.</th>
+                            <th>P. Unit.</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTabla"></tbody>
+                </table>
+
+                <div class="totales">
+                    <p>Subtotal: <span id="subtotal">S/ 0.00</span></p>
+                    <p>IGV (18%): <span id="igv">S/ 0.00</span></p>
+                    <p class="total">Total: <span id="total">S/ 0.00</span></p>
+                </div>
+
+                <div class="acciones">
+                    <button class="btn" onclick="generarFactura()">Generar comprobante</button>
+                    <button class="btn btn-secundario" onclick="imprimirFactura()">Imprimir</button>
+                    <button class="btn btn-peligro" onclick="reiniciarFactura()">Nueva factura</button>
+                </div>
+            </section>
+
+            <section id="mensajeEstado" class="mensaje-estado"></section>
         </div>
-
-        <div class="campo-fila">
-            <div class="campo">
-                <label id="labelDocumento" for="numeroDocumento">DNI</label>
-                <input type="text" id="numeroDocumento" placeholder="Número de documento">
-            </div>
-            <div class="campo">
-                <label for="numeroComprobante">N° de comprobante</label>
-                <input type="text" id="numeroComprobante" readonly>
-            </div>
-        </div>
-
-        <div class="campo">
-            <label for="fechaEmision">Fecha de emisión</label>
-            <input type="text" id="fechaEmision" readonly>
-        </div>
-    </section>
-
-    <!-- AGREGAR SERVICIO -->
-    <section class="agregar-item">
-        <h2>Agregar servicio de transporte</h2>
-
-        <div class="campo">
-            <label for="descripcionItem">Descripción del servicio</label>
-            <input type="text" id="descripcionItem" placeholder="Ej. Transporte de carga Lima - Trujillo">
-        </div>
-
-        <div class="campo-fila">
-            <div class="campo">
-                <label for="cantidadItem">Cantidad</label>
-                <input type="number" id="cantidadItem" min="1" value="1">
-            </div>
-            <div class="campo">
-                <label for="precioItem">Precio unitario (S/)</label>
-                <input type="number" id="precioItem" min="0" step="0.01" placeholder="0.00">
-            </div>
-        </div>
-
-        <button class="btn" onclick="agregarItem()">Agregar a la factura</button>
-    </section>
-
-    <!-- DETALLE Y TOTALES -->
-    <section class="detalle-factura">
-        <h2>Detalle del comprobante</h2>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Descripción</th>
-                    <th>Cant.</th>
-                    <th>P. Unit.</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody id="cuerpoTabla"></tbody>
-        </table>
-
-        <div class="totales">
-            <p>Subtotal: <span id="subtotal">S/ 0.00</span></p>
-            <p>IGV (18%): <span id="igv">S/ 0.00</span></p>
-            <p class="total">Total: <span id="total">S/ 0.00</span></p>
-        </div>
-
-        <div class="acciones">
-            <button class="btn" onclick="generarFactura()">Generar comprobante</button>
-            <button class="btn btn-secundario" onclick="imprimirFactura()">Imprimir</button>
-            <button class="btn btn-peligro" onclick="reiniciarFactura()">Nueva factura</button>
-        </div>
-    </section>
-
-    <section id="mensajeEstado" class="mensaje-estado"></section>
-
-</main>
+    </main>
+</div>
 
 <script src="factura.js"></script>
 </body>

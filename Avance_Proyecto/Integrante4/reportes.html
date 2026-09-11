@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexoCargo | Reportes, Métricas &amp; Mapas</title>
+
+<link rel="stylesheet" href="../Integrante3/css/styles.css">
+<link rel="stylesheet" href="./reportes.css">
+</head>
+<body>
+
+<div class="layout">
+    <aside class="sidebar">
+        <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="logo">
+            <h2>NexoCargo</h2>
+            <p>Gestión logística</p>
+        </div>
+
+        <nav class="menu">
+            <a href="../Integrante5/dashboard.html">Dashboard</a>
+            <a href="../Integrante1/clientes.html">Clientes</a>
+            <a href="../Integrante3/cotizaciones.html">Cotizaciones</a>
+            <a href="../Integrante3/vehiculos.html">Vehículos</a>
+            <a href="../Integrante3/ordenes.html">Órdenes</a>
+            <a href="../Integrante4/factura (1).html">Facturas</a>
+            <a href="./reportes.html" class="activo">Reportes</a>
+        </nav>
+    </aside>
+
+    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+    <main class="contenido">
+        <header class="encabezado">
+            <h1>Reportes, métricas y mapas</h1>
+            <p>Visualiza el desempeño operativo y el detalle de órdenes.</p>
+        </header>
+
+        <div class="reportes-container">
+            <!-- FILTROS Y ORDEN -->
+            <section class="filtros">
+                <h2>Filtrar por estado</h2>
+                <div class="filtros-barra" id="filtrosEstado">
+                   
+                </div>
+                <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
+
+                <div class="orden-selector">
+                    <label for="selectOrden">Ordenar por:</label>
+                    <select id="selectOrden" onchange="cambiarOrden()">
+                        <option value="fecha-desc">Fecha (más reciente)</option>
+                        <option value="fecha-asc">Fecha (más antigua)</option>
+                        <option value="monto-desc">Monto (mayor a menor)</option>
+                        <option value="monto-asc">Monto (menor a mayor)</option>
+                        <option value="cliente-asc">Cliente (A-Z)</option>
+                    </select>
+                    <span id="contadorResultados"></span>
+                </div>
+            </section>
+
+            <!-- MÉTRICAS GENERALES -->
+            <section class="metricas">
+                <h2>Métricas generales</h2>
+                <div class="grid-metricas">
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaCantidad">0</div>
+                        <div class="etiqueta">Órdenes</div>
+                    </div>
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaMonto">S/ 0.00</div>
+                        <div class="etiqueta">Monto total</div>
+                    </div>
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaPromedio">S/ 0.00</div>
+                        <div class="etiqueta">Promedio por orden</div>
+                    </div>
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaClientes">0</div>
+                        <div class="etiqueta">Clientes únicos</div>
+                    </div>
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaRutas">0</div>
+                        <div class="etiqueta">Rutas únicas</div>
+                    </div>
+                    <div class="tarjeta-metrica">
+                        <div class="valor" id="metricaUrgentes">0</div>
+                        <div class="etiqueta">Urgentes</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TABLA DE ÓRDENES -->
+            <section class="tabla-ordenes">
+                <h2>Detalle de órdenes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Cliente</th>
+                            <th>Ruta</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaOrdenes"></tbody>
+                </table>
+            </section>
+
+            <!-- TOP CLIENTES -->
+            <section class="top-clientes">
+                <h2>Top clientes por monto facturado</h2>
+                <div id="listaTopClientes"></div>
+            </section>
+
+            <!-- RESUMEN POR RUTA -->
+            <section class="resumen-rutas">
+                <h2>Resumen por ruta</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ruta</th>
+                            <th>N° de órdenes</th>
+                            <th>Monto total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cuerpoTablaRutas"></tbody>
+                </table>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script src="./reportes.js"></script>
+<script src="./reportes.ui.js"></script>
+</body>
+</html>

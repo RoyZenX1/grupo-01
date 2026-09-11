@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizaciones | NexoCargo</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="logo">
+                <h2>NexoCargo</h2>
+                <p>Gestión logística</p>
+            </div>
+
+            <nav class="menu">
+                <a href="../Integrante5/dashboard.html">Dashboard</a>
+                <a href="../Integrante1/clientes.html">Clientes</a>
+                <a href="./cotizaciones.html" class="activo">Cotizaciones</a>
+                <a href="./vehiculos.html">Vehículos</a>
+                <a href="./ordenes.html">Órdenes</a>
+                <a href="../Integrante4/factura (1).html">Facturas</a>
+                <a href="../Integrante4/reportes.html">Reportes</a>
+            </nav>
+        </aside>
+
+        <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+        <main class="contenido">
+            <header class="encabezado">
+                <h1>Cotizaciones</h1>
+                <p>Consulta, crea y administra las cotizaciones de transporte.</p>
+            </header>
+
+            <section class="panel">
+                <h2>Resumen</h2>
+                <div class="grid-tarjetas">
+                    <article class="tarjeta">
+                        <h3>Total cotizaciones</h3>
+                        <p class="numero">12</p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Aprobadas</h3>
+                        <p class="numero">8</p>
+                    </article>
+                    <article class="tarjeta">
+                        <h3>Pendientes</h3>
+                        <p class="numero">4</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>Lista de cotizaciones</h2>
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Ruta</th>
+                                <th>Monto</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>COT001</td>
+                                <td>Transportes del Sur</td>
+                                <td>Lima - Trujillo</td>
+                                <td>S/ 1,850.00</td>
+                                <td>Aprobada</td>
+                            </tr>
+                            <tr>
+                                <td>COT002</td>
+                                <td>Comercial Andina</td>
+                                <td>Lima - Arequipa</td>
+                                <td>S/ 2,400.00</td>
+                                <td>Pendiente</td>
+                            </tr>
+                            <tr>
+                                <td>COT003</td>
+                                <td>Distribuidora Norte</td>
+                                <td>Piura - Lima</td>
+                                <td>S/ 3,100.00</td>
+                                <td>Aprobada</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
