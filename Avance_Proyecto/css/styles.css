@@ -1,5 +1,3 @@
-
-
 /* =========================
    VARIABLES
 ========================= */
@@ -115,6 +113,7 @@ a {
 .btn-restaurar:hover {
     background: #f1f4f7;
 }
+
 /* =========================
    LAYOUT
 ========================= */
@@ -252,12 +251,34 @@ a {
     font-size: 16px;
 }
 
-.layout.sidebar-collapsed .menu a:nth-child(1)::before { content: "⌂"; }
-.layout.sidebar-collapsed .menu a:nth-child(2)::before { content: "♙"; }
-.layout.sidebar-collapsed .menu a:nth-child(3)::before { content: "▣"; }
-.layout.sidebar-collapsed .menu a:nth-child(4)::before { content: "▤"; }
-.layout.sidebar-collapsed .menu a:nth-child(5)::before { content: "➜"; }
-.layout.sidebar-collapsed .menu a:nth-child(6)::before { content: "▥"; }
+.layout.sidebar-collapsed .menu a:nth-child(1)::before {
+    content: "⌂";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(2)::before {
+    content: "♙";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(3)::before {
+    content: "▣";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(4)::before {
+    content: "▤";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(5)::before {
+    content: "➜";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(6)::before {
+    content: "▥";
+}
+
+.layout.sidebar-collapsed .menu a:nth-child(7)::before {
+    content: "▦";
+}
+
 
 .menu a:hover,
 .menu a.activo {
@@ -274,12 +295,33 @@ a {
     text-align: center;
 }
 
-.menu a:nth-child(1)::before { content: "⌂"; }
-.menu a:nth-child(2)::before { content: "♙"; }
-.menu a:nth-child(3)::before { content: "▣"; }
-.menu a:nth-child(4)::before { content: "▤"; }
-.menu a:nth-child(5)::before { content: "➜"; }
-.menu a:nth-child(6)::before { content: "▥"; }
+.menu a:nth-child(1)::before {
+    content: "⌂";
+}
+
+.menu a:nth-child(2)::before {
+    content: "♙";
+}
+
+.menu a:nth-child(3)::before {
+    content: "▣";
+}
+
+.menu a:nth-child(4)::before {
+    content: "▤";
+}
+
+.menu a:nth-child(5)::before {
+    content: "➜";
+}
+
+.menu a:nth-child(6)::before {
+    content: "▥";
+}
+
+.menu a:nth-child(7)::before {
+    content: "▦";
+}
 
 .menu a.activo::before {
     color: var(--azul);
@@ -520,9 +562,13 @@ tbody tr:hover {
     border-radius: 8px;
 }
 
-/* =========================
+/* =====================================================================================================
    RESPONSIVE
 ========================= */
+
+/* =====================================================
+   TABLET
+===================================================== */
 
 @media (max-width: 900px) {
 
@@ -530,98 +576,731 @@ tbody tr:hover {
         grid-template-columns: 190px 1fr;
     }
 
-    .grid-tarjetas {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 700px) {
-
-    .layout {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        position: fixed;
-        z-index: 10;
-        inset: 0 auto 0 0;
-        width: min(280px, 86vw);
-        padding: 18px;
-        transform: translateX(0);
-        transition: transform 220ms ease;
-    }
-
-    .mobile-menu-toggle {
-        position: fixed;
-        z-index: 20;
-        top: 16px;
-        left: 16px;
-        display: grid;
-        place-items: center;
-        width: 42px;
-        height: 42px;
-        border: 1px solid var(--borde);
-        border-radius: 11px;
-        background: var(--blanco);
-        color: var(--azul);
-        font-size: 20px;
-        box-shadow: var(--sombra);
-        cursor: pointer;
-    }
-
-    .layout:not(.sidebar-collapsed) .mobile-menu-toggle {
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    .layout.sidebar-collapsed .sidebar {
-        transform: translateX(-100%);
-    }
-
-    .layout.sidebar-collapsed {
-        grid-template-columns: 1fr;
-    }
-
-    .logo {
-        margin: 0 4px 20px;
-    }
-
-    .menu-toggle,
-    .layout.sidebar-collapsed .menu-toggle {
-        position: absolute;
-        top: 18px;
-        right: 18px;
-        margin: 0;
-    }
-
-    /* MENÚ VERTICAL EN CELULAR */
-    .menu {
-        flex-direction: column;
-        flex-wrap: nowrap;
-        gap: 7px;
-    }
-
-    .menu a {
-        width: 100%;
-    }
-
     .contenido {
-        padding: 75px 20px 20px;
+        padding: 24px;
+    }
+
+    .grid-tarjetas {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .formulario {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tabla-contenedor {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 700px) {
+
+    /* ================================================
+       LAYOUT GENERAL
+    ================================================ */
+
+    .layout {
+        display: block;
+        min-height: 100vh;
+    }
+
+
+    /* ================================================
+       SIDEBAR → SE CONVIERTE EN BARRA SUPERIOR
+    ================================================ */
+
+    .sidebar {
+        position: sticky;
+        top: 0;
+        left: 0;
+
+        z-index: 1000;
+
+        width: 100%;
+        min-height: auto;
+
+        padding: 12px 10px;
+
+        background: var(--azul);
+
+        border-right: none;
+        border-bottom: 1px solid var(--azul-oscuro);
+
+        box-shadow: 0 4px 14px rgba(35, 51, 66, 0.15);
+
+        transform: none !important;
+    }
+
+
+    /* ================================================
+       LOGO
+    ================================================ */
+
+    .logo {
+        margin: 0 0 10px;
+        text-align: center;
+    }
+
+    .logo h2 {
+        font-size: 17px;
+    }
+
+    .logo p {
+        margin: 2px 0 0;
+        font-size: 8px;
+    }
+
+    .logo h2::before {
+        font-size: 13px;
+        margin-right: 6px;
+    }
+
+
+    /* ================================================
+       BOTÓN DEL SIDEBAR
+       
+       En celular ya no lo necesitamos porque
+       las opciones aparecen directamente arriba.
+    ================================================ */
+
+    .menu-toggle {
+        display: none;
+    }
+
+
+    /* ================================================
+       MENÚ COMO PESTAÑAS HORIZONTALES
+    ================================================ */
+
+    .menu {
+        display: flex;
+
+        flex-direction: row;
+
+        flex-wrap: nowrap;
+
+        gap: 6px;
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        overflow-y: hidden;
+
+        padding: 2px 2px 5px;
+
+        scrollbar-width: thin;
+    }
+
+
+    /* Evita que las pestañas se hagan pequeñas */
+
+    .menu a {
+        flex: 0 0 auto;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        white-space: nowrap;
+
+        padding: 9px 13px;
+
+        border-radius: 8px;
+
+        font-size: 11px;
+
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+
+    /* Iconos */
+
+    .menu a::before {
+        width: auto;
+
+        margin-right: 5px;
+
+        font-size: 12px;
+    }
+
+
+    /* Pestaña activa */
+
+    .menu a.activo {
+        background: #e4eaff;
+
+        color: var(--azul);
+
+        transform: none;
+    }
+
+
+    /* ================================================
+       BOTÓN HAMBURGUESA
+       
+       Ya no hace falta en celular.
+    ================================================ */
+
+    .mobile-menu-toggle {
+        display: none !important;
+    }
+
+
+    /* ================================================
+       CONTENIDO
+    ================================================ */
+
+    .contenido {
+        width: 100%;
+
+        max-width: none;
+
+        padding: 22px 14px 30px;
+    }
+
+
+    /* ================================================
+       ENCABEZADO
+    ================================================ */
+
+    .encabezado {
+        display: block;
+
+        padding-bottom: 15px;
+
+        margin-bottom: 15px;
+    }
+
+    .encabezado h1 {
+        font-size: 1.45rem;
+
+        line-height: 1.2;
+
+        margin-bottom: 7px;
+    }
+
+    .encabezado p {
+        font-size: 13px;
+
+        line-height: 1.5;
+    }
+
+
+    /* ================================================
+       PANELES
+    ================================================ */
+
+    .panel {
+        padding: 17px;
+
+        margin-bottom: 15px;
+
+        border-radius: 10px;
+    }
+
+    .panel h2 {
+        font-size: 1.05rem;
+
+        margin-bottom: 17px;
+    }
+
+
+    /* ================================================
+       FORMULARIOS
+    ================================================ */
+
+    .formulario {
         grid-template-columns: 1fr;
+
+        gap: 14px;
     }
 
     .campo-completo {
         grid-column: auto;
     }
 
+
+    /* ================================================
+       CAMPOS
+    ================================================ */
+
+    .campo {
+        width: 100%;
+    }
+
+    .campo input,
+    .campo select,
+    .campo textarea {
+        width: 100%;
+
+        max-width: 100%;
+
+        font-size: 14px;
+    }
+
+
+    /* ================================================
+       BOTONES
+    ================================================ */
+
+    .formulario .btn {
+        width: 100%;
+    }
+
+    .btn-restaurar {
+        width: 100%;
+
+        margin-top: 8px;
+    }
+
+
+    /* ================================================
+       TARJETAS
+    ================================================ */
+
     .grid-tarjetas {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .tarjeta {
+        min-height: 70px;
+
+        padding: 15px;
+    }
+
+
+    /* ================================================
+       TABLAS NORMALES
+    ================================================ */
+
+    .tabla-contenedor {
+        width: 100%;
+
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 650px;
+    }
+
+    th,
+    td {
+        padding: 10px;
+
+        font-size: 13px;
+
+        white-space: nowrap;
+    }
+
+
+    /* ================================================
+       RESULTADOS
+    ================================================ */
+
+    .resultado {
+        width: 100%;
+
+        overflow-wrap: break-word;
+    }
+
+}
+
+
+/* =====================================================
+   CELULARES PEQUEÑOS
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .sidebar {
+        padding: 10px 7px;
+    }
+
+    .logo {
+        margin-bottom: 8px;
+    }
+
+    .logo h2 {
+        font-size: 15px;
+    }
+
+    .menu {
+        gap: 5px;
+    }
+
+    .menu a {
+        padding: 8px 10px;
+
+        font-size: 10px;
+    }
+
+    .menu a::before {
+        font-size: 11px;
+
+        margin-right: 4px;
+    }
+
+    .contenido {
+        padding: 18px 11px 25px;
+    }
+
+    .encabezado h1 {
+        font-size: 1.3rem;
+    }
+
+    .encabezado p {
+        font-size: 12px;
+    }
+
+    .panel {
+        padding: 14px;
+    }
+
+    .campo input,
+    .campo select {
+        padding: 11px;
+    }
+
+    .btn,
+    .btn-restaurar {
+        width: 100%;
+    }
+
+}
+
+
+/* ===============================================================================================
+   RESPONSIVE - FACTURACIÓN
+========================================= */
+
+@media (max-width: 700px) {
+
+    .factura-container {
+        width: 100%;
+        display: block;
+    }
+
+
+    /* Secciones */
+
+    .datos-cliente,
+    .agregar-item,
+    .detalle-factura {
+        width: 100%;
+
+        margin-bottom: 15px;
+
+        padding: 17px;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Campos de dos columnas */
+
+    .campo-fila {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+
+    /* Inputs */
+
+    .datos-cliente input,
+    .datos-cliente select,
+    .agregar-item input,
+    .agregar-item select {
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* Botón agregar */
+
+    .agregar-item .btn {
+        width: 100%;
+
+        margin-top: 5px;
+    }
+
+
+    /* Tabla de factura */
+
+    .detalle-factura {
+        overflow: hidden;
+    }
+
+    .detalle-factura table {
+        display: block;
+
+        width: 100%;
+
+        overflow-x: auto;
+
+        white-space: nowrap;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    .detalle-factura th,
+    .detalle-factura td {
+        padding: 9px;
+
+        font-size: 12px;
+    }
+
+
+    /* Totales */
+
+    .totales {
+        width: 100%;
+
+        text-align: right;
+
+        margin-top: 15px;
+    }
+
+
+    /* Botones finales */
+
+    .acciones {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 8px;
+
+        width: 100%;
+
+        margin-top: 15px;
+    }
+
+    .acciones .btn {
+        width: 100%;
+    }
+
+
+    /* Mensaje */
+
+    .mensaje-estado {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        overflow-wrap: break-word;
+    }
+}
+
+
+@media (max-width: 400px) {
+
+    .datos-cliente,
+    .agregar-item,
+    .detalle-factura {
+        padding: 14px;
+    }
+
+    .detalle-factura h2,
+    .datos-cliente h2,
+    .agregar-item h2 {
+        font-size: 1rem;
+    }
+
+}
+
+
+/* ==================================================================================================
+   RESPONSIVE - REPORTES
+========================================= */
+
+@media (max-width: 700px) {
+
+    .reportes-container {
+        width: 100%;
+    }
+
+
+    /* =====================================
+       FILTROS
+    ===================================== */
+
+    .filtros {
+        width: 100%;
+
+        padding: 17px;
+
+        box-sizing: border-box;
+    }
+
+    .filtros-barra {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        width: 100%;
+    }
+
+    .btn-limpiar {
+        width: 100%;
+
+        margin-top: 10px;
+    }
+
+
+    /* =====================================
+       SELECTOR DE ORDEN
+    ===================================== */
+
+    .orden-selector {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 7px;
+
+        width: 100%;
+
+        margin-top: 15px;
+    }
+
+    .orden-selector select {
+        width: 100%;
+
+        max-width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    /* =====================================
+       MÉTRICAS
+    ===================================== */
+
+    .metricas {
+        width: 100%;
+    }
+
+    .grid-metricas {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+
+        width: 100%;
+    }
+
+
+    .tarjeta-metrica {
+        min-width: 0;
+
+        padding: 15px 10px;
+
+        box-sizing: border-box;
+
+        text-align: center;
+    }
+
+    .tarjeta-metrica .valor {
+        font-size: 20px;
+
+        overflow-wrap: anywhere;
+    }
+
+    .tarjeta-metrica .etiqueta {
+        font-size: 11px;
+    }
+
+
+    /* =====================================
+       TABLAS
+    ===================================== */
+    .tabla-ordenes,
+    .resumen-rutas {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Contenido interno de las tablas */
+
+    .tabla-ordenes table,
+    .resumen-rutas table {
+        width: max-content;
+        min-width: 700px;
+        white-space: nowrap;
+        border-collapse: collapse;
+    }
+
+    /* Mantener visibles todas las columnas */
+
+    .tabla-ordenes th,
+    .tabla-ordenes td,
+    .resumen-rutas th,
+    .resumen-rutas td {
+        white-space: nowrap;
+    }
+
+
+    /* =====================================
+       TOP CLIENTES
+    ===================================== */
+
+    .top-clientes {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+    #listaTopClientes {
+        width: 100%;
+
+        overflow-wrap: anywhere;
+    }
+
+}
+
+
+/* =========================================
+   CELULAR PEQUEÑO
+========================================= */
+
+@media (max-width: 400px) {
+
+    .grid-metricas {
         grid-template-columns: 1fr;
     }
 
-    .encabezado {
-        display: block;
+    .tarjeta-metrica {
+        padding: 14px;
     }
+
 }
