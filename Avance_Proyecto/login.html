@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iniciar sesión | NexoCargo</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <main class="inicio">
+        <section class="inicio-contenido">
+
+            <h1>Iniciar sesión</h1>
+
+            <p>
+                Accede al panel de NexoCargo para gestionar clientes,
+                vehículos, órdenes y cotizaciones.
+            </p>
+
+            <form id="formLogin" class="formulario" novalidate>
+
+                <div class="campo campo-completo">
+                    <label for="email">Correo electrónico</label>
+                    <input id="email" name="email" type="email" placeholder="admin@nexocargo.pe" required>
+                </div>
+
+                <div class="campo campo-completo">
+                    <label for="clave">Clave</label>
+                    <input id="clave" name="clave" type="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="campo-completo">
+                    <button id="btnIngresar" class="btn" type="submit">
+                        Ingresar
+                    </button>
+                </div>
+
+            </form>
+
+            <p id="mensaje" class="mensaje" hidden></p>
+
+            <p style="margin-top: 18px; font-size: 13px; color: var(--gris);">
+                <strong>Admin:</strong> admin@nexocargo.pe / admin123
+            </p>
+
+        </section>
+    </main>
+
+    <script src="Integrante5/auth.js" defer></script>
+    <script src="Integrante5/login.js" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!-- Documento HTML en español. -->
+<html lang="es">
+
+<head>
+
+    <!-- Codificación que permite mostrar correctamente el texto en español. -->
+    <meta charset="UTF-8">
+    <!-- Ajusta el ancho de la página al dispositivo. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Texto que aparece en la pestaña del navegador. -->
+    <title>Dashboard | NexoCargo</title>
+    <!-- Hoja de estilos compartida por el proyecto. -->
+    <link rel="stylesheet" href="../css/styles.css">
+
+</head>
+
+<!-- app.js lee data-proteger para impedir accesos no autorizados. -->
+<body data-proteger="administrador">
+
+    <!-- Contenedor general de la barra lateral y el contenido. -->
+    <div class="layout">
+
+        <!-- Barra lateral de navegación del sistema. -->
+        <aside class="sidebar">
+
+            <!-- Control para contraer o expandir la barra lateral. -->
+            <button class="menu-toggle" type="button" aria-label="Contraer menú" aria-expanded="true">
+                <span></span><span></span><span></span>
+            </button>
+
+            <!-- Identidad visual de la aplicación. -->
+            <div class="logo">
+                <h2>NexoCargo</h2>
+                <p>Gestión logística</p>
+            </div>
+
+            <!-- Enlaces hacia los módulos disponibles. -->
+            <nav class="menu">
+
+                <!-- Enlace de la página actual. -->
+                <a href="./dashboard.html" class="activo">
+                    Dashboard
+                </a>
+
+                <a href="../Integrante1/clientes.html">
+                    Clientes
+                </a>
+
+                <a href="../integrante2/cotizaciones.html">
+                    Cotizaciones
+                </a>
+
+                <a href="../Integrante3/vehiculos.html">
+                    Vehículos
+                </a>
+
+                <a href="../Integrante3/ordenes.html">
+                    Órdenes
+                </a>
+
+                <a href="../Integrante4/factura (1).html">
+                    Facturas
+                </a>
+
+                <a href="../Integrante4/reportes.html">
+                    Reportes
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- Botón alternativo para abrir el menú en pantallas pequeñas. -->
+        <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+        <!-- Área principal del dashboard. -->
+        <main class="contenido">
+
+            <!-- Encabezado con la sesión activa y el cierre de sesión. -->
+            <header class="encabezado">
+
+                <div>
+                    <h1>Panel de control</h1>
+
+                    <p>
+                        <!-- dashboard.ui.js reemplaza "Hola" por el nombre de la sesión. -->
+                        <span id="bienvenida">Hola</span>.  Rol: <strong id="rolUsuario">—</strong>
+                    </p>
+                </div>
+
+                <!-- auth.js conecta este botón con cerrarSesion(). -->
+                <button id="btnCerrarSesion" type="button" class="btn-restaurar">
+                    Cerrar sesión
+                </button>
+
+            </header>
+
+
+            <!-- Tarjetas con los totales principales. -->
+            <section class="grid-tarjetas">
+
+                <!-- Tarjeta actualizada con el total de clientes. -->
+                <article class="tarjeta">
+
+                    <h3>Clientes registrados</h3>
+
+                    <p class="numero" id="totalClientesDash">
+                        0
+                    </p>
+
+                </article>
+
+
+                <article class="tarjeta">
+
+                    <h3>Usuarios de la plataforma</h3>
+
+                    <p class="numero" id="totalUsuariosDash">
+                        0
+                    </p>
+
+                </article>
+
+            </section>
+
+
+            <!-- Panel que contiene la tabla de clientes recientes. -->
+            <section class="panel">
+
+                <h2>Últimos clientes registrados</h2>
+
+                <div class="tabla-contenedor">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Nombre</th>
+                                <th>DNI / RUC</th>
+                                <th>Email</th>
+                            </tr>
+
+                        </thead>
+
+                        <!-- dashboard.ui.js agrega aquí las filas de clientes. -->
+                        <tbody id="tablaClientesDash">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- Se muestra cuando no existen clientes registrados. -->
+                <p id="mensajeVacioDash" class="mensaje" hidden>
+                </p>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Define usuarios, sesiones y cierre de sesión. -->
+    <script src="auth.js" defer></script>
+    <!-- Protege la ruta y controla el menú lateral. -->
+    <script src="../app.js" defer></script>
+    <!-- Carga clientes y calcula las métricas. -->
+    <script src="dashboard.js" defer></script>
+    <!-- Inserta los datos del dashboard en el HTML. -->
+    <script src="dashboard.ui.js" defer></script>
+
+</body>
+
+</html>
