@@ -135,7 +135,7 @@ git push -u origin feature/nombre-funcionalidad
 | Integrante 4 | Jose Mandujano |
 | Integrante 5 | Nicolas Agapito |
 
-> Reemplazar los nombres por los integrantes reales del Grupo 01.
+> Nombres de los integrantes del Grupo 01.
 
 ---
 
