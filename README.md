@@ -127,12 +127,13 @@ git push -u origin feature/nombre-funcionalidad
 
 ## 👥 Integrantes
 
-| Integrante   | Rol        |
+| Integrante   | Nombres        | 
 | ------------ | ---------- |
-| Integrante 1 | Desarrollo |
-| Integrante 2 | Desarrollo |
-| Integrante 3 | Desarrollo |
-| Integrante 4 | Desarrollo |
+| Integrante 1 | Roy Quiquia|
+| Integrante 2 | Suzan Mullisaca |
+| Integrante 3 | Luisa Quintana  |
+| Integrante 4 | Jose Mandujano |
+| Integrante 5 | Nicolas Agapito |
 
 > Reemplazar los nombres por los integrantes reales del Grupo 01.
 
