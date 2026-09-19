@@ -1,0 +1,189 @@
+/* ==========================================================
+   VARIABLES DE DISEÑO
+   Concentran colores en un solo lugar: si quieres cambiar
+   la paleta, solo editas esta sección.
+   ========================================================== */
+:root {
+  color-scheme: light;
+  /* Azules de marca */
+  --azul-900: #0b2545;
+  --azul-700: #1f4d78;
+  --azul-500: #2e74b5;
+  --azul-100: #e8f1fb;
+  /* Acento, texto, bordes y fondos */
+  --rojo: #e63b2e;
+  --tinta: #172033;
+  --gris: #667085;
+  --borde: #d7dee8;
+  --fondo: #f4f7fb;
+  --blanco: #ffffff;
+  /* Estados: éxito, error y advertencia */
+  --verde: #13795b;
+  --verde-claro: #e8f5f0;
+  --error: #9b1c1c;
+  --error-claro: #fdecec;
+  --advertencia: #8a6500;
+  --advertencia-claro: #fff6d9;
+}
+
+/* Incluye borde y padding dentro del ancho declarado de cada elemento */
+* { box-sizing: border-box; }
+
+/* ==========================================================
+   BASE Y ENCABEZADO
+   ========================================================== */
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: var(--tinta);
+  background: var(--fondo);
+  line-height: 1.5;
+}
+
+/* Columna centrada con máximo 1180px y 1rem de aire a cada lado */
+.contenedor {
+  width: min(1180px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+/* Franja superior con degradado; el padding inferior grande deja
+   espacio para que los paneles "monten" sobre ella */
+.encabezado {
+  padding: 2.7rem 0 5rem;
+  color: var(--blanco);
+  background: linear-gradient(135deg, var(--azul-900), var(--azul-500));
+}
+
+/* Tipografía: títulos y párrafos sin margen superior */
+h1, h2, p { margin-top: 0; }
+/* clamp(mínimo, ideal, máximo): tamaño fluido según el ancho de pantalla */
+h1 { max-width: 850px; margin-bottom: .5rem; font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.05; }
+h2 { margin-bottom: 1rem; color: var(--azul-900); }
+.introduccion { max-width: 720px; margin-bottom: 0; color: #dbeafe; }
+.etiqueta { margin-bottom: .35rem; color: var(--rojo); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+
+/* ==========================================================
+   DISTRIBUCIÓN PRINCIPAL (CSS Grid)
+   Dos columnas: registro (1.15fr) e indicadores (.85fr).
+   El margen negativo sube el contenido sobre el encabezado.
+   ========================================================== */
+.contenido {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 1.25rem;
+  margin-top: -2.8rem;
+  padding-bottom: 3rem;
+}
+
+/* Tarjeta blanca reutilizable */
+.panel {
+  padding: clamp(1.1rem, 3vw, 1.8rem);
+  border: 1px solid var(--borde);
+  border-radius: 1rem;
+  background: var(--blanco);
+  box-shadow: 0 18px 45px rgb(11 37 69 / 10%);
+}
+
+/* Un panel "completo" ocupa desde la primera hasta la última columna */
+.panel-completo { grid-column: 1 / -1; }
+
+/* ==========================================================
+   FORMULARIO Y FILTROS
+   ========================================================== */
+/* Tres columnas iguales; minmax(0, 1fr) evita que el contenido las desborde */
+.campos, .filtros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .9rem; }
+/* Un campo doble ocupa dos columnas */
+.campo-doble { grid-column: span 2; }
+.campo { margin-bottom: .9rem; }
+label { display: block; margin-bottom: .35rem; font-weight: 700; }
+small { color: var(--gris); }
+
+/* Controles de entrada con medidas y aspecto compartidos */
+input, select, textarea {
+  width: 100%;
+  padding: .72rem .8rem;
+  border: 1px solid #aeb9c8;
+  border-radius: .55rem;
+  color: inherit;
+  background: #fff;
+  font: inherit;
+}
+
+/* El JSON se muestra en fuente monoespaciada y solo crece en vertical */
+textarea { resize: vertical; font-family: ui-monospace, "Cascadia Code", monospace; font-size: .9rem; }
+/* Foco visible para quien navega con teclado */
+input:focus, select:focus, textarea:focus { outline: 3px solid rgb(46 116 181 / 22%); border-color: var(--azul-500); }
+
+/* ==========================================================
+   BOTONES
+   ========================================================== */
+.acciones { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: .5rem; }
+
+button {
+  padding: .7rem .95rem;
+  border: 2px solid var(--azul-700);
+  border-radius: .55rem;
+  color: #fff;
+  background: var(--azul-700);
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+button:hover { background: var(--azul-900); }
+/* :focus-visible solo se muestra al navegar con teclado */
+button:focus-visible { outline: 3px solid rgb(230 59 46 / 35%); outline-offset: 2px; }
+/* Variante secundaria: fondo blanco, texto azul */
+button.secundario { color: var(--azul-700); background: #fff; }
+/* Variante de peligro: botón pequeño "Eliminar" de la tabla */
+button.peligro { padding: .35rem .55rem; border-color: var(--error); color: var(--error); background: #fff; font-size: .84rem; }
+
+/* ==========================================================
+   MENSAJES, INSIGNIA Y MÉTRICAS
+   ========================================================== */
+/* Por defecto un mensaje es de error; la clase .exito lo cambia a verde */
+.mensajes { margin-top: 1rem; padding: .8rem 1rem; border-left: 4px solid var(--error); color: var(--error); background: var(--error-claro); }
+.mensajes.exito { border-color: var(--verde); color: var(--verde); background: var(--verde-claro); }
+.cabecera-seccion { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.insignia { padding: .35rem .65rem; border-radius: 999px; color: var(--azul-900); background: var(--azul-100); font-weight: 750; white-space: nowrap; }
+/* Métricas en cuadrícula de 2 columnas */
+.metricas { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; margin: 0; }
+.metricas div { padding: .8rem; border-radius: .65rem; background: var(--azul-100); text-align: center; }
+.metricas dt { color: var(--gris); font-size: .78rem; }
+.metricas dd { margin: 0; color: var(--azul-900); font-size: 1.35rem; font-weight: 800; }
+.alerta { margin: 1rem 0 0; padding: .7rem; border-radius: .5rem; color: var(--advertencia); background: var(--advertencia-claro); font-weight: 700; }
+
+/* ==========================================================
+   TABLA
+   ========================================================== */
+/* Si la tabla no cabe, aparece scroll horizontal dentro de este contenedor */
+.tabla-contenedor { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: .7rem .6rem; border-bottom: 1px solid var(--borde); text-align: left; vertical-align: top; }
+th { color: var(--azul-900); background: var(--azul-100); font-size: .87rem; }
+/* Números alineados a la derecha y con cifras de ancho fijo */
+.numero { text-align: right; font-variant-numeric: tabular-nums; }
+.secundario-texto { color: var(--gris); font-size: .82rem; }
+/* Etiqueta de estado: además del color, lleva texto (no depende solo del color) */
+.estado { display: inline-block; padding: .2rem .5rem; border-radius: 999px; font-size: .8rem; font-weight: 800; }
+.estado.aprobado { color: var(--verde); background: var(--verde-claro); }
+.estado.riesgo { color: var(--error); background: var(--error-claro); }
+.estado-vacio { padding: 1rem; color: var(--gris); text-align: center; }
+/* Garantiza que el atributo hidden siempre oculte el elemento,
+   aunque otra regla le asigne display */
+[hidden] { display: none !important; }
+
+/* ==========================================================
+   ADAPTACIÓN A PANTALLAS PEQUEÑAS (media queries)
+   ========================================================== */
+/* Tablet: todo pasa a una sola columna */
+@media (max-width: 860px) {
+  .contenido, .campos, .filtros { grid-template-columns: 1fr; }
+  .panel-completo, .campo-doble { grid-column: auto; }
+}
+
+/* Móvil: métricas en una columna y cabecera apilada */
+@media (max-width: 520px) {
+  .metricas { grid-template-columns: 1fr; }
+  .cabecera-seccion { flex-direction: column; }
+}
