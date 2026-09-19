@@ -1,0 +1,211 @@
+🎓 1. Arreglos — “La Caja Ordenada”
+En la imagen aparece una caja con tres compartimentos:
+0 → manzana
+1 → pera
+2 → uva
+Puedes decir:
+“Un arreglo es como una lista donde podemos guardar varios elementos. Cada elemento tiene una posición llamada índice. Algo importante es que JavaScript empieza a contar desde el índice 0, no desde el 1. Por eso, en este ejemplo, frutas[0] nos da la manzana.”
+El código:
+let frutas = ["manzana", "pera", "uva"];
+console.log(frutas[0]);
+Da como resultado:
+manzana
+🧠 Para recordarlo:
+Arreglo = una lista ordenada.
+🎓 2. Arreglo bidimensional — “El Mapa Cuadriculado”
+Aquí tienes una cuadrícula:
+       columna
+        0  1  2
+fila 0  1  2  3
+fila 1  4  5  6
+fila 2  7  8  9
+Puedes decir:
+“Un arreglo bidimensional es parecido a una tabla o una matriz. En lugar de utilizar un solo índice, usamos dos: uno para indicar la fila y otro para indicar la columna.”
+Por ejemplo:
+matriz[1][2]
+Significa:
+1 → fila 1
+2 → columna 2
+Resultado → 6
+🧠 Para recordarlo:
+Arreglo normal = posición.
+Bidimensional = fila + columna.
+🎓 3. Objeto — “El Archivador”
+En la imagen aparece un archivador con información:
+nombre → Ana
+edad → 30
+ciudad → Madrid
+Puedes decir:
+“Un objeto sirve para guardar información relacionada. A diferencia de un arreglo, donde normalmente accedemos mediante posiciones, en un objeto accedemos mediante propiedades o claves.”
+Por ejemplo:
+let persona = {
+    nombre: "Ana",
+    edad: 30,
+    ciudad: "Madrid"
+};
+Si quiero el nombre:
+persona.nombre
+Obtengo:
+Ana
+🧠 Para recordarlo:
+Objeto = información organizada con nombre → valor.
+Por ejemplo:
+nombre → Ana
+edad → 30
+🎓 4. Clase — “El Molde”
+Esta es una de las más importantes.
+En la imagen hay una máquina que funciona como un molde y crea a Ana y Luis.
+Puedes decir:
+“Una clase es como una plantilla o molde que utilizamos para crear objetos. En lugar de escribir las propiedades de cada persona desde cero, hacemos una clase y después podemos crear diferentes personas a partir de ella.”
+Por ejemplo:
+class Persona {
+    constructor(nombre) {
+        this.nombre = nombre;
+    }
+}
+Después podemos crear:
+let p1 = new Persona("Ana");
+let p2 = new Persona("Luis");
+Entonces tenemos dos objetos diferentes creados usando la misma clase.
+🧠 Una comparación muy fácil:
+Clase = molde 🧁
+Objeto = pastel creado con ese molde 🍰
+La clase dice cómo será el objeto, mientras que el objeto es una instancia creada a partir de ella.
+🎓 5. JSON — “El Mensajero”
+En la imagen aparece un cartero llevando información hacia una computadora o servidor.
+Puedes decir:
+“JSON es un formato utilizado para representar e intercambiar información. Es muy común cuando una aplicación necesita enviar o recibir datos desde un servidor.”
+Por ejemplo:
+{
+    "nombre": "Ana",
+    "edad": 30
+}
+Puedes imaginar que una aplicación dice:
+“Tengo estos datos y necesito enviárselos a otro sistema.”
+Los convierte a un formato que ambos sistemas pueden entender.
+🧠 Para recordarlo:
+JSON = formato para transportar/intercambiar datos. 📦
+Y una diferencia importante:
+En JSON las claves utilizan comillas dobles:
+"nombre": "Ana"
+🎓 6. Map — “El Traductor”
+Aquí tienes algo parecido a un diccionario:
+CLAVE       VALOR
+
+"nombre" → "Pedro"
+1        → "número uno"
+Puedes decir:
+“Un Map permite relacionar una clave con un valor. La ventaja es que las claves pueden ser de diferentes tipos, no solamente texto.”
+Por ejemplo:
+let mapa = new Map();
+
+mapa.set("nombre", "Pedro");
+Y para buscarlo:
+mapa.get("nombre");
+Resultado:
+Pedro
+🧠 Para recordarlo:
+Piensa en un diccionario:
+palabra → significado
+En Map:
+clave → valor
+🎓 7. Interpolación — “El Ensamblador”
+Esta imagen muestra piezas que se juntan para formar una frase.
+Por ejemplo tenemos:
+let nombre = "Ana";
+Y queremos decir:
+Hola Ana, bienvenida
+Podemos escribir:
+console.log(`Hola ${nombre}, bienvenida`);
+Puedes decir:
+“La interpolación permite insertar el contenido de una variable directamente dentro de un texto. Para hacerlo utilizamos comillas invertidas y ${}.”
+Si nombre contiene "Ana":
+${nombre}
+se reemplaza por:
+Ana
+🧠 Para recordarlo:
+Interpolación = meter una variable dentro de un texto.
+🎓 8. Filter — “El Filtrador”
+Aquí aparece un detective que tiene que seleccionar estudiantes.
+Tenemos:
+Ana → 8
+Luis → 5
+Pedro → 9
+Y queremos solamente los que tienen más de 8.
+Puedes decir:
+“filter() sirve para seleccionar elementos de un arreglo que cumplen una determinada condición. Los que cumplen la condición se quedan y los demás quedan fuera.”
+Por ejemplo:
+let aprobados = estudiantes.filter(e => e.nota > 8);
+Entonces:
+Ana (8) ❌
+Luis (5) ❌
+Pedro (9) ✅
+🧠 Para recordarlo:
+filter = filtro.
+Como un colador:
+“Solo dejo pasar lo que cumple la condición.”
+🎓 9. Map — “El Transformador”
+⚠️ Aquí hay que tener cuidado porque este map() es diferente al Map de la viñeta 6.
+El mago recibe:
+1   2   3
+Y los transforma:
+2   4   6
+Puedes decir:
+“El método map() recorre un arreglo y transforma cada uno de sus elementos. En este caso, toma cada número y lo multiplica por dos.”
+Código:
+let dobles = numeros.map(n => n * 2);
+Resultado:
+[2, 4, 6]
+🧠 Para recordarlo:
+map() = transformar. 🪄
+🎓 10. Operador flecha — =>
+El personaje de la imagen convierte una función larga en una más corta.
+Primero:
+let suma = function(a, b) {
+    return a + b;
+};
+Y podemos escribir:
+let suma = (a, b) => a + b;
+Puedes decir:
+“El operador flecha permite escribir funciones de una forma más corta. En este ejemplo, recibe a y b y devuelve su suma.”
+La flecha:
+(a, b) => a + b
+se puede leer aproximadamente como:
+“Recibe a y b, y devuelve a más b.”
+🧠 Para recordarlo:
+=> = una forma corta de escribir funciones.
+⭐ Si tienes que explicarlo MUY rápido
+Puedes memorizar estas frases:
+Concepto
+Frase para decir
+📦 Arreglo
+“Es una lista de elementos que tiene índices.”
+🧮 Bidimensional
+“Es como una tabla, usamos fila y columna.”
+🗂️ Objeto
+“Guarda información mediante propiedades y valores.”
+🏭 Clase
+“Es una plantilla para crear objetos.”
+📩 JSON
+“Es un formato para intercambiar datos.”
+🧩 Interpolación
+“Permite insertar variables dentro de un texto.”
+🧺 Colección
+“Es un arreglo que puede contener varios objetos.”
+🗺️ Map
+“Relaciona claves con valores y permite claves de distintos tipos.”
+🔎 filter()
+“Selecciona los elementos que cumplen una condición.”
+🪄 map()
+“Transforma cada elemento de un arreglo.”
+➡️ =>
+“Es una forma abreviada de escribir funciones.”
+🔄 Iteración
+“Es recorrer los elementos de un arreglo uno por uno.”
+🧠 Y la diferencia que más te conviene aprender
+Map y map() NO son lo mismo.
+Map → estructura que relaciona clave → valor.
+map() → método que transforma elementos de un arreglo.
+Una forma sencilla de decirlo en una exposición sería:
+“Aunque se llaman parecido, Map y map() tienen funciones diferentes: Map almacena relaciones entre claves y valores, mientras que map() transforma los elementos de un arreglo.”
+Eso te puede salvar si el profesor te pregunta específicamente por esa diferencia.

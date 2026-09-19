@@ -1,0 +1,137 @@
+🎬 Roleplay: “El mensaje perdido de Fondo de Bikini”
+Personajes:
+🧽 Bob Esponja: programador
+⭐ Patricio: usuario que da los datos
+🦑 Calamardo: cliente exigente
+🦀 Don Cangrejo: jefe que necesita el resultado
+
+🎭 Escena
+
+Don Cangrejo:
+¡Bob Esponja! Necesito enviar este mensaje, pero está todo desordenado:
+
+"  Hola, equipo JavaScript  "
+
+Bob:
+¡No se preocupe, Don Cangrejo! Primero usamos trim() para eliminar los espacios innecesarios.
+
+Patricio:
+¡Yo quiero que diga todo en mayúsculas!
+
+Bob:
+Entonces usamos toUpperCase().
+
+"HOLA, EQUIPO JAVASCRIPT"
+
+Calamardo:
+Qué emocionante... 🙄. Ahora necesito saber si el mensaje contiene la palabra "JavaScript".
+
+Bob:
+Usamos includes() y obtenemos true.
+
+Patricio:
+¡Encontramos la palabra! Pero ahora quiero sacar solamente "equipo".
+
+Bob:
+Para eso podemos usar slice() y extraer una parte del texto.
+
+Don Cangrejo:
+¡Perfecto! Ahora quiero agregar el nombre de Patricio al mensaje.
+
+Bob:
+Podemos concatenar:
+
+"Hola " + nombre
+
+O utilizar un template literal:
+
+Hola ${nombre}
+
+Calamardo:
+Y encontré un correo. ¿Cómo sabemos si está escrito correctamente?
+
+Bob:
+Podemos utilizar Regex, que permite comprobar si un texto cumple un determinado patrón.
+
+Patricio:
+¡Entonces podemos hacer un montón de cosas con los strings!
+
+Bob:
+Exacto: podemos buscar, extraer, unir, modificar y validar texto.
+
+Don Cangrejo:
+¡Excelente trabajo! Ahora...
+
+Patricio:
+¿Podemos usar strings para pedir una pizza?
+
+Calamardo:
+¡PATRICIO!🎬 Roleplay: “El mensaje perdido de Fondo de Bikini”
+Personajes:
+🧽 Bob Esponja: programador
+⭐ Patricio: usuario que da los datos
+🦑 Calamardo: cliente exigente
+🦀 Don Cangrejo: jefe que necesita el resultado
+
+🎭 Escena
+
+Don Cangrejo:
+¡Bob Esponja! Necesito enviar este mensaje, pero está todo desordenado:
+
+"  Hola, equipo JavaScript  "
+
+Bob:
+¡No se preocupe, Don Cangrejo! Primero usamos trim() para eliminar los espacios innecesarios.
+
+Patricio:
+¡Yo quiero que diga todo en mayúsculas!
+
+Bob:
+Entonces usamos toUpperCase().
+
+"HOLA, EQUIPO JAVASCRIPT"
+
+Calamardo:
+Qué emocionante... 🙄. Ahora necesito saber si el mensaje contiene la palabra "JavaScript".
+
+Bob:
+Usamos includes() y obtenemos true.
+
+Patricio:
+¡Encontramos la palabra! Pero ahora quiero sacar solamente "equipo".
+
+Bob:
+Para eso podemos usar slice() y extraer una parte del texto.
+
+Don Cangrejo:
+¡Perfecto! Ahora quiero agregar el nombre de Patricio al mensaje.
+
+Bob:
+Podemos concatenar:
+
+"Hola " + nombre
+
+O utilizar un template literal:
+
+Hola ${nombre}
+
+Calamardo:
+Y encontré un correo. ¿Cómo sabemos si está escrito correctamente?
+
+Bob:
+Podemos utilizar Regex, que permite comprobar si un texto cumple un determinado patrón.
+
+Patricio:
+¡Entonces podemos hacer un montón de cosas con los strings!
+
+Bob:
+Exacto: podemos buscar, extraer, unir, modificar y validar texto.
+
+Don Cangrejo:
+¡Excelente trabajo! Ahora...
+
+Patricio:
+¿Podemos usar strings para pedir una pizza?
+
+Calamardo:
+¡PATRICIO!

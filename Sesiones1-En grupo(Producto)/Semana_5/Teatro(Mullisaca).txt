@@ -1,0 +1,351 @@
+🎭 GUION: “BICHOS: EL ALGORITMO DE LA COLONIA”
+
+Duración aproximada: 8–10 minutos
+Personajes:
+
+🐜 Flik — inventor
+
+👑 Atta — líder de la colonia
+
+🌸 Dot — ayudante
+
+🐞 Francis — encargado de la organización
+
+🦗 Hopper — antagonista
+
+
+🟩 ESCENA 1 — EL PROBLEMA
+
+(Atta, Dot y Francis están reunidos. Se ven preocupados.)
+
+Atta:
+¡Tenemos un problema! Se acerca el invierno y necesitamos reunir alimentos para toda la colonia.
+
+Francis:
+Y no podemos recoger cualquier cosa. Tenemos poco tiempo y no podemos transportar todo.
+
+Dot:
+Entonces... ¿cómo sabemos qué alimentos debemos recoger primero?
+
+(Entra Flik apresurado.)
+
+Flik:
+¡Tengo una idea!
+
+Atta:
+Flik, por favor dime que esta vez no vas a construir otra máquina que explote.
+
+Flik:
+😅 No exactamente. Esta vez quiero crear un algoritmo en JavaScript.
+
+Dot:
+¿Un algoritmo?
+
+Flik:
+Sí. Una serie de pasos que nos ayudará a decidir qué alimentos recoger para aprovechar mejor nuestro tiempo y recursos.
+
+
+---
+
+🟨 ESCENA 2 — VARIABLES
+
+Francis:
+Pero primero necesitamos información.
+
+Flik:
+Exactamente. Vamos a utilizar variables para almacenar nuestros datos.
+
+(Flik escribe en una cartulina o en la laptop.)
+
+let tiempoDisponible = 3;
+let capacidad = 50;
+let totalAlimentos = 0;
+
+Dot:
+Entonces tiempoDisponible guarda el número de días...
+
+Flik:
+¡Exacto!
+
+Francis:
+Y capacidad representa cuánto podemos transportar.
+
+Atta:
+Entonces nuestras variables cambian dependiendo de la situación.
+
+Flik:
+Correcto.
+
+
+---
+
+🟧 ESCENA 3 — ARREGLOS Y OBJETOS
+
+Dot:
+Pero tenemos muchos alimentos. ¿Vamos a crear una variable para cada uno?
+
+Flik:
+¡No! Para eso utilizaremos un arreglo.
+
+(Muestra varias tarjetas de alimentos.)
+
+const alimentos = [
+    { nombre: "Semillas", cantidad: 20, valor: 6, dificultad: 2 },
+    { nombre: "Frutas", cantidad: 15, valor: 5, dificultad: 3 },
+    { nombre: "Hojas", cantidad: 30, valor: 2, dificultad: 1 },
+    { nombre: "Granos", cantidad: 25, valor: 7, dificultad: 2 }
+];
+
+Dot:
+¡Cada alimento tiene varios datos!
+
+Flik:
+Sí. Cada uno es un objeto con propiedades como nombre, cantidad, valor y dificultad.
+
+Francis:
+Y todos esos objetos están dentro del arreglo alimentos.
+
+Atta:
+Eso nos permitirá trabajar con todos ellos.
+
+
+---
+
+🟥 ESCENA 4 — OPERADORES
+
+(Hopper aparece.)
+
+Hopper:
+¡JA! ¿De verdad creen que una computadora va a salvarlos?
+
+Atta:
+Tenemos que aprovechar nuestros recursos.
+
+Flik:
+Precisamente por eso utilizaremos operadores para hacer nuestros cálculos.
+
+Dot:
+¿Como sumar y multiplicar?
+
+Flik:
+Sí.
+
+let puntuacion = valor * cantidad - dificultad;
+
+Francis:
+Entonces el programa puede calcular qué alimento resulta más conveniente.
+
+Hopper:
+¡Pero tienen poco tiempo!
+
+Flik:
+Y ahí entra nuestro siguiente concepto.
+
+
+---
+
+🟦 ESCENA 5 — SENTENCIAS DE CONTROL
+
+Flik:
+Necesitamos que el programa pueda tomar decisiones.
+
+if (tiempoDisponible < 3) {
+    console.log("Debemos priorizar los alimentos.");
+} else {
+    console.log("Podemos recoger más alimentos.");
+}
+
+Dot:
+¡El programa decide dependiendo de la condición!
+
+Atta:
+Entonces, si tenemos poco tiempo, debemos seleccionar solamente los alimentos más importantes.
+
+Hopper:
+¡Exactamente! ¡Y tienen MUY poco tiempo!
+
+(Todos se preocupan.)
+
+
+---
+
+🟪 ESCENA 6 — FUNCIÓN
+
+Francis:
+Pero no podemos escribir ese cálculo cada vez para cada alimento.
+
+Flik:
+¡Por eso crearemos una función!
+
+function calcularPrioridad(alimento) {
+    return alimento.valor * alimento.cantidad
+           - alimento.dificultad;
+}
+
+Dot:
+¿La función recibe un alimento?
+
+Flik:
+Sí, calcula su prioridad y nos devuelve el resultado.
+
+Atta:
+Así podemos reutilizarla con todos nuestros alimentos.
+
+Flik:
+¡Exactamente!
+
+
+---
+
+🟫 ESCENA 7 — RECORRIENDO LOS ALIMENTOS
+
+Francis:
+Pero tenemos varios alimentos. ¿Cómo hacemos para calcularlos todos?
+
+Flik:
+Utilizaremos una estructura repetitiva.
+
+for (let alimento of alimentos) {
+    alimento.prioridad = calcularPrioridad(alimento);
+}
+
+Dot:
+¡El for va pasando por cada alimento!
+
+Flik:
+Sí. Así no tenemos que repetir manualmente el mismo código.
+
+(Todos empiezan a revisar las tarjetas.)
+
+Francis:
+Semillas...
+
+Dot:
+Frutas...
+
+Atta:
+Hojas...
+
+Flik:
+¡Y granos!
+
+
+---
+
+🟩 ESCENA 8 — COLECCIÓN Y DECISIÓN
+
+Atta:
+Tenemos muchos datos. ¿Podemos organizarlos?
+
+Flik:
+Claro. Podemos utilizar una colección, por ejemplo un Map, para relacionar cada alimento con su prioridad.
+
+const prioridades = new Map();
+
+for (let alimento of alimentos) {
+    prioridades.set(
+        alimento.nombre,
+        calcularPrioridad(alimento)
+    );
+}
+
+Dot:
+Entonces podemos saber rápidamente la prioridad de cada alimento.
+
+Flik:
+Exactamente.
+
+Hopper:
+¡Pero todavía no han decidido qué recoger!
+
+Flik:
+El algoritmo lo hará.
+
+
+---
+
+🚨 ESCENA 9 — ¡ERROR!
+
+(Francis mira la laptop.)
+
+Francis:
+¡Flik! ¡Tenemos un problema! ¡Uno de los alimentos no tiene cantidad!
+
+Dot:
+¡Entonces el cálculo puede fallar!
+
+Flik:
+No se preocupen. Podemos controlar el error.
+
+try {
+    // ejecutar el algoritmo
+} catch (error) {
+    console.log("Error: datos incompletos.");
+}
+
+Francis:
+¡El programa detectó el problema!
+
+Atta:
+¡Entonces podemos corregir los datos y continuar!
+
+
+---
+
+🏆 ESCENA 10 — RESULTADO FINAL
+
+(Flik ejecuta el programa.)
+
+Flik:
+¡Listo! El algoritmo ya analizó todos los alimentos.
+
+Atta:
+¿Cuáles debemos recoger?
+
+Flik:
+Según la prioridad calculada, debemos comenzar con los alimentos que ofrecen mayor beneficio y requieren menos recursos.
+
+Dot:
+¡Entonces no elegimos al azar!
+
+Flik:
+Exactamente. Utilizamos los datos y el algoritmo para tomar una decisión.
+
+Francis:
+Tenemos:
+
+✅ Variables
+✅ Operadores
+✅ Arreglos
+✅ Objetos
+✅ Colecciones
+✅ Funciones
+✅ Sentencias de control
+✅ Iteraciones
+✅ Manejo de errores
+
+Hopper:
+😨 ¡¿Y todo eso lo hicieron con JavaScript?!
+
+Flik:
+Así es.
+
+Atta:
+Porque programar no es solamente escribir código...
+
+Dot:
+...es encontrar una solución a un problema.
+
+Francis:
+¡Y comprobar que esa solución funcione!
+
+Hopper:
+Bueno... ¡esta vez ganaron!
+
+(Todos celebran.)
+
+🎬 FINAL
+
+Todos:
+
+> “¡Problema identificado, algoritmo creado y colonia salvada!” 🐜💻
