@@ -1,0 +1,19 @@
+{
+  "name": "analizador-academico-cli",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">24 <25" },
+  "scripts": {
+    "clean": "node -e \"import('node:fs').then(({rmSync}) => rmSync('dist',{recursive:true,force:true}))\"",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run clean && tsc",
+    "start": "node --enable-source-maps dist/index.js",
+    "test": "node --test dist/pruebas/AnalizadorAcademico.test.js",
+    "verify": "npm run typecheck && npm run build && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "24.13.5",
+    "typescript": "6.0.3"
+  }
+}
