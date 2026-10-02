@@ -1,0 +1,173 @@
+<a class="skip-link" href="#contenido">Saltar al contenido principal</a>
+
+<header class="hero py-5">
+  <div class="container py-3">
+    <p class="eyebrow mb-2">JavaScript Avanzado · Semana 7</p>
+    <h1 class="display-5 fw-bold mb-3">{{ titulo }}</h1>
+    <p class="lead col-lg-8 mb-0">
+      Consulta indicadores, filtra estudiantes y reconoce casos que requieren acompañamiento.
+    </p>
+  </div>
+</header>
+
+<main id="contenido" class="container py-5">
+  <section aria-labelledby="titulo-resumen" class="mb-5">
+    <div class="d-flex flex-column flex-lg-row justify-content-between gap-3 mb-4">
+      <div>
+        <p class="section-kicker mb-1">Resumen</p>
+        <h2 id="titulo-resumen" class="h3 mb-0">Indicadores de la sección</h2>
+      </div>
+      <p class="text-secondary mb-0 align-self-lg-end" aria-live="polite">
+        Mostrando {{ estudiantesVisibles().length }} de {{ resumen().total }} estudiantes
+      </p>
+    </div>
+
+    @if (resumen().total > 0) {
+      <div class="row g-3">
+        <div class="col-6 col-lg-3">
+          <div class="metric-card h-100">
+            <span>Total</span>
+            <strong>{{ resumen().total }}</strong>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="metric-card h-100">
+            <span>Promedio general</span>
+            <strong>{{ resumen().promedioGeneral }}</strong>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="metric-card h-100">
+            <span>Aprobados</span>
+            <strong class="text-success">{{ resumen().aprobados }}</strong>
+          </div>
+        </div>
+        <div class="col-6 col-lg-3">
+          <div class="metric-card h-100">
+            <span>En riesgo</span>
+            <strong class="text-danger">{{ resumen().enRiesgo }}</strong>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <p class="empty-state mb-0">No existen datos para calcular indicadores.</p>
+    }
+  </section>
+
+  <section aria-labelledby="titulo-listado">
+    <div class="d-flex flex-column flex-xl-row justify-content-between gap-3 mb-4">
+      <div>
+        <p class="section-kicker mb-1">Detalle</p>
+        <h2 id="titulo-listado" class="h3 mb-0">Estudiantes registrados</h2>
+      </div>
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <div class="btn-group" role="group" aria-label="Filtrar estudiantes por estado">
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            [class.active]="filtroActivo() === 'todos'"
+            [attr.aria-pressed]="filtroActivo() === 'todos'"
+            (click)="cambiarFiltro('todos')"
+          >
+            Todos
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            [class.active]="filtroActivo() === 'aprobados'"
+            [attr.aria-pressed]="filtroActivo() === 'aprobados'"
+            (click)="cambiarFiltro('aprobados')"
+          >
+            Aprobados
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-primary"
+            [class.active]="filtroActivo() === 'riesgo'"
+            [attr.aria-pressed]="filtroActivo() === 'riesgo'"
+            (click)="cambiarFiltro('riesgo')"
+          >
+            En riesgo
+          </button>
+        </div>
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          [disabled]="resumen().total === 0"
+          (click)="simularListaVacia()"
+        >
+          Simular lista vacía
+        </button>
+        <button
+          type="button"
+          class="btn btn-dark"
+          [disabled]="resumen().total > 0"
+          (click)="restaurarDatos()"
+        >
+          Restaurar datos
+        </button>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      @for (estudiante of estudiantesVisibles(); track estudiante.id; let posicion = $index) {
+        <div class="col-md-6 col-xl-4">
+          <article class="tarjeta-estudiante h-100" [appResaltarRiesgo]="estudiante.promedio">
+            <div class="d-flex justify-content-between gap-3 mb-3">
+              <div>
+                <span class="student-number">Registro {{ posicion + 1 }}</span>
+                <h3 class="h5 mb-1">{{ estudiante.nombre }}</h3>
+                <p class="text-secondary small mb-0">{{ estudiante.programa }}</p>
+              </div>
+              @switch (estadoDe(estudiante.promedio)) {
+                @case ('Destacado') {
+                  <span class="badge text-bg-success align-self-start">Destacado</span>
+                }
+                @case ('Aprobado') {
+                  <span class="badge text-bg-primary align-self-start">Aprobado</span>
+                }
+                @default {
+                  <span class="badge text-bg-danger align-self-start">En riesgo</span>
+                }
+              }
+            </div>
+            <dl class="row g-2 mb-3">
+              <dt class="col-7">Promedio</dt>
+              <dd class="col-5 text-end fw-semibold">{{ estudiante.promedio }} / 20</dd>
+              <dt class="col-7">Asistencia</dt>
+              <dd class="col-5 text-end fw-semibold">{{ estudiante.asistencia }} %</dd>
+            </dl>
+            <div
+              class="progress"
+              role="progressbar"
+              aria-label="Avance del promedio sobre veinte"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-valuenow]="porcentajeDe(estudiante.promedio)"
+            >
+              <div
+                class="progress-bar"
+                [class.bg-danger]="estudiante.promedio < 11"
+                [class.bg-primary]="estudiante.promedio >= 11 && estudiante.promedio < 14"
+                [class.bg-success]="estudiante.promedio >= 14"
+                [style.width.%]="porcentajeDe(estudiante.promedio)"
+              ></div>
+            </div>
+          </article>
+        </div>
+      } @empty {
+        <div class="col-12">
+          <p class="empty-state mb-0" role="status">
+            No hay estudiantes que coincidan con la vista seleccionada.
+          </p>
+        </div>
+      }
+    </div>
+  </section>
+</main>
+
+<footer class="border-top py-4">
+  <div class="container text-secondary small">
+    Laboratorio de Angular con componentes standalone y control de flujo moderno
+  </div>
+</footer>
