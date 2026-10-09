@@ -1,0 +1,29 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+body {
+  background: #f4f6f9;
+  color: #172e4d;
+}
+
+.panel {
+  background: #fff;
+  padding: 1.5rem;
+  border: 1px solid #d7dee8;
+  border-radius: 0.8rem;
+}
+
+.formulario {
+  max-width: 42rem;
+}
+
+.card {
+  border-radius: 0.8rem;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid #8b4e00;
+  outline-offset: 3px;
+}

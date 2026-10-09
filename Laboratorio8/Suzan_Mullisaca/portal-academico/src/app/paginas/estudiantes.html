@@ -1,0 +1,25 @@
+<h1>Estudiantes</h1>
+<p>Selecciona una tarjeta para comprobar la comunicación entre componentes.</p>
+<a routerLink="/registro" class="btn btn-primary mb-3">Registrar estudiante</a>
+
+<p role="status" aria-live="polite">
+  @if (seleccionado(); as e) {
+    Estudiante seleccionado {{ e.nombre }} con identificador {{ e.id }}.
+  } @else {
+    No hay una selección activa.
+  }
+</p>
+
+<div class="row g-3">
+  @for (e of store.estudiantes(); track e.id) {
+    <div class="col-md-6 col-xl-4">
+      <app-tarjeta-estudiante
+        [estudiante]="e"
+        [seleccionado]="seleccionado()?.id === e.id"
+        (seleccionar)="seleccionar($event)"
+      />
+    </div>
+  } @empty {
+    <p>No hay estudiantes registrados.</p>
+  }
+</div>

@@ -1,0 +1,52 @@
+<h1>Registrar estudiante</h1>
+<p>Completa los cuatro campos. El registro se guarda solo en memoria.</p>
+
+<form [formGroup]="form" (ngSubmit)="guardar()" novalidate class="panel formulario">
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre completo</label>
+    <input id="nombre" formControlName="nombre" type="text" autocomplete="name"
+      class="form-control" [class.is-invalid]="invalido('nombre')"
+      [attr.aria-invalid]="invalido('nombre')"
+      aria-describedby="nombre-ayuda nombre-error" />
+    <p id="nombre-ayuda" class="form-text">Entre 3 y 80 caracteres después de quitar espacios exteriores.</p>
+    <p id="nombre-error" class="text-danger">
+      @if (invalido('nombre')) { Escribe un nombre de 3 a 80 caracteres. }
+    </p>
+  </div>
+
+  <div class="mb-3">
+    <label for="programa" class="form-label">Programa</label>
+    <select id="programa" formControlName="programa" class="form-select"
+      [attr.aria-invalid]="invalido('programa')">
+      <option value="Software">Software</option>
+      <option value="Sistemas">Sistemas</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="promedio" class="form-label">Promedio (0 a 20)</label>
+    <input id="promedio" formControlName="promedio" type="number" step="any"
+      class="form-control" [class.is-invalid]="invalido('promedio')"
+      [attr.aria-invalid]="invalido('promedio')" aria-describedby="promedio-error" />
+    <p id="promedio-error" class="text-danger">
+      @if (invalido('promedio')) { Ingresa un promedio entre 0 y 20. }
+    </p>
+  </div>
+
+  <div class="mb-3">
+    <label for="asistencia" class="form-label">Asistencia (0 a 100)</label>
+    <input id="asistencia" formControlName="asistencia" type="number" step="any"
+      class="form-control" [class.is-invalid]="invalido('asistencia')"
+      [attr.aria-invalid]="invalido('asistencia')" aria-describedby="asistencia-error" />
+    <p id="asistencia-error" class="text-danger">
+      @if (invalido('asistencia')) { Ingresa una asistencia entre 0 y 100. }
+    </p>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Guardar</button>
+
+  @if (enviado() && form.invalid) {
+    <p role="alert" class="text-danger mt-3">Revisa los campos marcados.</p>
+  }
+  @if (mensaje()) { <p role="status" class="mt-3">{{ mensaje() }}</p> }
+</form>
