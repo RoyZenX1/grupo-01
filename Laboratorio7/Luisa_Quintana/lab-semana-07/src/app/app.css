@@ -1,0 +1,127 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #172033;
+  background: #f5f7fb;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1050;
+  padding: 0.65rem 1rem;
+  color: #fff;
+  background: #111827;
+  border-radius: 0.5rem;
+  transform: translateY(-160%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.hero {
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 10%, rgb(255 255 255 / 16%), transparent 28%),
+    linear-gradient(125deg, #111827, #173d74 68%, #bb6b79);
+}
+
+.eyebrow,
+.section-kicker {
+  font-size: 0.77rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: #bde3f2;
+}
+
+.section-kicker {
+  color: #315d9d;
+}
+
+.metric-card,
+.tarjeta-estudiante,
+.empty-state {
+  background: #fff;
+  border: 1px solid #dce3ee;
+  border-radius: 1rem;
+  box-shadow: 0 0.45rem 1.1rem rgb(29 47 76 / 7%);
+}
+
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem;
+}
+
+.metric-card span {
+  color: #5f6b7d;
+  font-size: 0.86rem;
+}
+
+.metric-card strong {
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.tarjeta-estudiante {
+  padding: 1.35rem;
+  border-left: 0.36rem solid #94a3b8;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.tarjeta-estudiante:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.75rem 1.4rem rgb(29 47 76 / 12%);
+}
+
+.tarjeta-estudiante.tarjeta-riesgo {
+  border-left-color: #dc3545;
+}
+
+.tarjeta-estudiante.tarjeta-aprobado {
+  border-left-color: #0d6efd;
+}
+
+.tarjeta-estudiante.tarjeta-destacado {
+  border-left-color: #198754;
+}
+
+.student-number {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: #6b7280;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  padding: 1.5rem;
+  color: #5f6b7d;
+  text-align: center;
+}
+
+/* Foco visible para accesibilidad */
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #ffc107;
+  outline-offset: 2px;
+}
+
+/* Respeto por preferencias de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta-estudiante {
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
