@@ -2,14 +2,19 @@
 let mascaraFiltro = 0;          // acumula los flags activos (bitwise)
 let ordenActualCampo = "fecha"; // columna usada para ordenar
 let ordenActualDireccion = "desc";
+let criterios = { texto: "", montoMin: null, montoMax: null, desde: "", hasta: "" };
 
-
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", async function () {
     renderizarFiltros();
-    actualizarVista();
-    console.log("Módulo de reportes y métricas listo.");
-};
+    actualizarVista(); // se muestra de inmediato con los datos locales
 
+    const resultado = await cargarOrdenesDesdeBackend();
+    document.getElementById("origenDatos").textContent =
+        resultado.origen === "backend" ? "Datos: backend" : "Datos: locales";
+    actualizarVista(); // se refresca con lo que llegó del backend
+
+    console.log("Módulo de reportes y métricas listo.");
+});
 
 function renderizarFiltros() {
     const contenedor = document.getElementById("filtrosEstado");
@@ -17,8 +22,9 @@ function renderizarFiltros() {
 
     ETIQUETA_ESTADO.forEach((texto, flag) => {
         const boton = document.createElement("button");
-        boton.textContent = texto;
-        boton.className = "chip-filtro";
+        boton.type = "button";
+        boton.textContent = NOMBRE_ESTADO.get(flag);
+        boton.className = `chip-filtro ${texto}`;
         boton.dataset.flag = flag;
         // EVENTO onclick asignado dinámicamente
         boton.onclick = function () {
@@ -34,10 +40,29 @@ function alternarFiltro(flag, boton) {
     actualizarVista();
 }
 
+// Lee los filtros visuales (texto, montos, fechas)
+function aplicarFiltrosVisuales() {
+    const numero = (id) => {
+        const valor = document.getElementById(id).value;
+        return valor === "" ? null : Number(valor);
+    };
+    criterios = {
+        texto: document.getElementById("filtroTexto").value,
+        montoMin: numero("filtroMontoMin"),
+        montoMax: numero("filtroMontoMax"),
+        desde: document.getElementById("filtroDesde").value,
+        hasta: document.getElementById("filtroHasta").value,
+    };
+    actualizarVista();
+}
 
 function limpiarFiltros() {
     mascaraFiltro = 0;
     document.querySelectorAll(".chip-filtro").forEach((boton) => boton.classList.remove("activo"));
+    ["filtroTexto", "filtroMontoMin", "filtroMontoMax", "filtroDesde", "filtroHasta"].forEach((id) => {
+        document.getElementById(id).value = "";
+    });
+    criterios = { texto: "", montoMin: null, montoMax: null, desde: "", hasta: "" };
     actualizarVista();
 }
 
@@ -53,13 +78,18 @@ function cambiarOrden() {
 
 function actualizarVista() {
     try {
+        const porEstado = filtrarPorEstado(ordenes, mascaraFiltro);
         const filtradas = filtrarPorEstado(ordenes, mascaraFiltro);
         const ordenadas = ordenarPor(filtradas, ordenActualCampo, ordenActualDireccion);
+        const procesado = procesarOrdenes(filtradas); // una sola pasada
+
 
         pintarMetricas(calcularMetricas(filtradas));
         pintarTablaOrdenes(transformarParaReporte(ordenadas));
         pintarTopClientes(topClientesPorMonto(filtradas, 5));
         pintarResumenRutas(resumenPorRuta(filtradas));
+        pintarDistribucionEstado(distribucionPorEstado(procesado));
+        pintarResumenMeses(resumenPorMes(procesado));
 
         document.getElementById("contadorResultados").textContent =
             `${filtradas.length} de ${ordenes.length} órdenes`;
@@ -147,6 +177,42 @@ function pintarResumenRutas(rutas) {
             <td>${r.ruta}</td>
             <td>${r.cantidad}</td>
             <td>S/ ${r.monto.toFixed(2)}</td>
+        `;
+        cuerpo.appendChild(tr);
+    });
+}
+
+function pintarDistribucionEstado(distribucion) {
+    const cuerpo = document.getElementById("cuerpoTablaEstados");
+    cuerpo.innerHTML = "";
+
+    distribucion.forEach((grupo) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td><span class="badge ${ETIQUETA_ESTADO.get(grupo.flag)}">${NOMBRE_ESTADO.get(grupo.flag)}</span></td>
+            <td>${grupo.cantidad}</td>
+            <td>${Pipes.porcentaje(grupo.porcentaje, 1)}</td>
+            <td>${Pipes.moneda(grupo.monto)}</td>
+        `;
+        cuerpo.appendChild(tr);
+    });
+}
+
+function pintarResumenMeses(meses) {
+    const cuerpo = document.getElementById("cuerpoTablaMeses");
+    cuerpo.innerHTML = "";
+
+    if (meses.length === 0) {
+        cuerpo.innerHTML = `<tr><td colspan="3" class="vacio">Sin datos.</td></tr>`;
+        return;
+    }
+
+    meses.forEach((grupo) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${Pipes.mesAnio(grupo.mes)}</td>
+            <td>${grupo.cantidad}</td>
+            <td>${Pipes.moneda(grupo.monto)}</td>
         `;
         cuerpo.appendChild(tr);
     });
