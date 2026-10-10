@@ -1,0 +1,117 @@
+<h1>{{ id() ? 'Editar estudiante' : 'Registrar estudiante' }}</h1>
+<p>Los cambios se guardan en la API simulada.</p>
+@if (cargando()) {
+  <p role="status">Cargando registro...</p>
+}
+@if (errorCarga()) {
+  <p role="alert" class="text-danger">{{ errorCarga() }}</p>
+}
+<form
+  [formGroup]="form"
+  (ngSubmit)="guardar()"
+  novalidate
+  class="panel formulario"
+>
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre completo</label>
+    <input
+      id="nombre"
+      formControlName="nombre"
+      type="text"
+      autocomplete="name"
+      class="form-control"
+      [class.is-invalid]="invalido('nombre')"
+      [attr.aria-invalid]="invalido('nombre')"
+      aria-describedby="nombre-ayuda nombre-error"
+    />
+    <p id="nombre-ayuda" class="form-text">
+      Entre 3 y 80 caracteres después de quitar espacios exteriores.
+    </p>
+    <p id="nombre-error" class="text-danger">
+      @if (invalido('nombre')) {
+        Escribe un nombre de 3 a 80 caracteres.
+      }
+    </p>
+  </div>
+  <div class="mb-3">
+    <label for="programa" class="form-label">Programa</label>
+    <select
+      id="programa"
+      formControlName="programa"
+      class="form-select"
+      [attr.aria-invalid]="invalido('programa')"
+      aria-describedby="programa-error"
+    >
+      <option value="Software">Ingeniería de Software</option>
+      <option value="Sistemas">Ingeniería de Sistemas</option>
+    </select>
+    <p id="programa-error" class="text-danger">
+      @if (invalido('programa')) {
+        Selecciona un programa.
+      }
+    </p>
+  </div>
+  <div class="mb-3">
+    <label for="promedio" class="form-label">Promedio de 0 a 20</label>
+    <input
+      id="promedio"
+      formControlName="promedio"
+      type="number"
+      min="0"
+      max="20"
+      step="any"
+      class="form-control"
+      [class.is-invalid]="invalido('promedio')"
+      [attr.aria-invalid]="invalido('promedio')"
+      aria-describedby="promedio-error"
+    />
+    <p id="promedio-error" class="text-danger">
+      @if (invalido('promedio')) {
+        Ingresa un número entre 0 y 20.
+      }
+    </p>
+  </div>
+  <div class="mb-3">
+    <label for="asistencia" class="form-label"
+      >Asistencia de 0 a 100 por ciento</label
+    >
+    <input
+      id="asistencia"
+      formControlName="asistencia"
+      type="number"
+      min="0"
+      max="100"
+      step="any"
+      class="form-control"
+      [class.is-invalid]="invalido('asistencia')"
+      [attr.aria-invalid]="invalido('asistencia')"
+      aria-describedby="asistencia-error"
+    />
+    <p id="asistencia-error" class="text-danger">
+      @if (invalido('asistencia')) {
+        Ingresa un número entre 0 y 100.
+      }
+    </p>
+  </div>
+  @if (enviado() && form.invalid) {
+    <p role="alert" class="text-danger">
+      Revisa los campos señalados antes de guardar.
+    </p>
+  }
+  <div class="d-flex flex-wrap gap-2">
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="cargando() || guardando() || !!errorCarga()"
+    >
+      {{ guardando() ? 'Guardando...' : 'Guardar estudiante' }}
+    </button>
+    <a routerLink="/estudiantes" class="btn btn-outline-secondary"
+      >Ver estudiantes</a
+    >
+  </div>
+</form>
+<p role="status" aria-live="polite" class="mt-3">{{ mensaje() }}</p>
+@if (errorGuardado()) {
+  <p role="alert" class="text-danger">{{ errorGuardado() }}</p>
+}

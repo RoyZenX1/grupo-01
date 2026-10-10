@@ -1,0 +1,82 @@
+<h1>Estudiantes</h1>
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <a routerLink="/registro" class="btn btn-primary">Registrar estudiante</a>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="cargar()"
+    [disabled]="cargando() || eliminando()"
+  >
+    Actualizar listado
+  </button>
+</div>
+<p role="status" aria-live="polite">{{ mensaje() }}</p>
+@if (errorAccion()) {
+  <p role="alert" class="text-danger">{{ errorAccion() }}</p>
+}
+@if (cargando()) {
+  <p role="status">Cargando estudiantes...</p>
+} @else if (errorCarga()) {
+  <p role="alert" class="text-danger">{{ errorCarga() }}</p>
+  <button type="button" class="btn btn-primary" (click)="cargar()">
+    Reintentar
+  </button>
+} @else {
+  <p role="status">
+    @if (seleccionado(); as e) {
+      Seleccionaste a {{ e.nombre }}.
+    }
+  </p>
+  @if (pendiente(); as e) {
+    <section class="panel mb-3" aria-labelledby="confirmacion">
+      <h2 id="confirmacion" class="h5">Confirmar eliminación</h2>
+      <p>Se eliminará a {{ e.nombre }} de la API simulada.</p>
+      <button
+        type="button"
+        class="btn btn-danger me-2"
+        (click)="confirmarEliminacion()"
+        [disabled]="eliminando()"
+      >
+        {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="pendiente.set(null)"
+        [disabled]="eliminando()"
+      >
+        Cancelar
+      </button>
+    </section>
+  }
+  <div class="row g-3">
+    @for (e of lista(); track e.id) {
+      <div class="col-md-6 col-xl-4">
+        <app-tarjeta-estudiante
+          [estudiante]="e"
+          [seleccionado]="seleccionado()?.id === e.id"
+          (seleccionar)="seleccionar($event)"
+        />
+        <div class="d-flex gap-2 my-2">
+          <a
+            [routerLink]="['/registro', e.id]"
+            class="btn btn-outline-primary"
+            [attr.aria-label]="'Editar a ' + e.nombre"
+            >Editar</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="pendiente.set(e)"
+            [disabled]="eliminando()"
+            [attr.aria-label]="'Eliminar a ' + e.nombre"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <p>No hay estudiantes registrados. Agrega el primero.</p>
+    }
+  </div>
+}

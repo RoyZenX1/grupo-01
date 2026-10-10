@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+.cabecera {
+  background: #172e4d;
+  color: #fff;
+}
+nav a {
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+}
+nav a.activo {
+  background: #fff;
+  color: #172e4d;
+  font-weight: 700;
+}
+.saltar {
+  position: absolute;
+  top: -5rem;
+  left: 1rem;
+  padding: 0.8rem;
+  background: #fff;
+  z-index: 10;
+}
+.saltar:focus {
+  top: 0.5rem;
+}
