@@ -1,0 +1,122 @@
+<header class="encabezado">
+    <h1>Órdenes de Transporte</h1>
+    <p>Registra y administra las operaciones de transporte.</p>
+</header>
+
+<!-- REGISTRO -->
+<section class="panel">
+    <h2>Registrar nueva orden</h2>
+
+    <form class="formulario" (ngSubmit)="registrar()">
+
+        <div class="campo">
+            <label for="idOrden">ID de orden</label>
+            <input id="idOrden" name="id" type="text" placeholder="ORD001"
+                   [(ngModel)]="form.id" required>
+        </div>
+
+        <div class="campo">
+            <label for="cotizacionId">ID de cotización</label>
+            <input id="cotizacionId" name="cotizacionId" type="text" placeholder="COT001"
+                   [(ngModel)]="form.cotizacionId" required>
+        </div>
+
+        <div class="campo">
+            <label for="vehiculoId">ID de vehículo</label>
+            <input id="vehiculoId" name="vehiculoId" type="text" placeholder="V001"
+                   [(ngModel)]="form.vehiculoId" required>
+        </div>
+
+        <div class="campo">
+            <label for="origen">Origen</label>
+            <input id="origen" name="origen" type="text" placeholder="Lima"
+                   [(ngModel)]="form.origen" required>
+        </div>
+
+        <div class="campo">
+            <label for="destino">Destino</label>
+            <input id="destino" name="destino" type="text" placeholder="Arequipa"
+                   [(ngModel)]="form.destino" required>
+        </div>
+
+        <div class="campo">
+            <label for="distanciaOrden">Distancia (km)</label>
+            <input id="distanciaOrden" name="distancia" type="number" min="1"
+                   [(ngModel)]="form.distancia" required>
+        </div>
+
+        <div class="campo">
+            <label for="pesoOrden">Peso (toneladas)</label>
+            <input id="pesoOrden" name="peso" type="number" min="1"
+                   [(ngModel)]="form.peso" required>
+        </div>
+
+        <div class="campo-completo">
+            <button type="submit" class="btn">Registrar orden</button>
+            <button type="button" class="btn-restaurar" (click)="restaurar()">
+                Restaurar datos
+            </button>
+        </div>
+
+    </form>
+
+    @if (mensaje()) {
+        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'">
+            {{ mensaje() }}
+        </div>
+    }
+</section>
+
+<!-- TABLA -->
+<section class="panel">
+    <h2>Órdenes registradas</h2>
+
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cotización</th>
+                    <th>Vehículo</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Tarifa</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (o of ordenes(); track o.id) {
+                    <tr>
+                        <td>{{ o.id }}</td>
+                        <td>{{ o.cotizacionId }}</td>
+                        <td>{{ o.vehiculoId }}</td>
+                        <td>{{ o.origen }}</td>
+                        <td>{{ o.destino }}</td>
+                        <td>S/ {{ o.tarifa }}</td>
+                        <td>
+                            <select class="selector-estado-orden"
+                                    [attr.data-estado]="o.estado"
+                                    [value]="o.estado"
+                                    (change)="cambiarEstado(o.id, $event)">
+                                @for (e of estados; track e) {
+                                    <option [value]="e">{{ e }}</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-eliminar-orden"
+                                    (click)="eliminar(o.id)">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="8" class="vacio">No hay órdenes registradas.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

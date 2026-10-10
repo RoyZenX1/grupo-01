@@ -1,0 +1,50 @@
+<main class="login-wrapper">
+    <section class="login-card">
+        <h1>Iniciar sesión</h1>
+
+        <p>
+            Accede al panel de NexoCargo para gestionar clientes, vehículos,
+            órdenes y cotizaciones.
+        </p>
+
+        <form (ngSubmit)="onSubmit($event)" novalidate>
+
+            <div class="login-campo">
+                <label for="email">Correo electrónico</label>
+                <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="admin1@nexocargo.pe"
+                    [value]="email()"
+                    (input)="email.set($any($event.target).value)"
+                    required />
+            </div>
+
+            <div class="login-campo">
+                <label for="clave">Clave</label>
+                <input
+                    id="clave"
+                    name="clave"
+                    type="password"
+                    placeholder="••••••••"
+                    [value]="clave()"
+                    (input)="clave.set($any($event.target).value)"
+                    required />
+            </div>
+
+            <button class="login-boton" type="submit" [disabled]="cargando()">
+                {{ cargando() ? 'Ingresando...' : 'Ingresar' }}
+            </button>
+
+        </form>
+
+        @if (mensaje()) {
+            <p class="login-mensaje login-error">{{ mensaje() }}</p>
+        }
+
+        <p class="login-demo">
+            <strong>Demo:</strong> admin1@nexocargo.pe / admin123
+        </p>
+    </section>
+</main>

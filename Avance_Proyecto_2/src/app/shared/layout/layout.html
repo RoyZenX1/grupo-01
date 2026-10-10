@@ -1,0 +1,44 @@
+<div class="layout" [class.sidebar-collapsed]="sidebarCollapsed()">
+
+    <aside class="sidebar">
+        <button class="menu-toggle" type="button" (click)="toggleSidebar()"
+                aria-label="Contraer menú">
+            <span></span><span></span><span></span>
+        </button>
+
+        <div class="logo">
+            <h2>NexoCargo</h2>
+            <p>Gestión logística</p>
+        </div>
+
+        <nav class="menu">
+            <a routerLink="/dashboard"    routerLinkActive="activo">Dashboard</a>
+            <a routerLink="/clientes"     routerLinkActive="activo">Clientes</a>
+            <a routerLink="/cotizaciones" routerLinkActive="activo">Cotizaciones</a>
+            <a routerLink="/vehiculos"    routerLinkActive="activo">Vehículos</a>
+            <a routerLink="/ordenes"      routerLinkActive="activo">Órdenes</a>
+            <a routerLink="/facturas"     routerLinkActive="activo">Facturas</a>
+            <a routerLink="/reportes"     routerLinkActive="activo">Reportes</a>
+        </nav>
+    </aside>
+
+    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+
+    <main class="contenido">
+        <header class="encabezado">
+            <div>
+                <h1>Panel de control</h1>
+                <p>
+                    <span>Hola, {{ auth.sesion()?.nombre }}</span>.
+                    Rol: <strong>{{ auth.sesion()?.rol }}</strong>
+                </p>
+            </div>
+            <button type="button" class="btn-restaurar" (click)="cerrarSesion()">
+                Cerrar sesión
+            </button>
+        </header>
+
+        <router-outlet></router-outlet>
+    </main>
+
+</div>

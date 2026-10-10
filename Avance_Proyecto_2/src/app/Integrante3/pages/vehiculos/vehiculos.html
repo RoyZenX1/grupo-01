@@ -1,0 +1,152 @@
+<header class="encabezado">
+    <h1>Gestión de Vehículos</h1>
+    <p>Registra y administra los vehículos disponibles.</p>
+</header>
+
+<!-- TARJETAS -->
+<section class="grid-tarjetas">
+    <article class="tarjeta">
+        <h3>Total de vehículos</h3>
+        <p class="numero">{{ total() }}</p>
+    </article>
+    <article class="tarjeta">
+        <h3>Disponibles</h3>
+        <p class="numero">{{ disponibles() }}</p>
+    </article>
+    <article class="tarjeta">
+        <h3>En ruta</h3>
+        <p class="numero">{{ enRuta() }}</p>
+    </article>
+</section>
+
+<!-- REGISTRO -->
+<section class="panel">
+    <h2>Registrar vehículo</h2>
+
+    <form class="formulario" (ngSubmit)="registrar()">
+        <div class="campo">
+            <label for="idVehiculo">ID del vehículo</label>
+            <input id="idVehiculo" name="id" type="text" placeholder="V001"
+                   [(ngModel)]="form.id" required>
+        </div>
+
+        <div class="campo">
+            <label for="placa">Placa</label>
+            <input id="placa" name="placa" type="text" placeholder="ABC-123"
+                   [(ngModel)]="form.placa" required>
+        </div>
+
+        <div class="campo">
+            <label for="tipo">Tipo de vehículo</label>
+            <select id="tipo" name="tipo" [(ngModel)]="form.tipo" required>
+                <option value="">Seleccionar</option>
+                @for (t of tipos; track t) {
+                    <option [value]="t">{{ t }}</option>
+                }
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="capacidad">Capacidad (toneladas)</label>
+            <input id="capacidad" name="capacidad" type="number" min="1"
+                   [(ngModel)]="form.capacidad" required>
+        </div>
+
+        <div class="campo-completo">
+            <button type="submit" class="btn">Registrar vehículo</button>
+            <button type="button" class="btn-restaurar" (click)="restaurar()">
+                Restaurar datos
+            </button>
+        </div>
+    </form>
+
+    @if (mensaje()) {
+        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'">
+            {{ mensaje() }}
+        </div>
+    }
+</section>
+
+<!-- TABLA -->
+<section class="panel">
+    <h2>Vehículos registrados</h2>
+
+    <div class="tabla-contenedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Placa</th>
+                    <th>Tipo</th>
+                    <th>Capacidad</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (v of vehiculos(); track v.id) {
+                    <tr>
+                        <td>{{ v.id }}</td>
+                        <td>{{ v.placa }}</td>
+                        <td>{{ v.tipo }}</td>
+                        <td>{{ v.capacidad }} t</td>
+                        <td>
+                            <select class="selector-estado-vehiculo"
+                                    [attr.data-estado]="v.estado"
+                                    [value]="v.estado"
+                                    (change)="cambiarEstado(v.id, $event)">
+                                @for (e of estados; track e) {
+                                    <option [value]="e">{{ e }}</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn-eliminar"
+                                    (click)="eliminar(v.id)">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                } @empty {
+                    <tr>
+                        <td colspan="6" class="vacio">No hay vehículos registrados.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- TARIFA -->
+<section class="panel">
+    <h2>Consultar tarifa de transporte</h2>
+
+    <form class="formulario" (ngSubmit)="calcularTarifa()">
+        <div class="campo">
+            <label for="distancia">Distancia (km)</label>
+            <input id="distancia" name="distancia" type="number" min="1"
+                   [(ngModel)]="formTarifa.distancia" required>
+        </div>
+
+        <div class="campo">
+            <label for="peso">Peso (toneladas)</label>
+            <input id="peso" name="peso" type="number" min="1"
+                   [(ngModel)]="formTarifa.peso" required>
+        </div>
+
+        <div class="campo-completo">
+            <button type="submit" class="btn">Calcular tarifa</button>
+        </div>
+    </form>
+
+    @if (tarifa(); as t) {
+        <div class="resultado visible">
+            <strong>Tarifa encontrada:</strong> S/ {{ t.precio }}<br>
+            Distancia: {{ t.distancia }} km<br>
+            Peso: {{ t.peso }} toneladas
+        </div>
+    }
+    @if (errorTarifa()) {
+        <div class="resultado visible">{{ errorTarifa() }}</div>
+    }
+</section>
