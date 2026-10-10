@@ -8,6 +8,7 @@ import { EstadoAcademicoPipe } from '../pipes/estado-academico.pipe';
   standalone: true,
   imports: [DecimalPipe, PercentPipe, EstadoAcademicoPipe],
   templateUrl: './tarjeta-estudiante.html',
+  styles: [':host { display: block; }'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TarjetaEstudiante {

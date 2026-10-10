@@ -39,10 +39,12 @@
     </section>
   }
 
-  <div class="row g-3">
-    @for (e of lista(); track e.id) {
-      <div class="col-md-6 col-xl-4">
+<div class="row g-3">
+  @for (e of lista(); track e.id) {
+    <div class="col-md-6 col-xl-4">
+      <div class="d-flex flex-column h-100">
         <app-tarjeta-estudiante
+          class="flex-grow-1"
           [estudiante]="e"
           [seleccionado]="seleccionado()?.id === e.id"
           (seleccionar)="seleccionar($event)" />
@@ -55,8 +57,9 @@
                   [attr.aria-label]="'Eliminar a ' + e.nombre">Eliminar</button>
         </div>
       </div>
-    } @empty {
-      <p>No hay estudiantes registrados. Agrega el primero.</p>
-    }
-  </div>
+    </div>
+  } @empty {
+    <p>No hay estudiantes registrados. Agrega el primero.</p>
+  }
+</div>
 }
