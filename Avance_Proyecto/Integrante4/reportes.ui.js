@@ -23,17 +23,15 @@ function renderizarFiltros() {
     ETIQUETA_ESTADO.forEach((texto, flag) => {
         const boton = document.createElement("button");
         boton.type = "button";
-        boton.textContent = NOMBRE_ESTADO.get(flag);
-        boton.className = `chip-filtro ${texto}`;
+        boton.textContent = texto;
+        boton.className = "chip-filtro";
         boton.dataset.flag = flag;
-        // EVENTO onclick asignado dinámicamente
         boton.onclick = function () {
             alternarFiltro(flag, boton);
         };
         contenedor.appendChild(boton);
     });
 }
-
 function alternarFiltro(flag, boton) {
     mascaraFiltro = alternarFlag(mascaraFiltro, flag); // XOR bit a bit (reportes.js)
     boton.classList.toggle("activo", (mascaraFiltro & flag) !== 0);
@@ -79,10 +77,9 @@ function cambiarOrden() {
 function actualizarVista() {
     try {
         const porEstado = filtrarPorEstado(ordenes, mascaraFiltro);
-        const filtradas = filtrarPorEstado(ordenes, mascaraFiltro);
+        const filtradas = filtrarPorCriterios(porEstado, criterios);
         const ordenadas = ordenarPor(filtradas, ordenActualCampo, ordenActualDireccion);
         const procesado = procesarOrdenes(filtradas); // una sola pasada
-
 
         pintarMetricas(calcularMetricas(filtradas));
         pintarTablaOrdenes(transformarParaReporte(ordenadas));
@@ -95,7 +92,7 @@ function actualizarVista() {
             `${filtradas.length} de ${ordenes.length} órdenes`;
     } catch (error) {
         console.error(error);
-        alert("Ocurrió un error al generar el reporte.");
+        alert("Error: " + error.message);
     }
 }
 
@@ -121,13 +118,13 @@ function pintarTablaOrdenes(filas) {
 
     filas.forEach((fila) => {
         const tr = document.createElement("tr");
-        if (fila.esUrgente) tr.classList.add("fila-urgente");
+        if (fila.esUrgente) tr.classList.add("fila-urgente", "table-warning");
         tr.innerHTML = `
             <td>${fila.id}</td>
             <td>${fila.cliente}</td>
             <td>${fila.ruta}</td>
             <td>${fila.monto}</td>
-            <td>${fila.estado}</td>
+            <td>${fila.estadoHTML}</td>
             <td>${fila.fecha}</td>
         `;
         cuerpo.appendChild(tr);
@@ -189,7 +186,7 @@ function pintarDistribucionEstado(distribucion) {
     distribucion.forEach((grupo) => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-            <td><span class="badge ${ETIQUETA_ESTADO.get(grupo.flag)}">${NOMBRE_ESTADO.get(grupo.flag)}</span></td>
+            <td><span class="badge ${CLASE_BADGE.get(grupo.flag)}">${grupo.etiqueta}</span></td>
             <td>${grupo.cantidad}</td>
             <td>${Pipes.porcentaje(grupo.porcentaje, 1)}</td>
             <td>${Pipes.moneda(grupo.monto)}</td>

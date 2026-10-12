@@ -1,0 +1,28 @@
+<h1>Resumen académico</h1>
+<p>Consulta del {{ fecha | date: 'dd/MM/yyyy' }} con datos de la API.</p>
+@if (cargando()) {
+<p role="status">Cargando resumen...</p>
+} @else if (error()) {
+<p role="alert" class="text-danger">{{ error() }}</p>
+<button type="button" class="btn btn-primary" (click)="cargar()">
+    Reintentar
+</button>
+} @else if (total() === 0) {
+<p>No hay estudiantes registrados.</p>
+} @else {
+<div class="row g-3 my-3">
+    <div class="col-md-6">
+        <section class="panel" aria-labelledby="total-titulo">
+            <h2 id="total-titulo" class="h5">Estudiantes registrados</h2>
+            <p class="display-6">{{ total() }}</p>
+        </section>
+    </div>
+    <div class="col-md-6">
+        <section class="panel" aria-labelledby="promedio-titulo">
+            <h2 id="promedio-titulo" class="h5">Promedio general</h2>
+            <p class="display-6">{{ promedio() | number: '1.2-2' }}</p>
+        </section>
+    </div>
+</div>
+}
+<a routerLink="/estudiantes" class="btn btn-outline-primary mt-3">Consultar estudiantes</a>

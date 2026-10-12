@@ -9,14 +9,6 @@ const ESTADO = {
 
 
 const ETIQUETA_ESTADO = new Map([
-    [ESTADO.PENDIENTE, "text-bg-secondary"],
-    [ESTADO.EN_TRANSITO, "text-bg-warning"],
-    [ESTADO.ENTREGADO, "text-bg-success"],
-    [ESTADO.CANCELADO, "text-bg-danger"],
-    [ESTADO.URGENTE, "text-bg-primary"],
-]);
-
-const NOMBRE_ESTADO = new Map([
     [ESTADO.PENDIENTE, "Pendiente"],
     [ESTADO.EN_TRANSITO, "En tránsito"],
     [ESTADO.ENTREGADO, "Entregado"],
@@ -24,6 +16,15 @@ const NOMBRE_ESTADO = new Map([
     [ESTADO.URGENTE, "Urgente"],
 ]);
 
+const CLASE_BADGE = new Map([
+    [ESTADO.PENDIENTE, "text-bg-secondary"],
+    [ESTADO.EN_TRANSITO, "text-bg-primary"],
+    [ESTADO.ENTREGADO, "text-bg-success"],
+    [ESTADO.CANCELADO, "text-bg-danger"],
+    [ESTADO.URGENTE, "text-bg-warning"],
+]);
+
+const NOMBRE_ESTADO = ETIQUETA_ESTADO;
 
 const ordenes = [
     { id: 1,  cliente: "Transportes del Sur", origen: "Lima",     destino: "Trujillo", monto: 1850, estado: ESTADO.EN_TRANSITO | ESTADO.URGENTE, fecha: "2026-08-02" },
@@ -349,11 +350,12 @@ function resumenPorMes(procesado) {
 function transformarParaReporte(listaOrdenes) {
     return listaOrdenes.map((orden) => ({
         id: orden.id,
-        cliente: orden.cliente,
-        ruta: `${orden.origen} → ${orden.destino}`,
-        monto: `S/ ${orden.monto.toFixed(2)}`,
+        cliente: formatearCliente(orden.cliente),
+        ruta: Pipes.escapar(`${orden.origen} → ${orden.destino}`),
+        monto: Pipes.moneda(orden.monto),
         estado: etiquetasDeEstado(orden),
-        fecha: orden.fecha,
+        estadoHTML: badgesEstado(orden),
+        fecha: Pipes.fecha(orden.fecha),
         esUrgente: tieneEstado(orden, ESTADO.URGENTE),
     }));
 }
