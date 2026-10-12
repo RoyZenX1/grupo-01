@@ -1,0 +1,5 @@
+* text=auto eol=lf
+package-lock.json linguist-generated=true
+dist/** linguist-generated=true
+*.min.js linguist-generated=true
+*.min.css linguist-generated=true
