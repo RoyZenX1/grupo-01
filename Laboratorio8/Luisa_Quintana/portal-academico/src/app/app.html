@@ -1,0 +1,20 @@
+<a href="#contenido" class="saltar">Saltar al contenido</a>
+<header class="cabecera">
+  <div class="container py-4">
+    <p class="h4 mb-3">Portal académico</p>
+    <nav aria-label="Navegación principal" class="d-flex flex-wrap gap-2">
+      <a routerLink="/resumen" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page">Resumen</a>
+      <a routerLink="/estudiantes" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page">Estudiantes</a>
+      <a routerLink="/registro" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page">Registro</a>
+    </nav>
+  </div>
+</header>
+<main id="contenido" tabindex="-1" class="container py-4">
+  <router-outlet />
+</main>
+<footer class="container pb-4 text-body-secondary">
+  Laboratorio de Angular con datos ficticios sin conexión a un servidor.
+</footer>

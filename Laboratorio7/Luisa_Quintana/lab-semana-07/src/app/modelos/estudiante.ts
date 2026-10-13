@@ -1,9 +1,9 @@
+export type EstadoAcademico = 'Destacado' | 'Aprobado' | 'En riesgo';
+
 export interface Estudiante {
-    id: number;
-    nombre: string;
-    codigo: string;
-    carrera: string;
-    promedio: number;
-    asistencia: number;
-    estado: 'Aprobado' | 'Desaprobado' | 'En riesgo';
+  readonly id: number;
+  readonly nombre: string;
+  readonly programa: string;
+  readonly promedio: number;
+  readonly asistencia: number;
 }
