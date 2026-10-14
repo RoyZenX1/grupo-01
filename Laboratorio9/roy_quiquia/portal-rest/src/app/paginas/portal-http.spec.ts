@@ -22,6 +22,13 @@ const ana: Estudiante = {
   promedio: 17.2,
   asistencia: 94,
 };
+const luis: Estudiante = {
+  id: '102',
+  nombre: 'Luis Ramírez',
+  programa: 'Sistemas',
+  promedio: 10.4,
+  asistencia: 72,
+};
 
 describe('Vistas con HTTP', () => {
   let http: HttpTestingController;
@@ -160,5 +167,27 @@ describe('Vistas con HTTP', () => {
     f.componentInstance.guardar();
     expect(f.componentInstance.form.disabled).toBe(true);
     http.expectNone((req) => req.method === 'POST' || req.method === 'PATCH');
+  });
+
+  it('filtra sin coincidencias sin emitir otro GET', () => {
+    const f = TestBed.createComponent(Estudiantes);
+    f.detectChanges();
+    http.expectOne(API_URL).flush([ana, luis]);
+    f.componentInstance.filtroNombre.set('zzzz');
+    f.detectChanges();
+    expect(f.componentInstance.lista()).toEqual([ana, luis]);
+    expect(f.componentInstance.listaFiltrada()).toEqual([]);
+    expect(f.nativeElement.textContent).toContain('No hay coincidencias');
+  });
+
+  it('recupera todas las tarjetas al limpiar el filtro', () => {
+    const f = TestBed.createComponent(Estudiantes);
+    f.detectChanges();
+    http.expectOne(API_URL).flush([ana, luis]);
+    f.componentInstance.filtroNombre.set('ana');
+    f.componentInstance.filtroPrograma.set('Software');
+    expect(f.componentInstance.listaFiltrada()).toEqual([ana]);
+    f.componentInstance.limpiarFiltros();
+    expect(f.componentInstance.listaFiltrada()).toEqual([ana, luis]);
   });
 });
