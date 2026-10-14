@@ -2,7 +2,7 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* =========================
-   VARIABLES
+   1. VARIABLES
 ========================= */
 
 :root {
@@ -16,10 +16,20 @@
     --gris: #8b909c;
     --borde: #e8eaf0;
     --sombra: 0 5px 16px rgba(35, 51, 66, 0.07);
+
+    /* Colores de estado (alertas, botones destructivos) */
+    --peligro: #b83a3a;
+    --peligro-fondo: #fde4e4;
+    --peligro-texto: #9b1c1c;
+    --exito-fondo: #e2f5e9;
+    --exito-texto: #157347;
+
+    /* Anillo de foco visible para teclado (accesibilidad) */
+    --foco: #8b4e00;
 }
 
 /* =========================
-   GENERAL
+   2. GENERAL
 ========================= */
 
 *,
@@ -64,7 +74,33 @@ a {
 }
 
 /* =========================
-   ENCABEZADO
+   3. ACCESIBILIDAD
+========================= */
+
+:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 2px;
+}
+
+.saltar {
+    position: absolute;
+    top: -5rem;
+    left: 1rem;
+    z-index: 20;
+    padding: 0.7rem 1rem;
+    border-radius: 7px;
+    background: var(--blanco);
+    color: var(--azul);
+    font-weight: 700;
+    box-shadow: var(--sombra);
+}
+
+.saltar:focus {
+    top: 0.5rem;
+}
+
+/* =========================
+   4. ENCABEZADO
 ========================= */
 
 .encabezado {
@@ -92,7 +128,7 @@ a {
 }
 
 /* =========================
-   TARJETAS DE MÉTRICAS
+   4. TARJETAS DE MÉTRICAS
 ========================= */
 
 .grid-tarjetas {
@@ -135,7 +171,7 @@ a {
 }
 
 /* =========================
-   PANELES Y FORMULARIOS
+   5. PANELES Y FORMULARIOS
 ========================= */
 
 .panel {
@@ -197,7 +233,7 @@ a {
 }
 
 /* =========================
-   BOTONES
+   5. BOTONES
 ========================= */
 
 .btn {
@@ -216,6 +252,7 @@ a {
 }
 
 .btn:hover {
+    color: #ffffff;
     background: var(--azul-oscuro);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(35, 51, 66, 0.23);
@@ -247,9 +284,9 @@ a {
 
 .btn-eliminar,
 .btn-eliminar-orden {
-    border: 1px solid #b83a3a;
+    border: 1px solid var(--peligro);
     background: #ffffff;
-    color: #b83a3a;
+    color: var(--peligro);
     padding: 7px 10px;
     border-radius: 6px;
     cursor: pointer;
@@ -260,11 +297,11 @@ a {
 
 .btn-eliminar:hover,
 .btn-eliminar-orden:hover {
-    background: #fde4e4;
+    background: var(--peligro-fondo);
 }
 
 /* =========================
-   TABLAS
+   6. TABLAS
 ========================= */
 
 .tabla-contenedor {
@@ -309,8 +346,44 @@ tbody tr:hover {
 }
 
 /* =========================
-   SELECTORES DE ESTADO
+   7. ESTADOS (paleta única)
+   Cada [data-estado] define su juego de colores; selectores, insignias
+   y barras del dashboard lo reutilizan. Vehículos y órdenes comparten
+   la misma lógica de semáforo.
 ========================= */
+
+[data-estado="Disponible"],
+[data-estado="Completada"] {
+    --estado-fondo: #dcfce7;
+    --estado-borde: #86efac;
+    --estado-texto: #166534;
+}
+
+[data-estado="En ruta"] {
+    --estado-fondo: #e5f7ef;
+    --estado-borde: #8bd5b2;
+    --estado-texto: #197044;
+}
+
+[data-estado="Mantenimiento"],
+[data-estado="Pendiente"] {
+    --estado-fondo: #fff4d6;
+    --estado-borde: #f0c85a;
+    --estado-texto: #946c00;
+}
+
+[data-estado="Programada"] {
+    --estado-fondo: #e7f0ff;
+    --estado-borde: #9bbcf2;
+    --estado-texto: #285b9f;
+}
+
+[data-estado="Fuera de servicio"],
+[data-estado="Cancelada"] {
+    --estado-fondo: #fde4e4;
+    --estado-borde: #efaaaa;
+    --estado-texto: #a33131;
+}
 
 .selector-estado-vehiculo,
 .selector-estado-orden {
@@ -326,73 +399,101 @@ tbody tr:hover {
     background-color: #e5e7eb;
 }
 
-.selector-estado-vehiculo[data-estado="Disponible"] {
-    background-color: #dcfce7;
-    border-color: #86efac;
-    color: #166534;
-}
-.selector-estado-vehiculo[data-estado="En ruta"] {
-    background-color: #e5f7ef;
-    border-color: #8bd5b2;
-    color: #197044;
-}
-.selector-estado-vehiculo[data-estado="Mantenimiento"] {
-    background-color: #fff4d6;
-    border-color: #f0c85a;
-    color: #946c00;
-}
-.selector-estado-vehiculo[data-estado="Fuera de servicio"] {
-    background-color: #fde4e4;
-    border-color: #efaaaa;
-    color: #a33131;
+.selector-estado-vehiculo[data-estado],
+.selector-estado-orden[data-estado] {
+    background-color: var(--estado-fondo, #e5e7eb);
+    border-color: var(--estado-borde, transparent);
+    color: var(--estado-texto, #475569);
 }
 
-.selector-estado-orden[data-estado="Pendiente"] {
-    background-color: #fff4d6;
-    border-color: #f0c85a;
-    color: #946c00;
+/* Insignias (etiquetas pequeñas) */
+.insignia {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid #d5dbe3;
+    border-radius: 18px;
+    background: #eef1f5;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: capitalize;
+    white-space: nowrap;
 }
-.selector-estado-orden[data-estado="Programada"] {
-    background-color: #e7f0ff;
-    border-color: #9bbcf2;
-    color: #285b9f;
+
+.insignia[data-estado] {
+    background-color: var(--estado-fondo, #eef1f5);
+    border-color: var(--estado-borde, #d5dbe3);
+    color: var(--estado-texto, #475569);
 }
-.selector-estado-orden[data-estado="En ruta"] {
-    background-color: #e5f7ef;
-    border-color: #8bd5b2;
-    color: #197044;
+
+.insignia-admin {
+    background: var(--azul);
+    border-color: var(--azul);
+    color: #ffffff;
 }
-.selector-estado-orden[data-estado="Completada"] {
-    background-color: #dcfce7;
-    border-color: #86efac;
-    color: #166534;
-}
-.selector-estado-orden[data-estado="Cancelada"] {
-    background-color: #fde4e4;
-    border-color: #efaaaa;
-    color: #a33131;
+
+.insignia-cliente {
+    background: var(--naranja-claro);
+    border-color: var(--naranja);
+    color: #7a5600;
 }
 
 /* =========================
-   MENSAJES
+   8. MENSAJES Y PÁGINAS DE ESTADO
 ========================= */
 
 .mensaje {
     margin-top: 15px;
     padding: 10px 14px;
     border-radius: 8px;
-    background: #fde4e4;
-    color: #9b1c1c;
+    background: var(--peligro-fondo);
+    color: var(--peligro-texto);
     font-size: 0.9rem;
 }
 
 .mensaje.exito {
-    background: #e2f5e9;
-    color: #157347;
+    background: var(--exito-fondo);
+    color: var(--exito-texto);
+}
+
+/* Páginas 403 / 404 */
+.pagina-estado {
+    max-width: 520px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.pagina-estado-codigo {
+    margin: 0;
+    color: var(--naranja);
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.pagina-estado h1 {
+    margin: 10px 0 8px;
+    color: var(--azul);
+}
+
+.pagina-estado p {
+    color: var(--gris);
+}
+
+.pagina-estado .btn {
+    margin-top: 8px;
+}
+
+.pagina-estado-completa {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
 }
 
 /* =========================
-   RESULTADO DE TARIFA
+   9. RESULTADO DE TARIFA
 ========================= */
 
 .resultado {
@@ -410,7 +511,7 @@ tbody tr:hover {
 }
 
 /* =========================
-   RESPONSIVE
+   10. RESPONSIVE
 ========================= */
 
 @media (max-width: 900px) {

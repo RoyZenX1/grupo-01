@@ -1,5 +1,7 @@
 export type Rol = 'administrador' | 'cliente';
 
+export const ROLES: readonly Rol[] = ['administrador', 'cliente'];
+
 export interface Usuario {
     id: string;
     nombre: string;

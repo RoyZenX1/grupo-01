@@ -15,6 +15,7 @@
                     id="email"
                     name="email"
                     type="email"
+                    autocomplete="username"
                     placeholder="admin1@nexocargo.pe"
                     [value]="email()"
                     (input)="email.set($any($event.target).value)"
@@ -27,6 +28,7 @@
                     id="clave"
                     name="clave"
                     type="password"
+                    autocomplete="current-password"
                     placeholder="••••••••"
                     [value]="clave()"
                     (input)="clave.set($any($event.target).value)"
@@ -40,11 +42,19 @@
         </form>
 
         @if (mensaje()) {
-            <p class="login-mensaje login-error">{{ mensaje() }}</p>
+            <p class="login-mensaje login-error" role="alert">{{ mensaje() }}</p>
         }
 
-        <p class="login-demo">
-            <strong>Demo:</strong> admin1@nexocargo.pe / admin123
-        </p>
+        <div class="login-demo">
+            <p><strong>Cuentas de demostración</strong></p>
+            <div class="login-demo-botones">
+                @for (cuenta of cuentasDemo; track cuenta.email) {
+                    <button type="button" class="login-demo-boton" (click)="usarCuenta(cuenta)">
+                        {{ cuenta.etiqueta }}
+                    </button>
+                }
+            </div>
+            <p>Administrador: acceso a todos los módulos | Cliente: Dashboard, Cotizaciones y Facturas.</p>
+        </div>
     </section>
 </main>

@@ -1,8 +1,12 @@
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
 <div class="layout" [class.sidebar-collapsed]="sidebarCollapsed()">
 
     <aside class="sidebar">
         <button class="menu-toggle" type="button" (click)="toggleSidebar()"
-                aria-label="Contraer menú">
+                aria-controls="menu-principal"
+                [attr.aria-expanded]="!sidebarCollapsed()"
+                [attr.aria-label]="sidebarCollapsed() ? 'Expandir menú' : 'Contraer menú'">
             <span></span><span></span><span></span>
         </button>
 
@@ -11,34 +15,46 @@
             <p>Gestión logística</p>
         </div>
 
-        <nav class="menu">
-            <a routerLink="/dashboard"    routerLinkActive="activo">Dashboard</a>
-            <a routerLink="/clientes"     routerLinkActive="activo">Clientes</a>
-            <a routerLink="/cotizaciones" routerLinkActive="activo">Cotizaciones</a>
-            <a routerLink="/vehiculos"    routerLinkActive="activo">Vehículos</a>
-            <a routerLink="/ordenes"      routerLinkActive="activo">Órdenes</a>
-            <a routerLink="/facturas"     routerLinkActive="activo">Facturas</a>
-            <a routerLink="/reportes"     routerLinkActive="activo">Reportes</a>
+        <nav id="menu-principal" class="menu" aria-label="Navegación principal">
+            @for (item of auth.menu(); track item.modulo) {
+                <a [routerLink]="item.ruta"
+                   routerLinkActive="activo"
+                   ariaCurrentWhenActive="page"
+                   [attr.data-icono]="item.icono"
+                   [attr.title]="item.etiqueta">{{ item.etiqueta }}</a>
+            }
         </nav>
     </aside>
 
-    <button class="mobile-menu-toggle" type="button" aria-label="Abrir menú">☰</button>
+    <div class="area">
+        <header class="barra-superior">
+            <nav class="migas" aria-label="Ubicación actual">
+                <span>NexoCargo</span>
+                <span aria-hidden="true">/</span>
+                <strong>{{ paginaActual() }}</strong>
+            </nav>
 
-    <main class="contenido">
-        <header class="encabezado">
-            <div>
-                <h1>Panel de control</h1>
-                <p>
-                    <span>Hola, {{ auth.sesion()?.nombre }}</span>.
-                    Rol: <strong>{{ auth.sesion()?.rol }}</strong>
-                </p>
+            <div class="usuario">
+                <span class="avatar" aria-hidden="true">{{ inicial() }}</span>
+                <div class="usuario-datos">
+                    <span class="usuario-nombre">{{ auth.sesion()?.nombre }}</span>
+                    <span class="insignia"
+                          [class.insignia-admin]="auth.esAdmin()"
+                          [class.insignia-cliente]="!auth.esAdmin()">{{ auth.sesion()?.rol }}</span>
+                </div>
+                <button type="button" class="btn-restaurar" (click)="cerrarSesion()">
+                    Cerrar sesión
+                </button>
             </div>
-            <button type="button" class="btn-restaurar" (click)="cerrarSesion()">
-                Cerrar sesión
-            </button>
         </header>
 
-        <router-outlet></router-outlet>
-    </main>
+        <main id="contenido" class="contenido" tabindex="-1">
+            <router-outlet />
+        </main>
+
+        <footer class="pie">
+            NexoCargo | Sistema de gestión logística | Avance 2 | {{ anio }}
+        </footer>
+    </div>
 
 </div>

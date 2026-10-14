@@ -20,10 +20,10 @@
 .sidebar {
     position: relative;
     min-width: 0;
-    background: #233342;
-    color: #ffffff;
+    background: var(--azul);
+    color: var(--blanco);
     padding: 24px 15px;
-    border-right: 1px solid #2b3f52;
+    border-right: 1px solid var(--azul-oscuro);
     box-shadow: 4px 0 16px rgba(35, 51, 66, 0.12);
 }
 
@@ -38,7 +38,7 @@
     height: 34px;
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 9px;
-    background: #233342;
+    background: var(--azul);
     cursor: pointer;
 }
 
@@ -47,11 +47,7 @@
     width: 14px;
     height: 2px;
     border-radius: 2px;
-    background: #ffffff;
-}
-
-.mobile-menu-toggle {
-    display: none;
+    background: var(--blanco);
 }
 
 .logo {
@@ -60,11 +56,17 @@
 }
 
 .logo h2 {
-    color: #ffffff;
+    color: var(--blanco);
     font-size: 1.05rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     margin: 0;
+}
+
+.logo h2::before {
+    content: "◉";
+    margin-right: 9px;
+    font-size: 14px;
 }
 
 .logo p {
@@ -76,13 +78,6 @@
     text-transform: uppercase;
 }
 
-.logo h2::before {
-    content: "◉";
-    color: #ffffff;
-    margin-right: 9px;
-    font-size: 14px;
-}
-
 .menu {
     display: flex;
     flex-direction: column;
@@ -92,16 +87,17 @@
 .menu a {
     display: flex;
     align-items: center;
-    color: #ffffff;
+    color: var(--blanco);
     padding: 11px 13px;
     border-radius: 7px;
     font-size: 0.82rem;
     font-weight: 600;
-    text-decoration: none;
     transition: background 160ms ease, color 160ms ease;
 }
 
+/* El ícono de cada opción viene de data-icono (ver core/config/permisos.ts) */
 .menu a::before {
+    content: attr(data-icono);
     width: 22px;
     margin-right: 7px;
     color: #b9c6d2;
@@ -109,22 +105,15 @@
     text-align: center;
 }
 
-.menu a:nth-child(1)::before { content: "⌂"; }
-.menu a:nth-child(2)::before { content: "♙"; }
-.menu a:nth-child(3)::before { content: "▣"; }
-.menu a:nth-child(4)::before { content: "▤"; }
-.menu a:nth-child(5)::before { content: "➜"; }
-.menu a:nth-child(6)::before { content: "▥"; }
-.menu a:nth-child(7)::before { content: "▦"; }
-
 .menu a:hover,
 .menu a.activo {
-    color: #233342;
+    color: var(--azul);
     background: #e4eaff;
 }
 
+.menu a:hover::before,
 .menu a.activo::before {
-    color: #233342;
+    color: var(--azul);
 }
 
 /* Sidebar colapsado */
@@ -138,13 +127,13 @@
     font-size: 0;
 }
 
-.layout.sidebar-collapsed .logo p {
-    display: none;
-}
-
 .layout.sidebar-collapsed .logo h2::before {
     margin: 0;
     font-size: 16px;
+}
+
+.layout.sidebar-collapsed .logo p {
+    display: none;
 }
 
 .layout.sidebar-collapsed .menu-toggle {
@@ -166,55 +155,95 @@
 }
 
 /* =========================
-   CONTENIDO
+   ÁREA PRINCIPAL
 ========================= */
 
-.contenido {
+.area {
     min-width: 0;
-    padding: 28px clamp(24px, 4vw, 42px);
-    max-width: 1500px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.encabezado {
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.barra-superior {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding-bottom: 18px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e8eaf0;
+    gap: 16px;
+    padding: 12px clamp(24px, 4vw, 42px);
+    background: var(--blanco);
+    border-bottom: 1px solid var(--borde);
 }
 
-.encabezado h1 {
-    color: #233342;
-    margin: 0 0 6px 0;
-    font-size: clamp(1.5rem, 2vw, 1.8rem);
+.migas {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--gris);
+}
+
+.migas strong {
+    color: var(--azul);
+}
+
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--azul);
+    color: var(--blanco);
     font-weight: 700;
-    letter-spacing: -0.04em;
-}
-
-.encabezado p {
-    color: #8b909c;
-    margin: 0;
     font-size: 0.9rem;
 }
 
-.btn-restaurar {
-    border: 1px solid #233342;
-    background: #ffffff;
-    color: #233342;
-    padding: 10px 18px;
-    border-radius: 7px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 0.82rem;
-    transition: background 160ms ease;
+.usuario-datos {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    line-height: 1.2;
 }
 
-.btn-restaurar:hover {
-    background: #f1f4f7;
+.usuario-nombre {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--texto);
+}
+
+.barra-superior .btn-restaurar {
+    margin-left: 0;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 28px clamp(24px, 4vw, 42px);
+}
+
+.contenido:focus {
+    outline: none;
+}
+
+.pie {
+    padding: 14px clamp(24px, 4vw, 42px);
+    border-top: 1px solid var(--borde);
+    color: var(--gris);
+    font-size: 0.78rem;
+    text-align: center;
 }
 
 /* =========================
@@ -225,6 +254,7 @@
     .layout {
         grid-template-columns: 190px 1fr;
     }
+
     .contenido {
         padding: 24px;
     }
@@ -235,13 +265,18 @@
         display: block;
     }
 
+    .area {
+        min-height: 0;
+    }
+
     .sidebar {
         position: sticky;
         top: 0;
+        z-index: 5;
         width: 100%;
         padding: 12px 10px;
         border-right: none;
-        border-bottom: 1px solid #2b3f52;
+        border-bottom: 1px solid var(--azul-oscuro);
     }
 
     .menu-toggle {
@@ -253,13 +288,8 @@
         text-align: center;
     }
 
-    .logo h2 {
-        font-size: 1.05rem;
-    }
-
     .logo p {
         margin: 2px 0 0;
-        font-size: 0.65rem;
     }
 
     .menu {
@@ -274,7 +304,6 @@
         white-space: nowrap;
         padding: 9px 13px;
         background: rgba(255, 255, 255, 0.08);
-        font-size: 0.8rem;
     }
 
     .menu a::before {
@@ -283,11 +312,20 @@
         font-size: 0.8rem;
     }
 
-    .contenido {
-        padding: 22px 14px 30px;
+    .barra-superior {
+        padding: 10px 14px;
     }
 
-    .encabezado {
-        display: block;
+    .migas {
+        display: none;
+    }
+
+    .usuario {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .contenido {
+        padding: 22px 14px 30px;
     }
 }

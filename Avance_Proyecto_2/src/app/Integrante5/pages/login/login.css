@@ -100,9 +100,39 @@
 }
 
 .login-demo {
-    margin-top: 16px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e8eaf0;
     font-size: 0.8rem;
     color: #8b909c;
+}
+
+.login-demo p {
+    margin: 0 0 8px;
+}
+
+.login-demo-botones {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.login-demo-boton {
+    border: 1px solid #233342;
+    background: #ffffff;
+    color: #233342;
+    padding: 6px 14px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+    font-family: inherit;
+    transition: background 160ms ease;
+}
+
+.login-demo-boton:hover {
+    background: #f1f4f7;
 }
 
 @media (max-width: 480px) {

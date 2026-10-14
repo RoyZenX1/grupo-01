@@ -1,0 +1,135 @@
+<header class="encabezado">
+    <div>
+        <h1>Dashboard</h1>
+        <p>
+            @if (auth.esAdmin()) {
+                Resumen general de la operación de NexoCargo.
+            } @else {
+                Bienvenido a tu panel de NexoCargo.
+            }
+        </p>
+    </div>
+</header>
+
+@if (auth.esAdmin()) {
+
+    <!-- INDICADORES -->
+    <section class="grid-tarjetas" aria-label="Indicadores principales">
+        <article class="tarjeta">
+            <h3>Vehículos en flota</h3>
+            <p class="numero">{{ flota().total }}</p>
+        </article>
+        <article class="tarjeta">
+            <h3>Vehículos disponibles</h3>
+            <p class="numero">{{ flota().disponibles }}</p>
+        </article>
+        <article class="tarjeta">
+            <h3>Órdenes activas</h3>
+            <p class="numero">{{ ordenes().activas }}</p>
+        </article>
+        <article class="tarjeta">
+            <h3>Órdenes completadas</h3>
+            <p class="numero">{{ ordenes().completadas }}</p>
+        </article>
+        <article class="tarjeta">
+            <h3>Vehículos en ruta</h3>
+            <p class="numero">{{ flota().enRuta }}</p>
+        </article>
+        <article class="tarjeta">
+            <h3>Ingresos estimados</h3>
+            <p class="numero">{{ ordenes().ingresos | currency: 'PEN' : 'S/ ' : '1.2-2' }}</p>
+        </article>
+    </section>
+
+    <!-- DISTRIBUCIONES -->
+    <section class="dashboard-columnas">
+        <article class="panel">
+            <h2>Órdenes por estado</h2>
+            <ul class="distribucion">
+                @for (item of estadosOrdenes(); track item.etiqueta) {
+                    <li [attr.data-estado]="item.etiqueta">
+                        <span class="dist-etiqueta">{{ item.etiqueta }}</span>
+                        <span class="dist-barra" aria-hidden="true">
+                            <span class="dist-relleno" [style.width.%]="item.porcentaje"></span>
+                        </span>
+                        <span class="dist-valor">{{ item.cantidad }} ({{ item.porcentaje }}%)</span>
+                    </li>
+                }
+            </ul>
+        </article>
+
+        <article class="panel">
+            <h2>Estado de la flota</h2>
+            <ul class="distribucion">
+                @for (item of estadosFlota(); track item.etiqueta) {
+                    <li [attr.data-estado]="item.etiqueta">
+                        <span class="dist-etiqueta">{{ item.etiqueta }}</span>
+                        <span class="dist-barra" aria-hidden="true">
+                            <span class="dist-relleno" [style.width.%]="item.porcentaje"></span>
+                        </span>
+                        <span class="dist-valor">{{ item.cantidad }} ({{ item.porcentaje }}%)</span>
+                    </li>
+                }
+            </ul>
+        </article>
+    </section>
+
+    <!-- ÚLTIMAS ÓRDENES -->
+    <section class="panel">
+        <h2>Últimas órdenes</h2>
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Orden</th>
+                        <th>Ruta</th>
+                        <th>Vehículo</th>
+                        <th>Tarifa</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (orden of ultimasOrdenes(); track orden.id) {
+                        <tr>
+                            <td>{{ orden.id }}</td>
+                            <td>{{ orden.origen }} → {{ orden.destino }}</td>
+                            <td>{{ orden.vehiculoId }}</td>
+                            <td>{{ orden.tarifa | currency: 'PEN' : 'S/ ' : '1.2-2' }}</td>
+                            <td>
+                                <span class="insignia" [attr.data-estado]="orden.estado">{{ orden.estado }}</span>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="5" class="vacio">Aún no hay órdenes registradas.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+} @else {
+
+    <section class="panel">
+        <h2>Hola, {{ auth.sesion()?.nombre }}</h2>
+        <p>
+            Desde aquí puedes solicitar cotizaciones y revisar tus facturas.
+            Elige una de las opciones disponibles para tu cuenta.
+        </p>
+    </section>
+
+}
+
+<!-- ACCESOS RÁPIDOS (según el rol) -->
+<section class="panel">
+    <h2>Accesos rápidos</h2>
+    <nav class="accesos" aria-label="Accesos rápidos">
+        @for (item of accesos(); track item.modulo) {
+            <a class="acceso" [routerLink]="item.ruta">
+                <span class="acceso-icono" aria-hidden="true">{{ item.icono }}</span>
+                {{ item.etiqueta }}
+            </a>
+        }
+    </nav>
+</section>

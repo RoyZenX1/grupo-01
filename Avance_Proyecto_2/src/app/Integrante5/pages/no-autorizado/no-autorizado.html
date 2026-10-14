@@ -1,0 +1,9 @@
+<section class="panel pagina-estado">
+    <p class="pagina-estado-codigo">403</p>
+    <h1>Acceso restringido</h1>
+    <p>
+        Tu rol <strong>{{ auth.sesion()?.rol }}</strong> no tiene permiso para ver esta sección.
+        Si crees que es un error, contacta con un administrador.
+    </p>
+    <a class="btn" routerLink="/dashboard">Volver al dashboard</a>
+</section>

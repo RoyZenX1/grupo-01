@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, LOCALE_ID } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localeEsPe from '@angular/common/locales/es-PE';
@@ -11,7 +11,11 @@ registerLocaleData(localeEsPe);
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
-        provideRouter(routes),
+        provideRouter(
+            routes,
+            // Al cambiar de página se vuelve al inicio del contenido
+            withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+        ),
         provideHttpClient(),
         { provide: LOCALE_ID, useValue: 'es-PE' }
     ]
