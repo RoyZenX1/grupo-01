@@ -1,0 +1,169 @@
+<section class="reportes-page">
+  <header class="page-heading">
+    <div>
+      <span class="eyebrow">NEXOCARGO / ANALÍTICA</span>
+      <h1>Reportes, métricas y rutas</h1>
+      <p>Resumen calculado en tiempo real con las órdenes del servicio Angular.</p>
+    </div>
+    <button class="btn-limpiar" type="button" (click)="limpiarFiltros()">Limpiar filtros</button>
+  </header>
+
+  <section class="panel filtros-panel" aria-label="Filtros de reportes">
+    <div class="panel-heading">
+      <div>
+        <h2>Filtrar órdenes</h2>
+        <p>Busca por código, cotización, vehículo, origen o destino.</p>
+      </div>
+      <span class="contador">{{ ordenesFiltradas().length }} de {{ ordenes().length }} órdenes</span>
+    </div>
+
+    <div class="filtros-grid">
+      <label class="campo campo-busqueda">
+        <span>Buscar</span>
+        <input type="search" [ngModel]="texto()" (ngModelChange)="texto.set($event)" placeholder="Ej. O001, Lima, Callao..." />
+      </label>
+      <label class="campo">
+        <span>Tarifa mínima (S/)</span>
+        <input type="number" min="0" [ngModel]="montoMin()" (ngModelChange)="montoMin.set($event === '' ? null : +$event)" placeholder="0.00" />
+      </label>
+      <label class="campo">
+        <span>Tarifa máxima (S/)</span>
+        <input type="number" min="0" [ngModel]="montoMax()" (ngModelChange)="montoMax.set($event === '' ? null : +$event)" placeholder="Sin límite" />
+      </label>
+      <label class="campo">
+        <span>Ordenar por</span>
+        <select [ngModel]="ordenamiento()" (ngModelChange)="ordenamiento.set($event)">
+          <option value="id-asc">Código: ascendente</option>
+          <option value="id-desc">Código: descendente</option>
+          <option value="tarifa-desc">Tarifa: mayor a menor</option>
+          <option value="tarifa-asc">Tarifa: menor a mayor</option>
+          <option value="origen-asc">Origen: A–Z</option>
+          <option value="estado-asc">Estado: A–Z</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="estados-filtros">
+      <span class="etiqueta-filtros">Estado:</span>
+      @for (estado of estados; track estado) {
+        <button type="button" class="chip-estado" [class.seleccionado]="tieneEstado(estado)" (click)="alternarEstado(estado)">
+          <span class="punto" [ngClass]="claseEstado(estado)"></span>{{ estado }}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="metricas-grid" aria-label="Métricas principales">
+    <article class="metrica-card metrica-azul">
+      <div class="metrica-icono">▤</div>
+      <p>Órdenes filtradas</p>
+      <strong>{{ ordenesFiltradas().length }}</strong>
+      <small>Registros encontrados</small>
+    </article>
+    <article class="metrica-card metrica-verde">
+      <div class="metrica-icono">S/</div>
+      <p>Total de tarifas</p>
+      <strong>{{ totalTarifas() | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</strong>
+      <small>Suma de las órdenes visibles</small>
+    </article>
+    <article class="metrica-card metrica-morado">
+      <div class="metrica-icono">∑</div>
+      <p>Tarifa promedio</p>
+      <strong>{{ tarifaPromedio() | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</strong>
+      <small>Promedio por orden</small>
+    </article>
+    <article class="metrica-card metrica-naranja">
+      <div class="metrica-icono">▣</div>
+      <p>Cotizaciones vinculadas</p>
+      <strong>{{ cotizacionesVinculadas() }}</strong>
+      <small>Códigos de cotización únicos</small>
+    </article>
+    <article class="metrica-card metrica-celeste">
+      <div class="metrica-icono">⇄</div>
+      <p>Rutas distintas</p>
+      <strong>{{ rutasUnicas() }}</strong>
+      <small>Combinaciones de origen y destino</small>
+    </article>
+    <article class="metrica-card metrica-roja">
+      <div class="metrica-icono">◷</div>
+      <p>Programadas o en ruta</p>
+      <strong>{{ enCurso() }}</strong>
+      <small>Órdenes en proceso</small>
+    </article>
+  </section>
+
+  <section class="panel tabla-panel">
+    <div class="panel-heading">
+      <div><h2>Detalle de órdenes</h2><p>Datos compartidos con el módulo de Órdenes.</p></div>
+    </div>
+    <div class="tabla-scroll">
+      <table>
+        <thead><tr><th>Código</th><th>Cotización</th><th>Vehículo</th><th>Ruta</th><th>Distancia</th><th>Peso</th><th>Tarifa</th><th>Estado</th></tr></thead>
+        <tbody>
+          @for (orden of ordenesFiltradas(); track orden.id) {
+            <tr>
+              <td class="codigo">{{ orden.id }}</td>
+              <td>{{ orden.cotizacionId }}</td>
+              <td>{{ orden.vehiculoId }}</td>
+              <td class="ruta-celda">{{ ruta(orden) }}</td>
+              <td>{{ orden.distancia | number:'1.0-1':'es-PE' }} km</td>
+              <td>{{ orden.peso | number:'1.0-2':'es-PE' }} t</td>
+              <td class="importe">{{ orden.tarifa | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</td>
+              <td><span class="badge-estado" [ngClass]="claseEstado(orden.estado)">{{ orden.estado }}</span></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="8" class="vacio">No se encontraron órdenes con los filtros seleccionados.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="resumen-grid">
+    <article class="panel resumen-panel">
+      <div class="panel-heading"><div><h2>Distribución por estado</h2><p>Porcentaje y tarifas agrupadas por estado.</p></div></div>
+      <div class="resumen-lista">
+        @for (grupo of resumenEstados(); track grupo.estado) {
+          <div class="resumen-item">
+            <div class="resumen-item-top">
+              <span class="badge-estado" [ngClass]="claseEstado(grupo.estado)">{{ grupo.estado }}</span>
+              <strong>{{ grupo.cantidad }}</strong>
+            </div>
+            <div class="barra-fondo"><div class="barra-valor" [ngClass]="claseEstado(grupo.estado)" [style.width.%]="grupo.porcentaje"></div></div>
+            <div class="resumen-item-bottom"><span>{{ grupo.porcentaje | number:'1.0-1':'es-PE' }}%</span><span>{{ grupo.monto | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</span></div>
+          </div>
+        }
+      </div>
+    </article>
+
+    <article class="panel resumen-panel">
+      <div class="panel-heading"><div><h2>Resumen por ruta</h2><p>Rutas ordenadas por suma de tarifas.</p></div></div>
+      <div class="tabla-scroll">
+        <table class="tabla-compacta">
+          <thead><tr><th>Ruta</th><th>Órdenes</th><th>Total</th></tr></thead>
+          <tbody>
+            @for (grupo of resumenRutas(); track grupo.ruta) {
+              <tr><td>{{ grupo.ruta }}</td><td>{{ grupo.cantidad }}</td><td class="importe">{{ grupo.monto | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</td></tr>
+            } @empty { <tr><td colspan="3" class="vacio">No hay rutas para resumir.</td></tr> }
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="panel resumen-panel cotizaciones-panel">
+      <div class="panel-heading"><div><h2>Cotizaciones con más órdenes</h2><p>Top 5 según el total de tarifas relacionadas.</p></div></div>
+      <div class="tabla-scroll">
+        <table class="tabla-compacta">
+          <thead><tr><th>Cotización</th><th>Órdenes</th><th>Total</th></tr></thead>
+          <tbody>
+            @for (grupo of cotizacionesFrecuentes(); track grupo.cotizacion) {
+              <tr><td class="codigo">{{ grupo.cotizacion }}</td><td>{{ grupo.cantidad }}</td><td class="importe">{{ grupo.monto | currency:'PEN':'symbol':'1.2-2':'es-PE' }}</td></tr>
+            } @empty { <tr><td colspan="3" class="vacio">No hay cotizaciones para resumir.</td></tr> }
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <p class="nota-datos"><strong>Nota:</strong> el modelo actual de Orden no contiene fecha de creación, nombre del cliente ni indicador de urgencia. Por eso este reporte usa cotización, vehículo, tarifa, ruta y estado disponibles, sin inventar esos datos.</p>
+</section>
