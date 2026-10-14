@@ -67,13 +67,6 @@ export const routes: Routes = [
                     import('./Integrante3/pages/ordenes/ordenes').then(m => m.Ordenes)
             },
             {
-                path: 'facturas',
-                title: 'Facturas · NexoCargo',
-                data: { modulo: 'facturas' },
-                loadComponent: () =>
-                    import('./Integrante4/pages/facturas/facturas').then(m => m.Facturas)
-            },
-            {
                 path: 'reportes',
                 title: 'Reportes · NexoCargo',
                 data: { modulo: 'reportes' },
