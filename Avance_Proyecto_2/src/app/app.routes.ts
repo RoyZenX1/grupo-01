@@ -42,11 +42,6 @@ export const routes: Routes = [
                     import('./Integrante3/pages/ordenes/ordenes').then(m => m.Ordenes)
             },
             {
-                path: 'facturas',
-                loadComponent: () =>
-                    import('./Integrante4/pages/facturas/facturas').then(m => m.Facturas)
-            },
-            {
                 path: 'reportes',
                 loadComponent: () =>
                     import('./Integrante4/pages/reportes/reportes').then(m => m.Reportes)
