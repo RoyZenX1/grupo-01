@@ -1,0 +1,98 @@
+<main class="contenido">
+    <header class="encabezado">
+        <div>
+            <h1>Cotizaciones y Tarifas</h1>
+            <p>Calcula el costo de servicios logisticos y genera registros oficiales en el sistema.</p>
+        </div>
+    </header>
+
+    <section class="cotizador-grid">
+        <!-- Formulario Reactivo -->
+        <article class="panel cotizador-formulario">
+            <div class="seccion-etiqueta">NUEVA COTIZACION</div>
+            <h2>Datos del servicio</h2>
+
+            <form [formGroup]="cotizadorForm" (ngSubmit)="calcularYGuardar()" class="formulario">
+
+                <div class="campo campo-completo">
+                    <label for="clienteId">ID o Codigo de Cliente</label>
+                    <input id="clienteId" formControlName="clienteId" type="text" placeholder="Ej. CUST-001" required>
+                </div>
+
+                <div class="campo campo-completo">
+                    <label for="productoServicio">Servicio o Ruta</label>
+                    <input id="productoServicio" formControlName="productoServicio" type="text"
+                        placeholder="Ej. Transporte Lima - Trujillo" required>
+                </div>
+
+                <div class="campo">
+                    <label for="precioUnitario">Precio unitario (S/)</label>
+                    <input id="precioUnitario" formControlName="precioUnitario" type="number" step="0.01" min="0.01"
+                        required>
+                </div>
+
+                <div class="campo">
+                    <label for="cantidad">Cantidad / Unidades</label>
+                    <input id="cantidad" formControlName="cantidad" type="number" min="1" required>
+                </div>
+
+                <div class="campo campo-completo">
+                    <label for="descuentoPorcentaje">Descuento corporativo (%) [Max 50%]</label>
+                    <input id="descuentoPorcentaje" formControlName="descuentoPorcentaje" type="number" min="0" max="50"
+                        required>
+                </div>
+
+                <!-- Mensajes de alerta -->
+                <p *ngIf="mensajeError" class="mensaje-error" role="alert">{{ mensajeError }}</p>
+                <p *ngIf="mensajeExito" class="mensaje-exito" role="alert">{{ mensajeExito }}</p>
+
+                <div class="acciones cotizador-acciones campo-completo">
+                    <button type="submit" class="btn" [disabled]="cotizadorForm.invalid">Calcular y Registrar</button>
+                </div>
+            </form>
+        </article>
+
+        <!-- Resumen dinmco -->
+        <article class="panel cotizador-resultado">
+            <div class="seccion-etiqueta">RESUMEN</div>
+            <h2>Resultado del Calculo</h2>
+
+            <div *ngIf="!resultadoCalculado" class="resultado-vacio">
+                <h3>Aun no hay una cotizacion generada</h3>
+                <p>Ingresa los datos del servicio y haz clic en calcular para ver el desglose financiero.</p>
+            </div>
+
+            <div *ngIf="resultadoCalculado" class="resultado-calculado">
+                <div class="servicio-resumen">
+                    <span>Servicio:</span>
+                    <strong>{{ resultadoCalculado.productoServicio }}</strong>
+                    <small>{{ resultadoCalculado.cantidad }} unidades</small>
+                </div>
+
+                <dl class="resumen">
+                    <div class="resumen-fila">
+                        <dt>Subtotal</dt>
+                        <dd>{{ resultadoCalculado.subtotal | currency:'PEN':'S/ ' }}</dd>
+                    </div>
+                    <div class="resumen-fila">
+                        <dt>Descuento ({{ resultadoCalculado.descuentoPorcentaje }}%)</dt>
+                        <dd>- S/ {{ (resultadoCalculado.subtotal - resultadoCalculado.baseImponible) | number:'1.2-2' }}
+                        </dd>
+                    </div>
+                    <div class="resumen-fila">
+                        <dt>Base Imponible</dt>
+                        <dd>{{ resultadoCalculado.baseImponible | currency:'PEN':'S/ ' }}</dd>
+                    </div>
+                    <div class="resumen-fila">
+                        <dt>IGV (18%)</dt>
+                        <dd>{{ resultadoCalculado.igv | currency:'PEN':'S/ ' }}</dd>
+                    </div>
+                    <div class="resumen-total">
+                        <dt>Total Final</dt>
+                        <dd>{{ resultadoCalculado.total | currency:'PEN':'S/ ' }}</dd>
+                    </div>
+                </dl>
+            </div>
+        </article>
+    </section>
+</main>
