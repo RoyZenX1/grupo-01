@@ -1,0 +1,36 @@
+
+.pagina-clientes {
+  padding: 30px;
+  color: #233342;
+}
+
+.encabezado {
+  margin-bottom: 25px;
+}
+
+.encabezado h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+.encabezado p {
+  color: #667085;
+}
+
+.tarjeta {
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e0e5eb;
+  border-radius: 12px;
+}
+
+.tarjeta h2 {
+  margin-top: 0;
+}
+
+.estado {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #fff5dc;
+  border-radius: 8px;
+}

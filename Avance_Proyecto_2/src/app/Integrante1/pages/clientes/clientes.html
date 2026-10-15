@@ -1,0 +1,143 @@
+<section class="container-fluid py-4">
+
+  <div class="mb-4">
+    <h1 class="fw-bold mb-1">Gestión de clientes</h1>
+    <p class="text-secondary mb-0">
+      Administra la información de los clientes de NexoCargo.
+    </p>
+  </div>
+
+  @if (mensaje()) {
+  <div class="alert" [class.alert-success]="tipoMensaje() === 'exito'" [class.alert-danger]="tipoMensaje() === 'error'"
+    role="alert">
+    {{ mensaje() }}
+  </div>
+  }
+
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-white py-3">
+      <h2 class="h5 mb-0">
+        {{ idEditando ? 'Editar cliente' : 'Registrar cliente' }}
+      </h2>
+    </div>
+
+    <div class="card-body">
+      <form (ngSubmit)="guardar()" #formCliente="ngForm">
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label for="nombre" class="form-label">Nombre completo</label>
+            <input id="nombre" name="nombre" type="text" class="form-control" [(ngModel)]="formulario.nombre" required
+              maxlength="100" placeholder="Ingrese el nombre completo">
+          </div>
+
+          <div class="col-md-6">
+            <label for="identificacion" class="form-label">DNI o RUC</label>
+            <input id="identificacion" name="identificacion" type="text" class="form-control"
+              [(ngModel)]="formulario.identificacion" required placeholder="8 dígitos para DNI o 11 para RUC">
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input id="email" name="email" type="email" class="form-control" [(ngModel)]="formulario.email" required
+              placeholder="ejemplo@correo.com">
+          </div>
+
+          <div class="col-md-6">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input id="telefono" name="telefono" type="text" class="form-control" [(ngModel)]="formulario.telefono"
+              required maxlength="9" placeholder="9 dígitos">
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+          <button type="submit" class="btn btn-primary">
+            {{ idEditando ? 'Guardar cambios' : 'Registrar cliente' }}
+          </button>
+
+          <button type="button" class="btn btn-outline-secondary" (click)="limpiarFormulario()">
+            Limpiar
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+      <h2 class="h5 mb-0">Lista de clientes</h2>
+    </div>
+
+
+    <div class="card-body">
+
+      <div class="mb-3">
+        <label for="busqueda" class="form-label">
+          Buscar cliente
+        </label>
+
+        <input id="busqueda" name="busqueda" type="text" class="form-control"
+          placeholder="Escribe un nombre, DNI o RUC..." [ngModel]="busqueda()" (ngModelChange)="busqueda.set($event)">
+      </div>
+
+      <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>DNI / RUC</th>
+              <th>Correo electrónico</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (cliente of clientesFiltrados(); track cliente.id) {
+            <tr>
+              <td>{{ cliente.id }}</td>
+              <td class="fw-semibold">{{ cliente.nombre }}</td>
+              <td>{{ cliente.identificacion }}</td>
+              <td>{{ cliente.email }}</td>
+              <td>{{ cliente.telefono }}</td>
+              <td>
+                <div class="d-flex gap-2">
+                  <button type="button" class="btn btn-sm btn-warning" (click)="editar(cliente)">
+                    Editar
+                  </button>
+
+                  <button type="button" class="btn btn-sm btn-danger" (click)="eliminar(cliente.id)">
+                    Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            } @empty {
+            <tr>
+              <td colspan="6" class="text-center text-secondary py-4">
+                @if (busqueda().trim()) {
+                No se encontraron clientes que coincidan con "{{ busqueda() }}".
+                } @else {
+                No hay clientes registrados.
+                }
+              </td>
+            </tr>
+            }
+
+          </tbody>
+        </table>
+      </div>
+
+      <p class="text-secondary mb-0 mt-3">
+        Total de clientes: <strong>{{ clientes().length }}</strong>
+      </p>
+    </div>
+  </div>
+
+</section>
