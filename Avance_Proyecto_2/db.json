@@ -65,6 +65,26 @@
       "total": 235.41,
       "fechaEmision": "2026-10-16",
       "id": "CtPuJEq6HYE"
+    },
+    {
+      "clienteId": "2",
+      "cliente": "María López",
+      "origen": "Lima",
+      "destino": "Callao",
+      "distancia": 2,
+      "peso": 3,
+      "tarifa": 100,
+      "productoServicio": "Transporte Lima - Callao",
+      "precioUnitario": 100,
+      "cantidad": 1,
+      "descuentoPorcentaje": 1,
+      "subtotal": 100,
+      "baseImponible": 99,
+      "igv": 17.82,
+      "total": 116.82,
+      "fechaEmision": "2026-10-16",
+      "estado": "Pendiente",
+      "id": "at_xYBDyHCY"
     }
   ],
   "clientes": [
@@ -160,7 +180,7 @@
       "placa": "DEF-456",
       "tipo": "Furgón",
       "capacidad": 7,
-      "estado": "Disponible"
+      "estado": "Reservado"
     },
     {
       "id": "V003",
