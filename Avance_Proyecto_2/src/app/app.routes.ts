@@ -71,7 +71,7 @@ export const routes: Routes = [
                 title: 'Reportes · NexoCargo',
                 data: { modulo: 'reportes' },
                 loadComponent: () =>
-                    import('./Integrante4/pages/reportes/reportes').then(m => m.Reportes)
+                    import('./Integrante4/reportes/reportes').then(m => m.Reportes)
             },
             {
                 path: 'no-autorizado',
