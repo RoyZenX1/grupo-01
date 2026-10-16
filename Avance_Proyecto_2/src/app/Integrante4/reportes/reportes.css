@@ -2,6 +2,9 @@
 * { box-sizing: border-box; }
 .reportes-page { display: flex; flex-direction: column; gap: 22px; }
 .page-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; padding-bottom: 18px; border-bottom: 1px solid #e7ebf0; }
+.estado-carga, .error-carga { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0; padding: 12px 15px; border-radius: 8px; font-size: .82rem; }
+.estado-carga { background: #eef4f9; color: #49647c; }
+.error-carga { border: 1px solid #f0c7ca; background: #fff1f2; color: #9c3f48; }
 .eyebrow { color: #5c7893; font-size: .7rem; font-weight: 800; letter-spacing: .13em; }
 .page-heading h1 { margin: 7px 0 5px; color: #233342; font-size: clamp(1.5rem, 2.3vw, 2rem); letter-spacing: -.04em; }
 .page-heading p, .panel-heading p { margin: 0; color: #818b99; font-size: .86rem; }

@@ -1,8 +1,12 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { EstadoOrden, Orden } from '../models/orden.model';
-import { OrdenesService } from '../services/ordenes.service';
+import { finalize } from 'rxjs';
+import { OrdenesApi } from '../../Integrante3/services/ordenes-api';
+import { OrdenesService } from '../../Integrante3/services/ordenes.service';
+import { mensajeHttp } from '../../Integrante3/services/mensaje-http';
+import { EstadoOrden, Orden } from '../../Integrante3/models/orden.model';
 
 type OrdenOrdenamiento = 'codigo-asc' | 'codigo-desc' | 'tarifa-asc' | 'tarifa-desc' | 'origen-asc' | 'estado-asc';
 
@@ -13,11 +17,15 @@ type OrdenOrdenamiento = 'codigo-asc' | 'codigo-desc' | 'tarifa-asc' | 'tarifa-d
   templateUrl: './reportes.html',
   styleUrl: './reportes.css'
 })
-export class Reportes {
+export class Reportes implements OnInit {
   private readonly ordenesService = inject(OrdenesService);
+  private readonly ordenesApi = inject(OrdenesApi);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly estados: EstadoOrden[] = this.ordenesService.estados;
   readonly ordenes = this.ordenesService.ordenes;
+  readonly cargando = signal(false);
+  readonly errorCarga = signal('');
 
   readonly texto = signal('');
   readonly montoMin = signal<number | null>(null);
@@ -86,6 +94,26 @@ export class Reportes {
     }
     return [...mapa.values()].sort((a, b) => b.monto - a.monto).slice(0, 5);
   });
+
+  ngOnInit(): void {
+    this.cargarOrdenes();
+  }
+
+  cargarOrdenes(): void {
+    if (this.cargando()) return;
+    this.cargando.set(true);
+    this.errorCarga.set('');
+
+    this.ordenesApi.listar()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.cargando.set(false)),
+      )
+      .subscribe({
+        next: ordenes => this.ordenesService.reemplazarLista(ordenes),
+        error: error => this.errorCarga.set(mensajeHttp(error)),
+      });
+  }
 
   alternarEstado(estado: EstadoOrden): void {
     const actuales = this.estadosSeleccionados();

@@ -3,10 +3,20 @@
     <div>
       <span class="eyebrow">NEXOCARGO / ANALÍTICA</span>
       <h1>Reportes, métricas y rutas</h1>
-      <p>Resumen calculado en tiempo real con las órdenes del servicio Angular.</p>
+      <p>Resumen calculado con las órdenes compartidas por la API.</p>
     </div>
     <button class="btn-limpiar" type="button" (click)="limpiarFiltros()">Limpiar filtros</button>
   </header>
+
+  @if (cargando()) {
+    <p class="estado-carga" role="status">Cargando órdenes desde la API...</p>
+  }
+  @if (errorCarga()) {
+    <div class="error-carga" role="alert">
+      <span>{{ errorCarga() }}</span>
+      <button class="btn-limpiar" type="button" (click)="cargarOrdenes()" [disabled]="cargando()">Reintentar</button>
+    </div>
+  }
 
   <section class="panel filtros-panel" aria-label="Filtros de reportes">
     <div class="panel-heading">
