@@ -137,14 +137,6 @@
       "identificacion": "89123456",
       "email": "daniela.flores@gmail.com",
       "telefono": "987123456"
-    },
-    {
-      "nombre": "Luis Torres",
-      "identificacion": "23456799",
-      "email": "luistorres@gmail.com",
-      "telefono": "987654321",
-      "numero": 11,
-      "id": "g63An1FxxuA"
     }
   ],
   "vehiculos": [
