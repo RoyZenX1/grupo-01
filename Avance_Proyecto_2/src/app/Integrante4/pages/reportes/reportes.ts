@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { OrdenesService } from '../../../Integrante3/services/ordenes.service';
 import { EstadoOrden, Orden } from '../../../Integrante3/models/orden.model';
 
-type OrdenOrdenamiento = 'id-asc' | 'id-desc' | 'tarifa-asc' | 'tarifa-desc' | 'origen-asc' | 'estado-asc';
+type OrdenOrdenamiento = 'codigo-asc' | 'codigo-desc' | 'tarifa-asc' | 'tarifa-desc' | 'origen-asc' | 'estado-asc';
 
 @Component({
   selector: 'app-reportes',
@@ -22,7 +22,7 @@ export class Reportes {
   readonly texto = signal('');
   readonly montoMin = signal<number | null>(null);
   readonly montoMax = signal<number | null>(null);
-  readonly ordenamiento = signal<OrdenOrdenamiento>('id-asc');
+  readonly ordenamiento = signal<OrdenOrdenamiento>('codigo-asc');
   readonly estadosSeleccionados = signal<EstadoOrden[]>([]);
 
   readonly ordenesFiltradas = computed(() => {
@@ -34,7 +34,7 @@ export class Reportes {
 
     const filtradas = this.ordenes().filter(orden => {
       const coincideTexto = !textoNormalizado || this.normalizar(
-        `${orden.id} ${orden.cotizacionId} ${orden.vehiculoId} ${orden.origen} ${orden.destino}`
+        `${orden.codigo ?? orden.id} ${orden.cotizacionId} ${orden.vehiculoId} ${orden.origen} ${orden.destino}`
       ).includes(textoNormalizado);
       const coincideMinimo = minimo === null || minimo === undefined || orden.tarifa >= Number(minimo);
       const coincideMaximo = maximo === null || maximo === undefined || orden.tarifa <= Number(maximo);
@@ -102,7 +102,7 @@ export class Reportes {
     this.texto.set('');
     this.montoMin.set(null);
     this.montoMax.set(null);
-    this.ordenamiento.set('id-asc');
+    this.ordenamiento.set('codigo-asc');
     this.estadosSeleccionados.set([]);
   }
 
@@ -127,13 +127,13 @@ export class Reportes {
 
   private comparar(a: Orden, b: Orden, ordenamiento: OrdenOrdenamiento): number {
     switch (ordenamiento) {
-      case 'id-desc': return b.id.localeCompare(a.id, 'es', { numeric: true });
+      case 'codigo-desc': return (b.codigo ?? b.id).localeCompare(a.codigo ?? a.id, 'es', { numeric: true });
+      case 'codigo-asc': return (a.codigo ?? a.id).localeCompare(b.codigo ?? b.id, 'es', { numeric: true });
       case 'tarifa-asc': return a.tarifa - b.tarifa;
       case 'tarifa-desc': return b.tarifa - a.tarifa;
       case 'origen-asc': return a.origen.localeCompare(b.origen, 'es');
       case 'estado-asc': return a.estado.localeCompare(b.estado, 'es');
-      case 'id-asc':
-      default: return a.id.localeCompare(b.id, 'es', { numeric: true });
+      default: return (a.codigo ?? a.id).localeCompare(b.codigo ?? b.id, 'es', { numeric: true });
     }
   }
 }

@@ -33,8 +33,8 @@
       <label class="campo">
         <span>Ordenar por</span>
         <select [ngModel]="ordenamiento()" (ngModelChange)="ordenamiento.set($event)">
-          <option value="id-asc">Código: ascendente</option>
-          <option value="id-desc">Código: descendente</option>
+          <option value="codigo-asc">Código: ascendente</option>
+          <option value="codigo-desc">Código: descendente</option>
           <option value="tarifa-desc">Tarifa: mayor a menor</option>
           <option value="tarifa-asc">Tarifa: menor a mayor</option>
           <option value="origen-asc">Origen: A–Z</option>
@@ -102,7 +102,7 @@
         <tbody>
           @for (orden of ordenesFiltradas(); track orden.id) {
             <tr>
-              <td class="codigo">{{ orden.id }}</td>
+              <td class="codigo">{{ orden.codigo ?? orden.id }}</td>
               <td>{{ orden.cotizacionId }}</td>
               <td>{{ orden.vehiculoId }}</td>
               <td class="ruta-celda">{{ ruta(orden) }}</td>

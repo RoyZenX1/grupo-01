@@ -91,7 +91,7 @@
                 <tbody>
                     @for (orden of ultimasOrdenes(); track orden.id) {
                         <tr>
-                            <td>{{ orden.id }}</td>
+                            <td>{{ orden.codigo ?? orden.id }}</td>
                             <td>{{ orden.origen }} → {{ orden.destino }}</td>
                             <td>{{ orden.vehiculoId }}</td>
                             <td>{{ orden.tarifa | currency: 'PEN' : 'S/ ' : '1.2-2' }}</td>
