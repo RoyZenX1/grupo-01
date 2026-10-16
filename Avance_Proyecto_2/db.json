@@ -52,6 +52,19 @@
       "total": 222.22,
       "fechaEmision": "2026-10-16",
       "id": "JZM3GaB_2pU"
+    },
+    {
+      "clienteId": "1",
+      "productoServicio": "Tranporte Ica - Arequipa",
+      "precioUnitario": 70,
+      "cantidad": 3,
+      "descuentoPorcentaje": 5,
+      "subtotal": 210,
+      "baseImponible": 199.5,
+      "igv": 35.91,
+      "total": 235.41,
+      "fechaEmision": "2026-10-16",
+      "id": "CtPuJEq6HYE"
     }
   ],
   "clientes": [
@@ -185,6 +198,18 @@
       "tarifa": 100,
       "estado": "Completada",
       "id": "iuqim-2Zwco"
+    },
+    {
+      "cotizacionId": "C002",
+      "vehiculoId": "V002",
+      "origen": "Ate",
+      "destino": "Miraflores",
+      "distancia": 50,
+      "peso": 5,
+      "codigo": "ORD002",
+      "tarifa": 150,
+      "estado": "Pendiente",
+      "id": "HjXkYB4FI8M"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

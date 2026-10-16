@@ -31,8 +31,8 @@ const SOLO_ADMIN: readonly Rol[] = ['administrador'];
 export const ITEMS_MENU: readonly ItemMenu[] = [
     { modulo: 'dashboard',    ruta: '/dashboard',    etiqueta: 'Dashboard',    icono: '⌂', roles: TODOS },
     { modulo: 'clientes',     ruta: '/clientes',     etiqueta: 'Clientes',     icono: '♙', roles: SOLO_ADMIN },
-    { modulo: 'cotizaciones', ruta: '/cotizaciones', etiqueta: 'Cotizaciones', icono: '▣', roles: TODOS },
     { modulo: 'vehiculos',    ruta: '/vehiculos',    etiqueta: 'Vehículos',    icono: '▤', roles: SOLO_ADMIN },
+    { modulo: 'cotizaciones', ruta: '/cotizaciones', etiqueta: 'Cotizaciones', icono: '▣', roles: TODOS },
     { modulo: 'ordenes',      ruta: '/ordenes',      etiqueta: 'Órdenes',      icono: '➜', roles: SOLO_ADMIN },
     { modulo: 'reportes',     ruta: '/reportes',     etiqueta: 'Reportes',     icono: '▦', roles: SOLO_ADMIN }
 ];
