@@ -7,7 +7,6 @@ export type Modulo =
     | 'cotizaciones'
     | 'vehiculos'
     | 'ordenes'
-    | 'facturas'
     | 'reportes';
 
 export interface ItemMenu {
@@ -35,7 +34,6 @@ export const ITEMS_MENU: readonly ItemMenu[] = [
     { modulo: 'cotizaciones', ruta: '/cotizaciones', etiqueta: 'Cotizaciones', icono: '▣', roles: TODOS },
     { modulo: 'vehiculos',    ruta: '/vehiculos',    etiqueta: 'Vehículos',    icono: '▤', roles: SOLO_ADMIN },
     { modulo: 'ordenes',      ruta: '/ordenes',      etiqueta: 'Órdenes',      icono: '➜', roles: SOLO_ADMIN },
-    { modulo: 'facturas',     ruta: '/facturas',     etiqueta: 'Facturas',     icono: '▥', roles: TODOS },
     { modulo: 'reportes',     ruta: '/reportes',     etiqueta: 'Reportes',     icono: '▦', roles: SOLO_ADMIN }
 ];
 
