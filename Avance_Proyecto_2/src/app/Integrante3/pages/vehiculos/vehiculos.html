@@ -3,7 +3,6 @@
     <p>Registra y administra los vehículos disponibles.</p>
 </header>
 
-<!-- TARJETAS -->
 <section class="grid-tarjetas">
     <article class="tarjeta">
         <h3>Total de vehículos</h3>
@@ -19,134 +18,178 @@
     </article>
 </section>
 
-<!-- REGISTRO -->
 <section class="panel">
     <h2>Registrar vehículo</h2>
 
-    <form class="formulario" (ngSubmit)="registrar()">
+    <form [formGroup]="form" (ngSubmit)="registrar()" novalidate class="formulario">
         <div class="campo">
-            <label for="idVehiculo">ID del vehículo</label>
-            <input id="idVehiculo" name="id" type="text" placeholder="V001"
-                   [(ngModel)]="form.id" required>
+            <label for="idVehiculo">ID asignado</label>
+            <input id="idVehiculo" type="text" [value]="codigoSiguiente()" readonly
+                   aria-describedby="idVehiculo-ayuda" />
+            <p id="idVehiculo-ayuda" class="form-text">Se asigna automáticamente.</p>
         </div>
 
         <div class="campo">
             <label for="placa">Placa</label>
-            <input id="placa" name="placa" type="text" placeholder="ABC-123"
-                   [(ngModel)]="form.placa" required>
+            <input id="placa" formControlName="placa" type="text" placeholder="ABC-123"
+                   [class.is-invalid]="invalido('placa')"
+                   [attr.aria-invalid]="invalido('placa')"
+                   aria-describedby="placa-ayuda" />
+            <p id="placa-ayuda" class="form-text" [class.text-danger]="invalido('placa')">
+                {{ invalido('placa') ? 'Revisa el formato de la placa.' : 'Formato ABC-123.' }}
+            </p>
         </div>
 
         <div class="campo">
             <label for="tipo">Tipo de vehículo</label>
-            <select id="tipo" name="tipo" [(ngModel)]="form.tipo" required>
+            <select id="tipo" formControlName="tipo"
+                    [attr.aria-invalid]="invalido('tipo')"
+                    aria-describedby="tipo-error">
                 <option value="">Seleccionar</option>
                 @for (t of tipos; track t) {
                     <option [value]="t">{{ t }}</option>
                 }
             </select>
+            <p id="tipo-error" class="text-danger">
+                @if (invalido('tipo')) { Selecciona un tipo. }
+            </p>
         </div>
 
         <div class="campo">
             <label for="capacidad">Capacidad (toneladas)</label>
-            <input id="capacidad" name="capacidad" type="number" min="1"
-                   [(ngModel)]="form.capacidad" required>
+            <input id="capacidad" formControlName="capacidad" type="number"
+                   min="0.1" max="100" step="any"
+                   [class.is-invalid]="invalido('capacidad')"
+                   [attr.aria-invalid]="invalido('capacidad')"
+                   aria-describedby="capacidad-error" />
+            <p id="capacidad-error" class="text-danger">
+                @if (invalido('capacidad')) { Ingresa un valor mayor que 0. }
+            </p>
         </div>
 
         <div class="campo-completo">
-            <button type="submit" class="btn">Registrar vehículo</button>
-            <button type="button" class="btn-restaurar" (click)="restaurar()">
-                Restaurar datos
+            <button type="submit" class="btn"
+                    [disabled]="guardando() || cargando() || !!errorCarga()">
+                {{ guardando() ? 'Guardando...' : 'Registrar vehículo' }}
+            </button>
+            <button type="button" class="btn-restaurar" (click)="cargar()"
+                    [disabled]="cargando() || guardando()">
+                Recargar listado
             </button>
         </div>
     </form>
 
     @if (mensaje()) {
-        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'">
+        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'"
+             role="status" aria-live="polite">
             {{ mensaje() }}
         </div>
     }
 </section>
 
-<!-- TABLA -->
 <section class="panel">
     <h2>Vehículos registrados</h2>
 
-    <div class="tabla-contenedor">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Placa</th>
-                    <th>Tipo</th>
-                    <th>Capacidad</th>
-                    <th>Estado</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (v of vehiculos(); track v.id) {
+    @if (cargando()) {
+        <p role="status">Cargando vehículos...</p>
+    } @else if (errorCarga()) {
+        <p role="alert" class="text-danger">{{ errorCarga() }}</p>
+        <button type="button" class="btn" (click)="cargar()">Reintentar</button>
+    } @else {
+        @if (pendienteEliminar(); as idEliminar) {
+            <section class="panel" aria-labelledby="confirmar-eliminar">
+                <h3 id="confirmar-eliminar">Confirmar eliminación</h3>
+                <p>Se eliminará el vehículo <strong>{{ idEliminar }}</strong>.</p>
+                <button type="button" class="btn-eliminar" (click)="confirmarEliminar()"
+                        [disabled]="eliminando()">
+                    {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
+                </button>
+                <button type="button" class="btn-restaurar" (click)="cancelarEliminar()"
+                        [disabled]="eliminando()">
+                    Cancelar
+                </button>
+            </section>
+        }
+
+        <div class="tabla-contenedor">
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ v.id }}</td>
-                        <td>{{ v.placa }}</td>
-                        <td>{{ v.tipo }}</td>
-                        <td>{{ v.capacidad }} t</td>
-                        <td>
-                            <select class="selector-estado-vehiculo"
-                                    [attr.data-estado]="v.estado"
-                                    [value]="v.estado"
-                                    (change)="cambiarEstado(v.id, $event)">
-                                @for (e of estados; track e) {
-                                    <option [value]="e">{{ e }}</option>
-                                }
-                            </select>
-                        </td>
-                        <td>
-                            <button type="button" class="btn-eliminar"
-                                    (click)="eliminar(v.id)">
-                                Eliminar
-                            </button>
-                        </td>
+                        <th>ID</th><th>Placa</th><th>Tipo</th>
+                        <th>Capacidad</th><th>Estado</th><th>Acción</th>
                     </tr>
-                } @empty {
-                    <tr>
-                        <td colspan="6" class="vacio">No hay vehículos registrados.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    @for (v of vehiculos(); track v.id) {
+                        <tr>
+                            <td>{{ v.codigo ?? v.id }}</td>
+                            <td>{{ v.placa }}</td>
+                            <td>{{ v.tipo }}</td>
+                            <td>{{ v.capacidad }} t</td>
+                            <td>
+                                <select class="selector-estado-vehiculo"
+                                        [attr.data-estado]="v.estado"
+                                        [value]="v.estado"
+                                        [attr.aria-label]="'Cambiar estado de ' + v.placa"
+                                        (change)="cambiarEstado(v.id, $event)">
+                                    @for (e of estados; track e) {
+                                        <option [value]="e">{{ e | estadoVehiculo }}</option>
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn-eliminar"
+                                        [attr.aria-label]="'Eliminar vehículo ' + v.placa"
+                                        (click)="solicitarEliminar(v.id)">
+                                    Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    } @empty {
+                        <tr>
+                            <td colspan="6" class="vacio">No hay vehículos registrados.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </section>
 
-<!-- TARIFA -->
 <section class="panel">
     <h2>Consultar tarifa de transporte</h2>
-
-    <form class="formulario" (ngSubmit)="calcularTarifa()">
+    <form [formGroup]="formTarifa" (ngSubmit)="calcularTarifa()" novalidate class="formulario">
         <div class="campo">
             <label for="distancia">Distancia (km)</label>
-            <input id="distancia" name="distancia" type="number" min="1"
-                   [(ngModel)]="formTarifa.distancia" required>
+            <input id="distancia" formControlName="distancia" type="number"
+                   min="1" step="any"
+                   [class.is-invalid]="invalidoTarifa('distancia')" />
+            <p class="text-danger">
+                @if (invalidoTarifa('distancia')) { Ingresa una distancia válida. }
+            </p>
         </div>
-
         <div class="campo">
             <label for="peso">Peso (toneladas)</label>
-            <input id="peso" name="peso" type="number" min="1"
-                   [(ngModel)]="formTarifa.peso" required>
+            <input id="peso" formControlName="peso" type="number"
+                   min="0.1" step="any"
+                   [class.is-invalid]="invalidoTarifa('peso')" />
+            <p class="text-danger">
+                @if (invalidoTarifa('peso')) { Ingresa un peso válido. }
+            </p>
         </div>
-
         <div class="campo-completo">
             <button type="submit" class="btn">Calcular tarifa</button>
         </div>
     </form>
 
     @if (tarifa(); as t) {
-        <div class="resultado visible">
+        <div class="resultado visible" role="status">
             <strong>Tarifa encontrada:</strong> S/ {{ t.precio }}<br>
             Distancia: {{ t.distancia }} km<br>
             Peso: {{ t.peso }} toneladas
         </div>
     }
     @if (errorTarifa()) {
-        <div class="resultado visible">{{ errorTarifa() }}</div>
+        <div class="resultado visible" role="alert">{{ errorTarifa() }}</div>
     }
 </section>

@@ -66,6 +66,7 @@
 .campo {
     display: grid;
     gap: 7px;
+    align-content: start;
 }
 
 .campo label {
@@ -74,10 +75,16 @@
     font-weight: 600;
 }
 
+.campo p {
+    min-height: 1.35em;
+    margin: 0;
+}
+
 .campo input,
 .campo select,
 .selector-estado-vehiculo {
     width: 100%;
+    height: 40px;
     min-height: 40px;
     padding: 8px 10px;
     border: 1px solid #cbd5df;

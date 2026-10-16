@@ -1,9 +1,16 @@
-export type EstadoVehiculo = 'Disponible' | 'En ruta' | 'Mantenimiento' | 'Fuera de servicio';
+export type EstadoVehiculo =
+    | 'Disponible'
+    | 'En ruta'
+    | 'Mantenimiento'
+    | 'Fuera de servicio';
 
 export interface Vehiculo {
-    id: string;
-    placa: string;
-    tipo: string;
-    capacidad: number;
-    estado: EstadoVehiculo;
+    readonly id: string;
+    readonly codigo?: string;
+    readonly placa: string;
+    readonly tipo: string;
+    readonly capacidad: number;
+    readonly estado: EstadoVehiculo;
 }
+
+export type BorradorVehiculo = Omit<Vehiculo, 'id' | 'estado'>;

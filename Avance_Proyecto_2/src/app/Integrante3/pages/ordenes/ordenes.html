@@ -1,103 +1,166 @@
 <header class="encabezado">
     <h1>Órdenes de Transporte</h1>
-    <p>Registra y administra las operaciones de transporte.</p>
+    <p>Registra y administra las operaciones de transporte desde cotizaciones aprobadas.</p>
 </header>
 
-<!-- REGISTRO -->
 <section class="panel">
     <h2>Registrar nueva orden</h2>
 
-    <form class="formulario" (ngSubmit)="registrar()">
+    @if (cargando()) {
+        <p role="status">Cargando datos maestros...</p>
+    }
+    @if (errorCarga()) {
+        <p role="alert" class="text-danger">{{ errorCarga() }}</p>
+        <button type="button" class="btn" (click)="cargar()">Reintentar</button>
+    }
 
+    <form [formGroup]="form" (ngSubmit)="registrar()" novalidate class="formulario">
         <div class="campo">
-            <label for="idOrden">ID de orden</label>
-            <input id="idOrden" name="id" type="text" placeholder="ORD001"
-                   [(ngModel)]="form.id" required>
+            <label for="idOrden">ID asignado</label>
+            <input id="idOrden" type="text" [value]="codigoSiguiente()" readonly
+                   aria-describedby="idOrden-ayuda" />
+            <p id="idOrden-ayuda" class="form-text">Se asigna automáticamente.</p>
         </div>
 
         <div class="campo">
-            <label for="cotizacionId">ID de cotización</label>
-            <input id="cotizacionId" name="cotizacionId" type="text" placeholder="COT001"
-                   [(ngModel)]="form.cotizacionId" required>
+            <label for="cotizacionId">Cotización aprobada</label>
+            <select id="cotizacionId" formControlName="cotizacionId"
+                    [class.is-invalid]="invalido('cotizacionId')"
+                    [attr.aria-invalid]="invalido('cotizacionId')"
+                    aria-describedby="cotizacionId-error"
+                    (change)="alCambiarCotizacion()">
+                <option value="">Seleccionar cotización</option>
+                @for (c of cotizacionesAprobadas(); track c.id) {
+                    <option [value]="c.id">
+                        {{ c.id }} — {{ c.cliente }} ({{ c.origen }} → {{ c.destino }})
+                    </option>
+                }
+            </select>
+            <p id="cotizacionId-error" class="text-danger">
+                @if (invalido('cotizacionId')) {
+                    Selecciona una cotización aprobada.
+                }
+            </p>
         </div>
 
         <div class="campo">
-            <label for="vehiculoId">ID de vehículo</label>
-            <input id="vehiculoId" name="vehiculoId" type="text" placeholder="V001"
-                   [(ngModel)]="form.vehiculoId" required>
+            <label for="vehiculoId">Vehículo disponible</label>
+            <select id="vehiculoId" formControlName="vehiculoId"
+                    [class.is-invalid]="invalido('vehiculoId')"
+                    [attr.aria-invalid]="invalido('vehiculoId')"
+                    aria-describedby="vehiculoId-error">
+                <option value="">Seleccionar vehículo</option>
+                @for (v of vehiculosDisponibles(); track v.id) {
+                    @if (v.estado === 'Disponible') {
+                        <option [value]="v.id">
+                            {{ v.placa }} — {{ v.tipo }} (máx. {{ v.capacidad }} t)
+                        </option>
+                    }
+                }
+            </select>
+            <p id="vehiculoId-error" class="text-danger">
+                @if (invalido('vehiculoId')) { Selecciona un vehículo. }
+            </p>
         </div>
 
         <div class="campo">
             <label for="origen">Origen</label>
-            <input id="origen" name="origen" type="text" placeholder="Lima"
-                   [(ngModel)]="form.origen" required>
+            <input id="origen" formControlName="origen" type="text" placeholder="Lima"
+                   [class.is-invalid]="invalido('origen')" />
+            <p class="text-danger">
+                @if (invalido('origen')) { Entre 3 y 80 caracteres. }
+            </p>
         </div>
 
         <div class="campo">
             <label for="destino">Destino</label>
-            <input id="destino" name="destino" type="text" placeholder="Arequipa"
-                   [(ngModel)]="form.destino" required>
+            <input id="destino" formControlName="destino" type="text" placeholder="Arequipa"
+                   [class.is-invalid]="invalido('destino')" />
+            <p class="text-danger">
+                @if (invalido('destino')) { Entre 3 y 80 caracteres. }
+            </p>
         </div>
 
         <div class="campo">
             <label for="distanciaOrden">Distancia (km)</label>
-            <input id="distanciaOrden" name="distancia" type="number" min="1"
-                   [(ngModel)]="form.distancia" required>
+            <input id="distanciaOrden" formControlName="distancia" type="number"
+                   min="1" step="any"
+                   [class.is-invalid]="invalido('distancia')" />
+            <p class="text-danger">
+                @if (invalido('distancia')) { Ingresa una distancia válida. }
+            </p>
         </div>
 
         <div class="campo">
             <label for="pesoOrden">Peso (toneladas)</label>
-            <input id="pesoOrden" name="peso" type="number" min="1"
-                   [(ngModel)]="form.peso" required>
+            <input id="pesoOrden" formControlName="peso" type="number"
+                   min="0.1" step="any"
+                   [class.is-invalid]="invalido('peso')" />
+            <p class="text-danger">
+                @if (invalido('peso')) { Ingresa un peso válido. }
+            </p>
         </div>
 
         <div class="campo-completo">
-            <button type="submit" class="btn">Registrar orden</button>
-            <button type="button" class="btn-restaurar" (click)="restaurar()">
-                Restaurar datos
+            <button type="submit" class="btn" [disabled]="guardando() || cargando()">
+                {{ guardando() ? 'Guardando...' : 'Registrar orden' }}
+            </button>
+            <button type="button" class="btn-restaurar" (click)="cargar()"
+                    [disabled]="cargando()">
+                Recargar
             </button>
         </div>
-
     </form>
 
     @if (mensaje()) {
-        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'">
+        <div class="mensaje" [class.exito]="tipoMensaje() === 'exito'"
+             role="status" aria-live="polite">
             {{ mensaje() }}
         </div>
     }
 </section>
 
-<!-- TABLA -->
 <section class="panel">
     <h2>Órdenes registradas</h2>
+
+    @if (pendienteEliminar(); as idEliminar) {
+        <section class="panel" aria-labelledby="confirmar-orden">
+            <h3 id="confirmar-orden">Confirmar eliminación</h3>
+            <p>Se eliminará la orden <strong>{{ codigoPendienteEliminar() }}</strong>.</p>
+            <button type="button" class="btn-eliminar-orden" (click)="confirmarEliminar()"
+                    [disabled]="eliminando()">
+                {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
+            </button>
+            <button type="button" class="btn-restaurar" (click)="cancelarEliminar()"
+                    [disabled]="eliminando()">
+                Cancelar
+            </button>
+        </section>
+    }
 
     <div class="tabla-contenedor">
         <table>
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Cotización</th>
-                    <th>Vehículo</th>
-                    <th>Origen</th>
-                    <th>Destino</th>
-                    <th>Tarifa</th>
-                    <th>Estado</th>
-                    <th>Acción</th>
+                    <th>ID</th><th>Cotización</th><th>Vehículo</th>
+                    <th>Origen</th><th>Destino</th><th>Tarifa</th>
+                    <th>Estado</th><th>Acción</th>
                 </tr>
             </thead>
             <tbody>
                 @for (o of ordenes(); track o.id) {
                     <tr>
-                        <td>{{ o.id }}</td>
+                        <td>{{ o.codigo ?? o.id }}</td>
                         <td>{{ o.cotizacionId }}</td>
                         <td>{{ o.vehiculoId }}</td>
                         <td>{{ o.origen }}</td>
                         <td>{{ o.destino }}</td>
-                        <td>S/ {{ o.tarifa }}</td>
+                        <td>S/ {{ o.tarifa | number: '1.2-2' }}</td>
                         <td>
                             <select class="selector-estado-orden"
                                     [attr.data-estado]="o.estado"
                                     [value]="o.estado"
+                                    [attr.aria-label]="'Cambiar estado de ' + (o.codigo ?? o.id)"
                                     (change)="cambiarEstado(o.id, $event)">
                                 @for (e of estados; track e) {
                                     <option [value]="e">{{ e }}</option>
@@ -106,14 +169,17 @@
                         </td>
                         <td>
                             <button type="button" class="btn-eliminar-orden"
-                                    (click)="eliminar(o.id)">
+                                    [attr.aria-label]="'Eliminar orden ' + (o.codigo ?? o.id)"
+                                    (click)="solicitarEliminar(o)">
                                 Eliminar
                             </button>
                         </td>
                     </tr>
                 } @empty {
                     <tr>
-                        <td colspan="8" class="vacio">No hay órdenes registradas.</td>
+                        <td colspan="8" class="vacio">
+                            No hay órdenes registradas. Registra la primera desde una cotización aprobada.
+                        </td>
                     </tr>
                 }
             </tbody>

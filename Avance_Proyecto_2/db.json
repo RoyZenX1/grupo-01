@@ -1,6 +1,112 @@
 {
-  "cotizaciones": [],
+  "cotizaciones": [
+    {
+      "id": "C001",
+      "cliente": "Minera Sur",
+      "origen": "Lima",
+      "destino": "Callao",
+      "distancia": 25,
+      "peso": 2,
+      "tarifa": 100,
+      "estado": "Aprobada"
+    },
+    {
+      "id": "C002",
+      "cliente": "Agro Norte",
+      "origen": "Ate",
+      "destino": "Miraflores",
+      "distancia": 50,
+      "peso": 5,
+      "tarifa": 230,
+      "estado": "Aprobada"
+    },
+    {
+      "id": "C003",
+      "cliente": "Textil Centro",
+      "origen": "Lima",
+      "destino": "Chorrillos",
+      "distancia": 80,
+      "peso": 3,
+      "tarifa": 150,
+      "estado": "Aprobada"
+    },
+    {
+      "id": "C004",
+      "cliente": "Pesquera Callao",
+      "origen": "Callao",
+      "destino": "Lima",
+      "distancia": 30,
+      "peso": 4,
+      "tarifa": 180,
+      "estado": "Pendiente"
+    },
+    {
+      "clienteId": "CUST-004",
+      "productoServicio": "Transporte Ica - Lima",
+      "precioUnitario": 214,
+      "cantidad": 1,
+      "descuentoPorcentaje": 12,
+      "subtotal": 214,
+      "baseImponible": 188.32,
+      "igv": 33.9,
+      "total": 222.22,
+      "fechaEmision": "2026-10-16",
+      "id": "JZM3GaB_2pU"
+    }
+  ],
   "clientes": [],
-  "vehiculos": [],
-  "ordenes": []
+  "vehiculos": [
+    {
+      "id": "V001",
+      "placa": "ABC-123",
+      "tipo": "Camión",
+      "capacidad": 10,
+      "estado": "Disponible"
+    },
+    {
+      "id": "V002",
+      "placa": "DEF-456",
+      "tipo": "Furgón",
+      "capacidad": 7,
+      "estado": "Disponible"
+    },
+    {
+      "id": "V003",
+      "placa": "GHI-789",
+      "tipo": "Camioneta",
+      "capacidad": 3,
+      "estado": "Disponible"
+    },
+    {
+      "id": "Gaxntv4YNeQ",
+      "codigo": "V004",
+      "placa": "JKL-012",
+      "tipo": "Camión",
+      "capacidad": 8,
+      "estado": "Disponible"
+    },
+    {
+      "codigo": "V005",
+      "placa": "YTK-425",
+      "tipo": "Furgón",
+      "capacidad": 5,
+      "estado": "Disponible",
+      "id": "u-QADHzpbMU"
+    }
+  ],
+  "ordenes": [
+    {
+      "cotizacionId": "C001",
+      "vehiculoId": "V001",
+      "origen": "Lima",
+      "destino": "Callao",
+      "distancia": 25,
+      "peso": 2,
+      "codigo": "ORD001",
+      "tarifa": 100,
+      "estado": "Programada",
+      "id": "iuqim-2Zwco"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
