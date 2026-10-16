@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, forkJoin } from 'rxjs';
 
-import { CotizacionesApi } from '../../services/cotizaciones-api';
+import { CotizacionesApi } from '../../../Integrante2/services/cotizaciones-api';
 import { OrdenesApi } from '../../services/ordenes-api';
 import { OrdenesService } from '../../services/ordenes.service';
 import { VehiculosApi } from '../../services/vehiculos-api';

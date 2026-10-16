@@ -1,6 +1,6 @@
 export type EstadoCotizacion = 'Pendiente' | 'Aprobada' | 'Rechazada';
 
-export interface Cotizacion {
+export interface CotizacionTransporte {
     readonly id: string;
     readonly cliente: string;
     readonly origen: string;

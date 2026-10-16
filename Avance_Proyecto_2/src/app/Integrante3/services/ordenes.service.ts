@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Orden, EstadoOrden } from '../models/orden.model';
-import { Cotizacion } from '../models/cotizacion.model';
+import { CotizacionTransporte } from '../../Integrante2/models/cotizacion-transporte.model';
 import { VehiculosService } from './vehiculos.service';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class OrdenesService {
     private readonly ordenesSignal = signal<readonly Orden[]>([]);
     readonly ordenes = this.ordenesSignal.asReadonly();
 
-    private readonly cotizacionesSignal = signal<readonly Cotizacion[]>([]);
+    private readonly cotizacionesSignal = signal<readonly CotizacionTransporte[]>([]);
     readonly cotizacionesAprobadas = computed(() =>
         this.cotizacionesSignal().filter(c => c.estado === 'Aprobada'),
     );
@@ -33,7 +33,7 @@ export class OrdenesService {
         this.ordenesSignal.set([...lista]);
     }
 
-    reemplazarCotizaciones(lista: readonly Cotizacion[]): void {
+    reemplazarCotizaciones(lista: readonly CotizacionTransporte[]): void {
         this.cotizacionesSignal.set([...lista]);
     }
 
