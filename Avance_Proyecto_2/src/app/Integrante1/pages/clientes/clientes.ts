@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientesService } from '../../services/clientes.service';
@@ -16,25 +16,23 @@ import {
   templateUrl: './clientes.html',
   styleUrl: './clientes.css'
 })
-export class Clientes {
+export class Clientes implements OnInit {
   private clientesService = inject(ClientesService);
 
   readonly clientes = this.clientesService.clientes;
 
-  
-busqueda = signal('');
+  busqueda = signal('');
 
-readonly clientesFiltrados = () => {
-  const texto = this.busqueda().trim().toLowerCase();
+  readonly clientesFiltrados = () => {
+    const texto = this.busqueda().trim().toLowerCase();
 
-  return this.clientes().filter(cliente =>
-    cliente.nombre.toLowerCase().includes(texto) ||
-    cliente.identificacion.includes(texto)
-  );
-};
+    return this.clientes().filter(cliente =>
+      cliente.nombre.toLowerCase().includes(texto) ||
+      cliente.identificacion.includes(texto)
+    );
+  };
 
-
-  formulario: Omit<Cliente, 'id'> = {
+  formulario: Omit<Cliente, 'id' | 'numero'> = {
     nombre: '',
     identificacion: '',
     email: '',
@@ -46,25 +44,30 @@ readonly clientesFiltrados = () => {
   mensaje = signal('');
   tipoMensaje = signal<'exito' | 'error'>('exito');
 
+  ngOnInit(): void {
+    this.clientesService.cargar().subscribe({
+      error: () => {
+        this.mostrarError(
+          'No se pudieron cargar los clientes. Verifica que la API esté funcionando.'
+        );
+      }
+    });
+  }
+
   guardar(): void {
     this.mensaje.set('');
-
 
     const nombre = String(this.formulario.nombre ?? '').trim();
     const identificacion = String(this.formulario.identificacion ?? '').trim();
     const email = String(this.formulario.email ?? '').trim();
     const telefono = String(this.formulario.telefono ?? '').trim();
 
-
     if (!nombre || !identificacion || !email || !telefono) {
       this.mostrarError('Completa todos los campos.');
       return;
     }
 
-    if (
-      !validarDNI(identificacion) &&
-      !validarRUC(identificacion)
-    ) {
+    if (!validarDNI(identificacion) && !validarRUC(identificacion)) {
       this.mostrarError('El DNI debe tener 8 dígitos o el RUC 11 dígitos.');
       return;
     }
@@ -81,22 +84,26 @@ readonly clientesFiltrados = () => {
 
     const datos = { nombre, identificacion, email, telefono };
 
-    try {
-      if (this.idEditando) {
-        this.clientesService.actualizar(this.idEditando, datos);
-        this.mensaje.set('Cliente actualizado correctamente.');
-      } else {
-        this.clientesService.registrar(datos);
-        this.mensaje.set('Cliente registrado correctamente.');
-      }
+    const operacion = this.idEditando
+      ? this.clientesService.actualizar(this.idEditando, datos)
+      : this.clientesService.registrar(datos);
 
-      this.tipoMensaje.set('exito');
-      this.limpiarFormulario();
-    } catch (error) {
-      this.mostrarError(
-        error instanceof Error ? error.message : 'Ocurrió un error.'
-      );
-    }
+    operacion.subscribe({
+      next: () => {
+        this.mensaje.set(
+          this.idEditando
+            ? 'Cliente actualizado correctamente.'
+            : 'Cliente registrado correctamente.'
+        );
+        this.tipoMensaje.set('exito');
+        this.limpiarFormulario();
+      },
+      error: () => {
+        this.mostrarError(
+          'No se pudo guardar el cliente. Verifica que la API esté funcionando.'
+        );
+      }
+    });
   }
 
   editar(cliente: Cliente): void {
@@ -114,13 +121,21 @@ readonly clientesFiltrados = () => {
 
   eliminar(id: string): void {
     if (confirm('¿Estás seguro de eliminar este cliente?')) {
-      this.clientesService.eliminar(id);
-      this.mensaje.set('Cliente eliminado correctamente.');
-      this.tipoMensaje.set('exito');
+      this.clientesService.eliminar(id).subscribe({
+        next: () => {
+          this.mensaje.set('Cliente eliminado correctamente.');
+          this.tipoMensaje.set('exito');
 
-      if (this.idEditando === id) {
-        this.limpiarFormulario();
-      }
+          if (this.idEditando === id) {
+            this.limpiarFormulario();
+          }
+        },
+        error: () => {
+          this.mostrarError(
+            'No se pudo eliminar el cliente. Verifica que la API esté funcionando.'
+          );
+        }
+      });
     }
   }
 

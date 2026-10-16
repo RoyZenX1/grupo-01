@@ -3,6 +3,7 @@ import { Cliente } from './cliente.model';
 export const CLIENTES_INICIALES: Cliente[] = [
   {
     id: '1',
+    numero: 1,
     nombre: 'Juan Pérez',
     identificacion: '12345678',
     email: 'juan.perez@gmail.com',
@@ -10,6 +11,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '2',
+    numero: 2,
     nombre: 'María López',
     identificacion: '87654321',
     email: 'maria.lopez@gmail.com',
@@ -17,6 +19,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '3',
+    numero: 3,
     nombre: 'Carlos Torres',
     identificacion: '20123456789',
     email: 'carlos.torres@gmail.com',
@@ -24,6 +27,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '4',
+    numero: 4,
     nombre: 'Ana Rodríguez',
     identificacion: '45678912',
     email: 'ana.rodriguez@gmail.com',
@@ -31,6 +35,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '5',
+    numero: 5,
     nombre: 'Luis Fernández',
     identificacion: '78912345',
     email: 'luis.fernandez@gmail.com',
@@ -38,6 +43,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '6',
+    numero: 6,
     nombre: 'Carmen Sánchez',
     identificacion: '20567890123',
     email: 'carmen.sanchez@gmail.com',
@@ -45,6 +51,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '7',
+    numero: 7,
     nombre: 'Pedro Ramírez',
     identificacion: '56789123',
     email: 'pedro.ramirez@gmail.com',
@@ -52,6 +59,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '8',
+    numero: 8,
     nombre: 'Lucía Mendoza',
     identificacion: '67891234',
     email: 'lucia.mendoza@gmail.com',
@@ -59,6 +67,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '9',
+    numero: 9,
     nombre: 'Jorge Castro',
     identificacion: '20456789012',
     email: 'jorge.castro@gmail.com',
@@ -66,6 +75,7 @@ export const CLIENTES_INICIALES: Cliente[] = [
   },
   {
     id: '10',
+    numero: 10,
     nombre: 'Daniela Flores',
     identificacion: '89123456',
     email: 'daniela.flores@gmail.com',
