@@ -1,0 +1,148 @@
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  AbstractControl,
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { catchError, finalize, of, switchMap } from 'rxjs';
+import type { Programa } from '../models/estudiante';
+import { EstudiantesApi } from '../services/estudiantes-api';
+import { mensajeHttp } from '../services/mensaje-http';
+
+function nombreValido(control: AbstractControl) {
+  const valor = (control.value ?? '').trim();
+  return valor.length >= 3 && valor.length <= 80 ? null : { nombreInvalido: true };
+}
+
+@Component({
+  standalone: true,
+  imports: [ReactiveFormsModule, RouterLink],
+  templateUrl: './registro.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class Registro implements OnInit {
+  private readonly api = inject(EstudiantesApi);
+  private readonly route = inject(ActivatedRoute);
+  private readonly fb = inject(FormBuilder);
+  private readonly destroyRef = inject(DestroyRef);
+
+  readonly id = signal<string | null>(null);
+  readonly cargando = signal(false);
+  readonly guardando = signal(false);
+  readonly enviado = signal(false);
+  readonly errorCarga = signal('');
+  readonly errorGuardado = signal('');
+  readonly mensaje = signal('');
+
+  readonly form = this.fb.group({
+    nombre: this.fb.nonNullable.control('', [nombreValido]),
+    programa: this.fb.nonNullable.control<Programa>('Software', [
+      Validators.required,
+    ]),
+    promedio: this.fb.control<number | null>(null, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(20),
+    ]),
+    asistencia: this.fb.control<number | null>(null, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(100),
+    ]),
+  });
+
+  ngOnInit(): void {
+    this.cargando.set(true);
+    this.form.disable();
+
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          const id = params.get('id');
+          this.id.set(id);
+          if (!id) {
+            this.form.enable();
+            this.cargando.set(false);
+            return of(null);
+          }
+          return this.api.obtener(id).pipe(
+            catchError((error) => {
+              this.errorCarga.set(mensajeHttp(error));
+              return of(null);
+            }),
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((estudiante) => {
+        if (estudiante) this.form.patchValue(estudiante);
+        if (!this.errorCarga()) this.form.enable();
+        this.cargando.set(false);
+      });
+  }
+
+  invalido(campo: keyof typeof this.form.controls): boolean {
+    const control = this.form.controls[campo];
+    return control.invalid && (control.touched || this.enviado());
+  }
+
+  guardar(): void {
+    if (this.guardando() || this.cargando() || this.errorCarga()) return;
+
+    this.enviado.set(true);
+    this.mensaje.set('');
+    this.errorGuardado.set('');
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const valores = this.form.getRawValue();
+    if (valores.promedio === null || valores.asistencia === null) return;
+
+    const datos = {
+      ...valores,
+      nombre: valores.nombre.trim(),
+      promedio: valores.promedio,
+      asistencia: valores.asistencia,
+    };
+
+    const id = this.id();
+    const solicitud = id
+      ? this.api.actualizar(id, datos)
+      : this.api.crear(datos);
+
+    this.guardando.set(true);
+    this.form.disable();
+
+    solicitud
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.guardando.set(false);
+          this.form.enable();
+        }),
+      )
+      .subscribe({
+        next: (estudiante) => {
+          this.mensaje.set(
+            `Se guardó a ${estudiante.nombre} con id ${estudiante.id}.`,
+          );
+          if (!id) this.form.reset();
+          this.enviado.set(false);
+        },
+        error: (error) => this.errorGuardado.set(mensajeHttp(error)),
+      });
+  }
+}

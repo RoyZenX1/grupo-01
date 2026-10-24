@@ -1,0 +1,53 @@
+<h1>Resumen académico</h1>
+<p>Consulta del {{ fecha | date: 'dd/MM/yyyy' }} con datos de la API.</p>
+
+@if (cargando()) {
+  <p role="status">Cargando resumen...</p>
+} @else if (error()) {
+  <p role="alert" class="text-danger">{{ error() }}</p>
+  <button type="button" class="btn btn-primary" (click)="cargar()">
+    Reintentar
+  </button>
+} @else if (total() === 0) {
+  <p>No hay estudiantes registrados.</p>
+} @else {
+  <div class="row g-3 my-3">
+    <div class="col-md-6 col-xl-3">
+      <app-panel-indicador
+        titulo="Estudiantes"
+        [valor]="total()"
+        ayuda="Registros recibidos de la API"
+      />
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <app-panel-indicador
+        titulo="Promedio general"
+        [valor]="(promedio() | number: '1.2-2') ?? '0.00'"
+        ayuda="Escala de 0 a 20"
+      />
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <app-panel-indicador
+        titulo="Asistencia media"
+        [valor]="(asistencia() | number: '1.0-0') + '%'"
+        ayuda="Promedio de la colección"
+      />
+    </div>
+    <div class="col-md-6 col-xl-3">
+      <app-panel-indicador
+        titulo="En riesgo"
+        [valor]="enRiesgo()"
+        [ayuda]="destacados() + ' estudiantes destacados'"
+      />
+    </div>
+  </div>
+
+  <div class="d-flex flex-wrap gap-2 mt-3">
+    <a routerLink="/estudiantes" class="btn btn-outline-primary">
+      Consultar estudiantes
+    </a>
+    <a routerLink="/informe" class="btn btn-outline-primary">
+      Ver informe
+    </a>
+  </div>
+}
