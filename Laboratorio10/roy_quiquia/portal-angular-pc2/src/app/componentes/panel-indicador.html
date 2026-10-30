@@ -1,0 +1,7 @@
+<section class="panel h-100" [attr.aria-label]="titulo()">
+  <h2 class="h6 text-body-secondary">{{ titulo() }}</h2>
+  <p class="display-6 mb-1">{{ valor() }}</p>
+  @if (ayuda()) {
+    <p class="mb-0 small">{{ ayuda() }}</p>
+  }
+</section>

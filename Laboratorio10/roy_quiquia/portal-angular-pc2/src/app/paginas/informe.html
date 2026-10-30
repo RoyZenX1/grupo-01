@@ -1,0 +1,46 @@
+<h1>Informe académico</h1>
+<p>
+  Este informe deriva indicadores de la misma respuesta utilizada por el portal. No guarda copias ni
+  modifica la API.
+</p>
+
+@if (cargando()) {
+  <p role="status">Preparando informe...</p>
+} @else if (error()) {
+  <p role="alert" class="text-danger">{{ error() }}</p>
+  <button type="button" class="btn btn-primary" (click)="cargar()">Reintentar</button>
+} @else if (lista().length === 0) {
+  <p>No hay estudiantes para elaborar el informe.</p>
+} @else {
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <caption>
+        Indicadores agrupados por programa académico
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Programa</th>
+          <th scope="col" class="text-end">Estudiantes</th>
+          <th scope="col" class="text-end">Promedio</th>
+          <th scope="col" class="text-end">Asistencia</th>
+          <th scope="col" class="text-end">En riesgo</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (fila of filas(); track fila.programa) {
+          <tr>
+            <th scope="row">{{ fila.programa }}</th>
+            <td class="text-end">{{ fila.total }}</td>
+            <td class="text-end">{{ fila.promedio | number: '1.2-2' }}</td>
+            <td class="text-end">
+              {{ fila.asistencia / 100 | percent: '1.0-0' }}
+            </td>
+            <td class="text-end">{{ fila.enRiesgo }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+<a routerLink="/estudiantes" class="btn btn-outline-primary mt-3"> Revisar estudiantes </a>

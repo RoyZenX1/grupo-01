@@ -1,0 +1,144 @@
+<h1>Estudiantes</h1>
+
+<div class="d-flex flex-wrap gap-2 mb-3">
+  <a routerLink="/registro" class="btn btn-primary">Registrar estudiante</a>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="cargar()"
+    [disabled]="cargando() || eliminando()"
+  >
+    Actualizar listado
+  </button>
+</div>
+
+<p role="status" aria-live="polite">{{ mensaje() }}</p>
+@if (errorAccion()) {
+  <p role="alert" class="text-danger">{{ errorAccion() }}</p>
+}
+
+@if (cargando()) {
+  <p role="status">Cargando estudiantes...</p>
+} @else if (errorCarga()) {
+  <p role="alert" class="text-danger">{{ errorCarga() }}</p>
+  <button type="button" class="btn btn-primary" (click)="cargar()">Reintentar</button>
+} @else {
+  <form class="panel mb-4" [formGroup]="filtros">
+    <fieldset>
+      <legend class="h5">Filtrar y ordenar</legend>
+      <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label for="termino" class="form-label">Nombre</label>
+          <input
+            id="termino"
+            type="search"
+            class="form-control"
+            formControlName="termino"
+            autocomplete="off"
+            placeholder="Ejemplo: Ana"
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="programa" class="form-label">Programa</label>
+          <select id="programa" class="form-select" formControlName="programa">
+            <option value="Todos">Todos</option>
+            <option value="Software">Software</option>
+            <option value="Sistemas">Sistemas</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" class="form-select" formControlName="estado">
+            <option value="Todos">Todos</option>
+            <option value="Destacado">Destacado</option>
+            <option value="Aprobado">Aprobado</option>
+            <option value="En riesgo">En riesgo</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label for="orden" class="form-label">Orden</label>
+          <select id="orden" class="form-select" formControlName="orden">
+            <option value="nombre">Nombre</option>
+            <option value="promedio-desc">Mayor promedio</option>
+            <option value="asistencia-desc">Mayor asistencia</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="limpiarFiltros()"
+            [disabled]="!hayFiltros()"
+          >
+            Limpiar filtros
+          </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <p role="status">Mostrando {{ visibles().length }} de {{ lista().length }} estudiantes.</p>
+  <p role="status">
+    @if (seleccionado(); as e) {
+      Seleccionaste a {{ e.nombre }}.
+    }
+  </p>
+
+  @if (pendiente(); as e) {
+    <section class="panel mb-3" aria-labelledby="confirmacion">
+      <h2 id="confirmacion" class="h5">Confirmar eliminación</h2>
+      <p>Se eliminará a {{ e.nombre }} de la API simulada.</p>
+      <button
+        type="button"
+        class="btn btn-danger me-2"
+        (click)="confirmarEliminacion()"
+        [disabled]="eliminando()"
+      >
+        {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="pendiente.set(null)"
+        [disabled]="eliminando()"
+      >
+        Cancelar
+      </button>
+    </section>
+  }
+
+  <div class="row g-3">
+    @for (e of visibles(); track e.id) {
+      <div class="col-md-6 col-xl-4">
+        <app-tarjeta-estudiante
+          [estudiante]="e"
+          [seleccionado]="seleccionado()?.id === e.id"
+          (seleccionar)="seleccionar($event)"
+        />
+        <div class="d-flex gap-2 my-2">
+          <a
+            [routerLink]="['/registro', e.id]"
+            class="btn btn-outline-primary"
+            [attr.aria-label]="'Editar a ' + e.nombre"
+            >Editar</a
+          >
+          <button
+            type="button"
+            class="btn btn-outline-danger"
+            (click)="pendiente.set(e)"
+            [disabled]="eliminando()"
+            [attr.aria-label]="'Eliminar a ' + e.nombre"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+    } @empty {
+      @if (lista().length === 0) {
+        <p>No hay estudiantes registrados. Agrega el primero.</p>
+      } @else {
+        <p>No hay coincidencias con los filtros seleccionados.</p>
+      }
+    }
+  </div>
+}
