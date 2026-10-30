@@ -1,59 +1,136 @@
-# AvanceProyecto2
+ 
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+# 🚀 Avance de Proyecto 2 - Trabajo Grupal
 
-## Development server
+> **Descripción breve del proyecto:**  
 
-To start a local development server, run:
+---
+
+## 👥 Integrantes del Grupo
+
+* **Nombre del Integrante 1** -
+* **Nombre del Integrante 2** -  
+* **Nombre del Integrante 3** -  
+* **Nombre del Integrante 4** - 
+* **Nombre del Integrante 5** -  Roy Quiquia Cordova -  U25302277
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+* **Framework:** [Angular (v22.1.8)](https://angular.dev/)
+* **Estilos / UI:** [Bootstrap / Tailwind / etc., según corresponda]
+* **Control de versiones:** Git / GitHub
+
+---
+
+## 📋 Guía de Inicio y Configuración
+
+Sigue estos pasos para clonar y ejecutar el proyecto en tu entorno local.
+
+### Prerrequisitos
+
+Asegúrate de tener instalado en tu computadora:
+
+* [Node.js](https://nodejs.org/) (versión recomendada LTS)
+* [Angular CLI](https://github.com/angular/angular-cli) (`npm install -g @angular/cli`)
+
+### Instalación
+
+1. Clona este repositorio:
+```bash
+git clone <URL-DEL-REPOSITORIO>
+
+```
+
+
+2. Entra a la carpeta del proyecto:
+```bash
+cd <NOMBRE-DE-LA-CARPETA>
+
+```
+
+
+3. Instala las dependencias:
+```bash
+npm install
+
+```
+
+
+
+---
+
+## 💻 Servidor de Desarrollo
+
+Para iniciar un servidor de desarrollo local, ejecuta:
 
 ```bash
 ng serve
+
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor esté en marcha, abre tu navegador y navega a `http://localhost:4200/`. La aplicación se recargará automáticamente si modificas cualquiera de los archivos fuente.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## ⚙️ Generación de Código (Scaffolding)
+
+Angular CLI incluye herramientas de andamiaje de código. Para generar un nuevo componente, ejecuta:
 
 ```bash
-ng generate component component-name
+ng generate component nombre-del-componente
+
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para ver una lista completa de los esquemas disponibles (como `components`, `directives` o `pipes`), ejecuta:
 
 ```bash
 ng generate --help
+
 ```
 
-## Building
+---
 
-To build the project run:
+## 🏗️ Construcción (Build)
+
+Para compilar el proyecto para producción, ejecuta:
 
 ```bash
 ng build
+
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Esto compilará tu proyecto y almacenará los archivos de distribución en el directorio `dist/`. Por defecto, la compilación de producción optimiza tu aplicación para mejorar el rendimiento y la velocidad.
 
-## Running unit tests
+---
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 🧪 Pruebas (Tests)
+
+### Pruebas unitarias
+
+Para ejecutar las pruebas unitarias utilizando el ejecutor [Vitest](https://vitest.dev/), utiliza el siguiente comando:
 
 ```bash
 ng test
+
 ```
 
-## Running end-to-end tests
+### Pruebas de extremo a extremo (E2E)
 
-For end-to-end (e2e) testing, run:
+Para las pruebas E2E, ejecuta:
 
 ```bash
 ng e2e
+
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+*(Nota: Angular CLI no incluye un framework E2E por defecto, asegúrate de configurar el que tu grupo haya decidido utilizar).*
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📚 Recursos Adicionales
+
+Para obtener más información sobre el uso de Angular CLI, incluyendo referencias detalladas de comandos, visita la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).
+
+--- 

@@ -1,0 +1,23 @@
+<article class="card h-100" [class.border-primary]="seleccionado()">
+  <div class="card-body">
+    <h2 class="h5">{{ estudiante().nombre }}</h2>
+    <p class="text-body-secondary">{{ estudiante().programa }}</p>
+    <dl>
+      <dt>Promedio</dt>
+      <dd>{{ estudiante().promedio | number: '1.2-2' }}</dd>
+      <dt>Asistencia</dt>
+      <dd>{{ estudiante().asistencia / 100 | percent: '1.0-0' }}</dd>
+      <dt>Estado académico</dt>
+      <dd>{{ estudiante().promedio | estadoAcademico }}</dd>
+    </dl>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      [attr.aria-pressed]="seleccionado()"
+      [attr.aria-label]="'Seleccionar a ' + estudiante().nombre"
+      (click)="seleccionar.emit(estudiante())"
+    >
+      {{ seleccionado() ? 'Seleccionado' : 'Seleccionar' }}
+    </button>
+  </div>
+</article>
