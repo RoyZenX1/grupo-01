@@ -1,0 +1,60 @@
+# ==========================================
+# Dependencias y paquetes de Node / npm
+# ==========================================
+node_modules/
+.pnp
+.pnp.js
+
+# ==========================================
+# Salidas de compilación y producción
+# ==========================================
+dist/
+dist-zip/
+build/
+
+# ==========================================
+# Archivos de registro / Logs
+# ==========================================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# Variables de entorno y configuración local
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ==========================================
+# Caché de pruebas (Vitest / Coverage)
+# ==========================================
+coverage/
+.vitest/
+
+# ==========================================
+# Caché de TypeScript y Vite
+# ==========================================
+.vite/
+*.tsbuildinfo
+
+# ==========================================
+# Configuración del editor de código / IDEs
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==========================================
+# Archivos del sistema operativo
+# ==========================================
+.DS_Store
+Thumbs.db
