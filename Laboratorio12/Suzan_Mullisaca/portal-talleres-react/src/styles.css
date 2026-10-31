@@ -1,0 +1,20 @@
+body { margin: 0; color: #182944; background: #f5f7fb; min-width: 320px; }
+h1 { font-weight: 750; letter-spacing: -.035em; margin-bottom: 1rem; }
+.site-header { padding: 1.4rem 0; background: #142743; color: white; }
+.site-header a { color: #e0eafa; text-decoration: none; }
+.site-header .brand { font-size: 1.25rem; font-weight: 750; color: white; }
+.site-header nav .active { color: white; text-decoration: underline; text-underline-offset: .4rem; }
+.eyebrow { font-weight: 750; letter-spacing: .13em; font-size: .8rem; color: #165f6d; }
+.card, .form-section { border: 1px solid #d8e0eb; border-radius: 1rem; background: white; }
+.form-section { margin: 1.5rem 0; padding: 1.5rem; }
+legend { float: none; width: auto; padding: 0 .25rem; }
+.participant { padding: 1rem; border: 1px solid #d8e0eb; border-radius: .65rem; margin-bottom: 1rem; }
+.field-message { font-size: .9rem; min-height: 1.2rem; margin: .3rem 0 0; }
+.summary { padding: 1rem 0; border-block: 1px solid #c8d5e6; }
+.payload { border-radius: .75rem; padding: 1.5rem; background: #152840; color: #ecf4ff; overflow-x: auto; }
+[aria-invalid="true"] { border-color: #b02a37; }
+:focus-visible { outline: 3px solid #bc6b00; outline-offset: 4px; }
+main:focus { outline: none; }
+.skip-link { position: absolute; left: 1rem; top: -6rem; padding: .8rem; background: white; z-index: 100; }
+.skip-link:focus { top: .5rem; }
+@media (max-width: 575px) { .form-section { padding: 1rem; } }
