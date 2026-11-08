@@ -1,0 +1,66 @@
+﻿:root {
+  font-family: system-ui, sans-serif;
+  color: #152641;
+  background: #eef3f8;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 58rem; margin: auto; padding: 1.25rem; }
+
+section, fieldset {
+  background: white;
+  border: 1px solid #aab9cc;
+  border-radius: .6rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  min-width: 0;
+}
+
+h1, h2 { line-height: 1.2; }
+label, .field { display: block; margin-block: .6rem; }
+input, select, button { font: inherit; }
+
+input:not([type="checkbox"]), select {
+  display: block;
+  max-width: 100%;
+  padding: .4rem;
+  margin-block: .25rem;
+}
+
+input[type="checkbox"] { margin-inline-end: .5rem; }
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin: .8rem 0;
+}
+
+button {
+  border: 1px solid #284870;
+  border-radius: .35rem;
+  color: #143a65;
+  background: #f6faff;
+  padding: .4rem .65rem;
+  cursor: pointer;
+}
+
+button[aria-pressed="true"], button[type="submit"] {
+  color: white;
+  background: #143a65;
+}
+
+button:disabled { opacity: .65; cursor: wait; }
+:focus-visible { outline: 3px solid #a34808; outline-offset: 3px; }
+li { margin-block: .25rem; }
+
+.measured-label, .demo-badge {
+  display: inline-block;
+  border: 1px solid currentColor;
+  padding: .25rem .55rem;
+  border-radius: .35rem;
+}
+
+[role="alert"] { color: #871a24; font-weight: 650; }
