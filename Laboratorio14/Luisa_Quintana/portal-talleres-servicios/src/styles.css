@@ -1,0 +1,81 @@
+﻿:root {
+  font: 1rem/1.55 system-ui, sans-serif;
+  color: #1b2d43;
+  background: #eff4f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  max-width: 56rem;
+  padding: 1.25rem;
+  margin: auto;
+}
+
+h1, h2 {
+  line-height: 1.2;
+}
+
+section, fieldset {
+  background: #fff;
+  border: 1px solid #aab9c9;
+  border-radius: .55rem;
+  padding: .85rem;
+  margin-block: 1rem;
+  min-width: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-block: .8rem;
+}
+
+label {
+  display: block;
+  margin-block: .55rem;
+}
+
+button, select {
+  font: inherit;
+}
+
+select {
+  display: block;
+  max-width: 100%;
+  padding: .35rem;
+}
+
+button {
+  border: 1px solid #284768;
+  border-radius: .35rem;
+  background: #f6faff;
+  color: #163a60;
+  padding: .4rem .65rem;
+}
+
+button[aria-pressed="true"], button[type="submit"] {
+  background: #163a60;
+  color: #fff;
+}
+
+button:disabled {
+  opacity: .65;
+}
+
+:focus-visible {
+  outline: 3px solid #a24208;
+  outline-offset: 3px;
+}
+
+[role="alert"] {
+  color: #8b1727;
+  font-weight: 650;
+}
