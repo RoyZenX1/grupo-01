@@ -23,12 +23,12 @@ export class VehiculosService {
     );
     readonly codigoSiguiente = computed(() => {
         const codigos = this.vehiculosSignal()
-            .map(v => v.codigo ?? v.id)
-            .map(codigo => /^V(\d+)$/.exec(codigo))
+            .map(v => v.codigo)
+            .map(codigo => /^VEH-(\d+)$/.exec(codigo))
             .filter((match): match is RegExpExecArray => match !== null)
             .map(match => Number(match[1]));
         const siguiente = codigos.length ? Math.max(...codigos) + 1 : 1;
-        return `V${String(siguiente).padStart(3, '0')}`;
+        return `VEH-${String(siguiente).padStart(3, '0')}`;
     });
 
     // Reemplaza la lista completa (llamado tras GET)

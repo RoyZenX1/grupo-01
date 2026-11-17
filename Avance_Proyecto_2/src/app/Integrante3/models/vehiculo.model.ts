@@ -6,7 +6,7 @@ export type EstadoVehiculo =
 
 export interface Vehiculo {
     readonly id: string;
-    readonly codigo?: string;
+    readonly codigo: string;
     readonly placa: string;
     readonly tipo: string;
     readonly capacidad: number;

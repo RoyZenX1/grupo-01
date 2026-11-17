@@ -13,7 +13,7 @@ import { VehiculosApi } from '../../services/vehiculos-api';
 import { VehiculosService } from '../../services/vehiculos.service';
 import { mensajeHttp } from '../../services/mensaje-http';
 import { EstadoVehiculoPipe } from '../../pipes/estado-vehiculo.pipe';
-import type { EstadoVehiculo } from '../../models/vehiculo.model';
+import type { EstadoVehiculo, Vehiculo } from '../../models/vehiculo.model';
 import type { Tarifa } from '../../models/tarifa.model';
 
 function numeroFinito(control: AbstractControl) {
@@ -51,7 +51,7 @@ export class Vehiculos implements OnInit {
     readonly enviado = signal(false);
     readonly mensaje = signal('');
     readonly tipoMensaje = signal<'exito' | 'error'>('exito');
-    readonly pendienteEliminar = signal<string | null>(null);
+    readonly pendienteEliminar = signal<Vehiculo | null>(null);
     readonly eliminando = signal(false);
 
     readonly estados: EstadoVehiculo[] = [
@@ -155,7 +155,7 @@ export class Vehiculos implements OnInit {
             .subscribe({
                 next: nuevo => {
                     this.store.agregarLocal(nuevo);
-                    this.mensaje.set(`Vehículo ${nuevo.codigo ?? nuevo.id} registrado.`);
+                    this.mensaje.set(`Vehículo ${nuevo.codigo} registrado.`);
                     this.tipoMensaje.set('exito');
                     this.form.reset({ placa: '', tipo: '', capacidad: null });
                     this.enviado.set(false);
@@ -185,8 +185,8 @@ export class Vehiculos implements OnInit {
             });
     }
 
-    solicitarEliminar(id: string): void {
-        this.pendienteEliminar.set(id);
+    solicitarEliminar(vehiculo: Vehiculo): void {
+        this.pendienteEliminar.set(vehiculo);
     }
 
     cancelarEliminar(): void {
@@ -194,17 +194,17 @@ export class Vehiculos implements OnInit {
     }
 
     confirmarEliminar(): void {
-        const id = this.pendienteEliminar();
-        if (!id || this.eliminando()) return;
+        const vehiculo = this.pendienteEliminar();
+        if (!vehiculo || this.eliminando()) return;
         this.eliminando.set(true);
-        this.api.eliminar(id)
+        this.api.eliminar(vehiculo.id)
             .pipe(
                 takeUntilDestroyed(this.destroyRef),
                 finalize(() => this.eliminando.set(false)),
             )
             .subscribe({
                 next: () => {
-                    this.store.quitarLocal(id);
+                    this.store.quitarLocal(vehiculo.id);
                     this.pendienteEliminar.set(null);
                     this.mensaje.set('Vehículo eliminado.');
                     this.tipoMensaje.set('exito');

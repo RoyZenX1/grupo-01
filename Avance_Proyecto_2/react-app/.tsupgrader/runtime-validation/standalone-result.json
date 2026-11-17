@@ -1,0 +1,189 @@
+{
+  "planHash": "f35a41db19fdfc76bcb736ed5ac31950db80a0bedad4f7cc2afc3b4722cbbb62",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-17T04:11:51.1917663Z",
+  "retryCount": 0,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 11027,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "builds-react-app",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E react-app@0.0.0 build\r\n\u003E tsc -b \u0026\u0026 vite build\r\n\r\n\u001B[36mvite v8.3.8 \u001B[32mbuilding client environment for production...\u001B[36m\u001B[39m\r\ntransforming...\r\n\u2713 178 modules transformed.\r\nrendering chunks...\r\ncomputing gzip size...\r\ndist/index.html                   0.47 kB \u2502 gzip:   0.30 kB\r\ndist/assets/index-CyBUxYrA.css  243.76 kB \u2502 gzip:  33.97 kB\r\ndist/assets/index-BM37yKEl.js   434.89 kB \u2502 gzip: 133.56 kB\r\n\r\n\u001B[32m\u2713 built in 603ms\u001B[39m\r\n",
+        "durationMs": 2389
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E react-app@0.0.0 test\r\n\u003E vitest run\r\n\r\n\r\n RUN  v4.1.12 C:/Users/Alejandro/Downloads/javascript/grupo-01/Avance_Proyecto_2/react-app\r\n\r\n\r\n Test Files  1 passed (1)\r\n      Tests  1 passed (1)\r\n   Start at  23:11:48\r\n   Duration  390ms (transform 66ms, setup 0ms, import 143ms, tests 15ms, environment 0ms)\r\n\r\n",
+        "durationMs": 1643,
+        "testResults": {
+          "testFramework": "vitest",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 1,
+          "testsPassed": 1,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": false
+        }
+      },
+      {
+        "name": "lint-passes",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "\r\n\u003E react-app@0.0.0 lint\r\n\u003E oxlint\r\n\r\n",
+        "durationMs": 663
+      },
+      {
+        "name": "dashboard-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Clink rel=\u0022icon\u0022 type=\u0022image/svg\u002Bxml\u0022 href=\u0022/favicon.svg\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Ctitle\u003Ereact-app\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n\n--- server output ---\n\r\n\u003E react-app@0.0.0 dev\r\n\u003E vite --host 127.0.0.1\r\n\r\n\r\n  \u001B[32m\u001B[1mVITE\u001B[22m v8.3.8\u001B[39m  \u001B[2mready in \u001B[0m\u001B[1m310\u001B[22m\u001B[2m\u001B[0m ms\u001B[22m\r\n\r\n  \u001B[32m\u279C\u001B[39m  \u001B[1mLocal\u001B[22m:   \u001B[36mhttp://127.0.0.1:\u001B[1m5173\u001B[22m/\u001B[39m\r\n",
+        "durationMs": 1120
+      },
+      {
+        "name": "clients-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Clink rel=\u0022icon\u0022 type=\u0022image/svg\u002Bxml\u0022 href=\u0022/favicon.svg\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Ctitle\u003Ereact-app\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n",
+        "durationMs": 335
+      },
+      {
+        "name": "vehicles-route-serves",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\r\n\u003Chtml lang=\u0022en\u0022\u003E\r\n  \u003Chead\u003E\n    \u003Cscript type=\u0022module\u0022\u003Eimport { injectIntoGlobalHook } from \u0022/@react-refresh\u0022;\ninjectIntoGlobalHook(window);\nwindow.$RefreshReg$ = () =\u003E {};\nwindow.$RefreshSig$ = () =\u003E (type) =\u003E type;\u003C/script\u003E\n\n    \u003Cscript type=\u0022module\u0022 src=\u0022/@vite/client\u0022\u003E\u003C/script\u003E\n\r\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\r\n    \u003Clink rel=\u0022icon\u0022 type=\u0022image/svg\u002Bxml\u0022 href=\u0022/favicon.svg\u0022 /\u003E\r\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\r\n    \u003Ctitle\u003Ereact-app\u003C/title\u003E\r\n  \u003C/head\u003E\r\n  \u003Cbody\u003E\r\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\r\n    \u003Cscript type=\u0022module\u0022 src=\u0022/src/main.tsx\u0022\u003E\u003C/script\u003E\r\n  \u003C/body\u003E\r\n\u003C/html\u003E\r\n",
+        "durationMs": 148
+      }
+    ],
+    "executions": [
+      {
+        "source": "setup[0]",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "ci"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "builds-react-app",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "build"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "lint-passes",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "lint"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "dashboard-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "clients-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      },
+      {
+        "source": "vehicles-route-serves",
+        "resolvedExecutable": "C:\\Program Files\\nodejs\\npm.CMD",
+        "args": [
+          "run",
+          "dev",
+          "--",
+          "--host",
+          "127.0.0.1"
+        ],
+        "cwd": "C:\\Users\\Alejandro\\Downloads\\javascript\\grupo-01\\Avance_Proyecto_2\\react-app",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32"
+      }
+    ]
+  }
+}

@@ -162,6 +162,7 @@
   "vehiculos": [
     {
       "id": "V001",
+      "codigo": "VEH-001",
       "placa": "ABC-123",
       "tipo": "Camión",
       "capacidad": 10,
@@ -169,6 +170,7 @@
     },
     {
       "id": "V002",
+      "codigo": "VEH-002",
       "placa": "DEF-456",
       "tipo": "Furgón",
       "capacidad": 7,
@@ -176,6 +178,7 @@
     },
     {
       "id": "V003",
+      "codigo": "VEH-003",
       "placa": "GHI-789",
       "tipo": "Camioneta",
       "capacidad": 3,
@@ -183,19 +186,28 @@
     },
     {
       "id": "Gaxntv4YNeQ",
-      "codigo": "V004",
+      "codigo": "VEH-004",
       "placa": "JKL-012",
       "tipo": "Camión",
       "capacidad": 8,
       "estado": "Disponible"
     },
     {
-      "codigo": "V005",
+      "codigo": "VEH-005",
       "placa": "YTK-425",
       "tipo": "Furgón",
       "capacidad": 5,
       "estado": "Disponible",
       "id": "u-QADHzpbMU"
+    },
+    {
+      "codigo": "VEH-006",
+      "placa": "BCD-242",
+      "modelo": "Hilux",
+      "tipo": "Camión",
+      "capacidad": 3,
+      "estado": "Disponible",
+      "id": "5LLLsGzsnh0"
     }
   ],
   "ordenes": [

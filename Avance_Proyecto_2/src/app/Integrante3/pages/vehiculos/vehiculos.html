@@ -25,10 +25,10 @@
 
     <form [formGroup]="form" (ngSubmit)="registrar()" novalidate class="formulario">
         <div class="campo">
-            <label for="idVehiculo">ID asignado</label>
-            <input id="idVehiculo" type="text" [value]="codigoSiguiente()" readonly
-                   aria-describedby="idVehiculo-ayuda" />
-            <p id="idVehiculo-ayuda" class="form-text">Se asigna automáticamente.</p>
+            <label for="codigoVehiculo">Código visible asignado</label>
+            <input id="codigoVehiculo" type="text" [value]="codigoSiguiente()" readonly
+                   aria-describedby="codigoVehiculo-ayuda" />
+            <p id="codigoVehiculo-ayuda" class="form-text">Se asigna automáticamente; el ID interno no se muestra.</p>
         </div>
 
         <div class="campo">
@@ -101,7 +101,7 @@
         @if (pendienteEliminar(); as idEliminar) {
             <section class="panel" aria-labelledby="confirmar-eliminar">
                 <h3 id="confirmar-eliminar">Confirmar eliminación</h3>
-                <p>Se eliminará el vehículo <strong>{{ idEliminar }}</strong>.</p>
+                <p>Se eliminará el vehículo con código <strong>{{ idEliminar.codigo }}</strong>.</p>
                 <button type="button" class="btn-eliminar" (click)="confirmarEliminar()"
                         [disabled]="eliminando()">
                     {{ eliminando() ? 'Eliminando...' : 'Confirmar' }}
@@ -117,14 +117,14 @@
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th><th>Placa</th><th>Tipo</th>
+                        <th>Código</th><th>Placa</th><th>Tipo</th>
                         <th>Capacidad</th><th>Estado</th><th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     @for (v of vehiculos(); track v.id) {
                         <tr>
-                            <td>{{ v.codigo ?? v.id }}</td>
+                            <td>{{ v.codigo }}</td>
                             <td>{{ v.placa }}</td>
                             <td>{{ v.tipo }}</td>
                             <td>{{ v.capacidad }} t</td>
@@ -142,7 +142,7 @@
                             <td>
                                 <button type="button" class="btn-eliminar"
                                         [attr.aria-label]="'Eliminar vehículo ' + v.placa"
-                                        (click)="solicitarEliminar(v.id)">
+                                        (click)="solicitarEliminar(v)">
                                     Eliminar
                                 </button>
                             </td>

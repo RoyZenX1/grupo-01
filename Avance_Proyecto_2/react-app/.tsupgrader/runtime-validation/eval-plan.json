@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-11-17T02:52:00Z",
+  "generatedOnPlatform": "win32",
+  "projectType": "webapp",
+  "setup": [
+    {
+      "command": "npm",
+      "args": ["ci"]
+    }
+  ],
+  "assertions": [
+    {
+      "name": "builds-react-app",
+      "kind": "process",
+      "command": "npm",
+      "args": ["run", "build"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 180
+    },
+    {
+      "name": "tests-pass",
+      "kind": "process",
+      "command": "npm",
+      "args": ["test"],
+      "verificationMethod": "test-results",
+      "expected": "0",
+      "timeoutSeconds": 180
+    },
+    {
+      "name": "lint-passes",
+      "kind": "process",
+      "command": "npm",
+      "args": ["run", "lint"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 120
+    },
+    {
+      "name": "dashboard-route-serves",
+      "kind": "http-probe",
+      "startCommand": "npm",
+      "startArgs": ["run", "dev", "--", "--host", "127.0.0.1"],
+      "url": "http://127.0.0.1:5173/dashboard",
+      "verificationMethod": "http-status",
+      "expected": "200",
+      "timeoutSeconds": 60
+    },
+    {
+      "name": "clients-route-serves",
+      "kind": "http-probe",
+      "startCommand": "npm",
+      "startArgs": ["run", "dev", "--", "--host", "127.0.0.1"],
+      "url": "http://127.0.0.1:5173/clientes",
+      "verificationMethod": "http-status",
+      "expected": "200",
+      "timeoutSeconds": 60
+    },
+    {
+      "name": "vehicles-route-serves",
+      "kind": "http-probe",
+      "startCommand": "npm",
+      "startArgs": ["run", "dev", "--", "--host", "127.0.0.1"],
+      "url": "http://127.0.0.1:5173/vehiculos",
+      "verificationMethod": "http-status",
+      "expected": "200",
+      "timeoutSeconds": 60
+    }
+  ]
+}
