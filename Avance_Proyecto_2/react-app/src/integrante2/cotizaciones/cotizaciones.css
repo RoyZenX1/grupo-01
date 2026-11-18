@@ -1,0 +1,4 @@
+.cotizaciones-page .table th[scope='row'] {
+  color: var(--azul);
+  font-weight: 600;
+}
