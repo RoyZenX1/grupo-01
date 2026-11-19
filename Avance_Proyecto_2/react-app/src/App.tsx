@@ -7,6 +7,8 @@ import {
 } from './pages/WorkspacePages'
 import { VehiculoDetallePage } from './integrante3/vehiculos/VehiculoDetallePage'
 import { VehiculosPage } from './integrante3/vehiculos/VehiculosPage'
+import { ReportesPage } from './integrante4/reportes/reportesPage'
+import { OrdenesPage } from './integrante4/ordenes/OrdenesPage'
 import './App.css'
 
 const queryClient = new QueryClient()
@@ -52,21 +54,11 @@ function App() {
             />
             <Route
               path="ordenes"
-              element={
-                <PlaceholderPage
-                  title="Órdenes"
-                  description="Aquí se incorporará la gestión de órdenes."
-                />
-              }
-            />
+              element={<OrdenesPage />}
+              />
             <Route
               path="reportes"
-              element={
-                <PlaceholderPage
-                  title="Reportes"
-                  description="Aquí se incorporarán los reportes del sistema."
-                />
-              }
+              element={<ReportesPage />}
             />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

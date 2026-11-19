@@ -1,0 +1,269 @@
+
+.reportes-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-bottom: 30px;
+}
+
+.reportes-header,
+.reportes-seccion-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.reportes-eyebrow {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.reportes-header h1 {
+  margin: 8px 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 750;
+  color: #172033;
+}
+
+.reportes-header p,
+.reportes-seccion-titulo p {
+  margin: 0;
+  color: #64748b;
+}
+
+.reportes-filtros,
+.reportes-tabla-seccion,
+.reportes-panel {
+  background: #fff;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+}
+
+.reportes-seccion-titulo {
+  margin-bottom: 20px;
+}
+
+.reportes-seccion-titulo h2,
+.reportes-panel h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #172033;
+  margin-bottom: 5px;
+}
+
+.reportes-estados-filtro {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.reportes-estados-filtro > span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.reportes-estado-chip {
+  border: 1px solid #dbe2ea;
+  background: #fff;
+  color: #475569;
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reportes-estado-chip:hover,
+.reportes-estado-chip.activo {
+  background: #172f50;
+  color: white;
+  border-color: #172f50;
+}
+
+.reportes-metricas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.reporte-metrica {
+  background: #fff;
+  border: 1px solid #e5eaf0;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reporte-metrica span {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.reporte-metrica strong {
+  color: #172f50;
+  font-size: 25px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.reporte-metrica small {
+  color: #94a3b8;
+}
+
+.reportes-tabla-seccion .table {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.reportes-tabla-seccion thead th {
+  background: #f8fafc;
+  color: #475569;
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.estado-orden {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.estado-pendiente {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.estado-programada {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.estado-en-ruta {
+  background: #ecfeff;
+  color: #0e7490;
+}
+
+.estado-completada {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.estado-cancelada {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.reportes-resumen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.reportes-panel h2 {
+  margin-bottom: 20px;
+}
+
+.resumen-estado {
+  margin-bottom: 18px;
+}
+
+.resumen-estado .progress {
+  height: 8px;
+  margin: 8px 0 5px;
+  background: #e9eef5;
+}
+
+.resumen-estado .progress-bar {
+  background: #315b87;
+}
+
+.resumen-estado small,
+.resumen-fila small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.resumen-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf0f4;
+}
+
+.resumen-fila:last-child {
+  border-bottom: 0;
+}
+
+.resumen-fila div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.resumen-fila strong {
+  font-size: 13px;
+  color: #334155;
+  overflow-wrap: anywhere;
+}
+
+.resumen-fila > span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #172f50;
+  white-space: nowrap;
+}
+
+.reportes-nota {
+  padding: 15px 18px;
+  border-left: 4px solid #315b87;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+@media (max-width: 1000px) {
+  .reportes-metricas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reportes-resumen-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .reportes-page {
+    gap: 16px;
+  }
+
+  .reportes-metricas {
+    grid-template-columns: 1fr;
+  }
+
+  .reportes-filtros,
+  .reportes-tabla-seccion,
+  .reportes-panel {
+    padding: 16px;
+  }
+}

@@ -234,6 +234,18 @@
       "tarifa": 150,
       "estado": "Pendiente",
       "id": "HjXkYB4FI8M"
+    },
+    {
+      "cotizacionId": "C003",
+      "vehiculoId": "Gaxntv4YNeQ",
+      "origen": "Lima",
+      "destino": "Chorrillos",
+      "distancia": 80,
+      "peso": 3,
+      "codigo": "ORD003",
+      "tarifa": 180,
+      "estado": "Pendiente",
+      "id": "ASe6_N1xY2E"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
