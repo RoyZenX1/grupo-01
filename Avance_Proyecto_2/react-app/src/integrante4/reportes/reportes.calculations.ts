@@ -6,7 +6,7 @@ import type {
   ResumenEstado,
   ResumenRuta,
   ResumenCotizacion,
-} from './reportes.types'
+} from './reportes.types.ts'
 
 export const ESTADOS_ORDEN: EstadoOrden[] = [
   'Pendiente',

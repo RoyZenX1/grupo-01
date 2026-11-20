@@ -1,8 +1,16 @@
 import { z } from 'zod'
-import { http } from '../../shared/api/http'
-import type { Orden, OrdenWrite } from './ordenes.types'
+import { http } from '../../shared/api/http.ts'
+import type { Orden, OrdenWrite } from './ordenes.types.ts'
 
 const recurso = (id: string) => `/ordenes/${encodeURIComponent(id)}`
+
+const estadoOrdenSchema = z.enum([
+  'Pendiente',
+  'Programada',
+  'En ruta',
+  'Completada',
+  'Cancelada',
+])
 
 const ordenSchema = z.object({
   id: z.coerce.string().min(1),
@@ -21,6 +29,9 @@ const ordenSchema = z.object({
     'Completada',
     'Cancelada',
   ]),
+  historial: z
+    .array(z.object({ estado: estadoOrdenSchema, fecha: z.string() }))
+    .optional(),
 })
 
 export async function listarOrdenes(): Promise<Orden[]> {

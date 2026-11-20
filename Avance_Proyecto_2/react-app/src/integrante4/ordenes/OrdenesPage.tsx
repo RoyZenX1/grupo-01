@@ -1,106 +1,101 @@
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
-import { listarVehiculos } from '../../integrante3/vehiculos/vehiculos.api'
-import { useAuth } from '../../integrante5/auth/auth.context'
-import { listarCotizacionesParaOrden } from './cotizaciones.ordenes.api'
-import { OrdenForm } from './OrdenForm'
-import { siguienteCodigoOrden } from './ordenes.calculations'
-import { actualizarOrden, listarOrdenes, crearOrden } from './ordenes.api'
-import { ESTADOS_ORDEN } from './ordenes.types'
-import type { EstadoOrden, Orden, OrdenWrite } from './ordenes.types'
+import { listarVehiculos } from '../../integrante3/vehiculos/vehiculos.api.ts'
+import { useAuth } from '../../integrante5/auth/auth.context.tsx'
+import { listarCotizacionesParaOrden } from './cotizaciones.ordenes.api.ts'
+import { OrdenDetail } from './OrdenDetail.tsx'
+import { OrdenForm } from './OrdenForm.tsx'
+import { estadosSiguientes } from './ordenes.estados.ts'
+import {
+  VEHICULOS_QUERY_KEY,
+  useCambiarEstadoOrden,
+  useCrearOrden,
+  useOrdenes,
+} from './ordenes.queries.ts'
+import { ESTADOS_ORDEN } from './ordenes.types.ts'
+import type { EstadoOrden, Orden, OrdenWrite } from './ordenes.types.ts'
 import './ordenes.css'
 
 export function OrdenesPage() {
-  const [ordenes, setOrdenes] = useState<Orden[]>([])
   const [formularioAbierto, setFormularioAbierto] = useState(false)
-  const [cargando, setCargando] = useState(true)
-  const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
-  const [cambiandoEstadoId, setCambiandoEstadoId] = useState<string | null>(null)
+  // null = sin elegir todavía (se usa ?orden=), '' = cerrado por el usuario.
+  const [idDetalle, setIdDetalle] = useState<string | null>(null)
+
   const esAdministrador = useAuth().tieneRol('Administrador')
+
   const [searchParams, setSearchParams] = useSearchParams()
   const cotizacionIdParam = searchParams.get('cotizacionId')
   const ordenIdParam = searchParams.get('orden')
-  const mostrarFormulario = formularioAbierto || cotizacionIdParam !== null
 
-  // Cargar vehículos desde la API.
+  const mostrarFormulario =
+    formularioAbierto || cotizacionIdParam !== null
+
+  // Órdenes con TanStack Query.
+  const {
+    data: ordenes = [],
+    isLoading: cargandoOrdenes,
+    isError: errorOrdenes,
+    error: detalleErrorOrdenes,
+    refetch: recargarOrdenes,
+  } = useOrdenes()
+
+  // Vehículos (se refrescan solos cuando una orden los ocupa o libera).
   const { data: vehiculosAPI = [] } = useQuery({
-    queryKey: ['vehiculos'],
+    queryKey: VEHICULOS_QUERY_KEY,
     queryFn: listarVehiculos,
   })
 
-  // Cargar cotizaciones desde la API.
-  const { data: cotizacionesAPI = [] } = useQuery({
+  // Cotizaciones.
+  const {
+    data: cotizacionesAPI = [],
+    isSuccess: cotizacionesCargadas,
+  } = useQuery({
     queryKey: ['cotizaciones-para-orden'],
     queryFn: listarCotizacionesParaOrden,
   })
 
-  // Cargar las órdenes existentes desde la API.
-  async function cargarOrdenes() {
-    try {
-      setCargando(true)
-      setError('')
+  // Una cotización con una orden vigente no se vuelve a ofrecer.
+  const cotizacionesConOrden = new Set(
+    ordenes
+      .filter((orden) => orden.estado !== 'Cancelada')
+      .map((orden) => orden.cotizacionId),
+  )
+  const cotizacionesDisponibles = cotizacionesAPI.filter(
+    (cotizacion) => !cotizacionesConOrden.has(cotizacion.id),
+  )
 
-      const datos = await listarOrdenes()
-      setOrdenes(datos)
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'No se pudieron cargar las órdenes.',
-      )
-    } finally {
-      setCargando(false)
-    }
-  }
+  const cotizacionPreseleccionada = cotizacionIdParam
+    ? cotizacionesAPI.find((item) => item.id === cotizacionIdParam)
+    : undefined
 
-  useEffect(() => {
-    void cargarOrdenes()
-  }, [])
+  const avisoCotizacion =
+    !cotizacionIdParam || !cotizacionesCargadas || cargandoOrdenes
+      ? ''
+      : !cotizacionPreseleccionada
+        ? `La cotización ${cotizacionIdParam} no existe.`
+        : cotizacionPreseleccionada.estado !== 'Aprobada'
+          ? `La cotización ${cotizacionIdParam} no está aprobada.`
+          : cotizacionesConOrden.has(cotizacionIdParam)
+            ? `La cotización ${cotizacionIdParam} ya tiene una orden registrada.`
+            : ''
 
-  // Registrar una nueva orden en JSON Server.
-  async function registrarOrden(datos: OrdenWrite) {
-    try {
-      setGuardando(true)
-      setError('')
+  const idDetalleActivo =
+    idDetalle === null ? ordenIdParam : idDetalle || null
+  const ordenDetalle = idDetalleActivo
+    ? ordenes.find((orden) => orden.id === idDetalleActivo)
+    : undefined
 
-      const nuevaOrden = await crearOrden({
-        ...datos,
-        codigo: siguienteCodigoOrden(ordenes),
-      })
+  // Cerrar formulario y limpiar la cotización seleccionada de la URL.
+  function cerrarFormulario() {
+    setFormularioAbierto(false)
 
-      setOrdenes((actuales) => [...actuales, nuevaOrden])
-      cerrarFormulario()
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'No se pudo registrar la orden.',
-      )
-    } finally {
-      setGuardando(false)
-    }
-  }
-
-  async function cambiarEstadoOrden(id: string, estado: EstadoOrden) {
-    try {
-      setCambiandoEstadoId(id)
-      setError('')
-
-      const actualizada = await actualizarOrden(id, { estado })
-      setOrdenes((actuales) =>
-        actuales.map((orden) => (orden.id === id ? actualizada : orden)),
-      )
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'No se pudo actualizar el estado de la orden.',
-      )
-    } finally {
-      setCambiandoEstadoId(null)
+    if (cotizacionIdParam) {
+      const siguientes = new URLSearchParams(searchParams)
+      siguientes.delete('cotizacionId')
+      setSearchParams(siguientes, { replace: true })
     }
   }
 
@@ -108,14 +103,76 @@ export function OrdenesPage() {
     setFormularioAbierto(true)
   }
 
-  function cerrarFormulario() {
-    setFormularioAbierto(false)
-    if (cotizacionIdParam) {
+  function abrirDetalle(id: string) {
+    setIdDetalle(id)
+  }
+
+  function cerrarDetalle() {
+    setIdDetalle('')
+
+    if (ordenIdParam) {
       const siguientes = new URLSearchParams(searchParams)
-      siguientes.delete('cotizacionId')
+      siguientes.delete('orden')
       setSearchParams(siguientes, { replace: true })
     }
   }
+
+  // Registrar una orden (también marca el vehículo como Ocupado).
+  const crearOrdenMutation = useCrearOrden(ordenes)
+
+  // Cambiar estado (respeta el flujo y libera el vehículo al terminar).
+  const actualizarEstadoMutation = useCambiarEstadoOrden()
+
+  // Función que recibe los datos del formulario.
+  async function registrarOrden(datos: OrdenWrite) {
+    setError('')
+
+    try {
+      await crearOrdenMutation.mutateAsync(datos)
+      cerrarFormulario()
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo registrar la orden.',
+      )
+    }
+  }
+
+  // Cambiar el estado de una orden.
+  async function cambiarEstadoOrden(
+    orden: Orden,
+    estado: EstadoOrden,
+  ) {
+    setError('')
+
+    if (
+      estado === 'Cancelada' &&
+      !window.confirm(
+        `¿Cancelar la orden ${orden.codigo}? Esta acción no se puede deshacer.`,
+      )
+    ) {
+      return
+    }
+
+    try {
+      await actualizarEstadoMutation.mutateAsync({ orden, estado })
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo actualizar el estado de la orden.',
+      )
+    }
+  }
+
+  const mensajeError = error || (
+    errorOrdenes
+      ? detalleErrorOrdenes instanceof Error
+        ? detalleErrorOrdenes.message
+        : 'No se pudieron cargar las órdenes.'
+      : ''
+  )
 
   return (
     <main className="ordenes-page">
@@ -129,19 +186,23 @@ export function OrdenesPage() {
           type="button"
           className="btn btn-primary"
           onClick={mostrarFormulario ? cerrarFormulario : abrirFormulario}
-          disabled={guardando}
+          disabled={crearOrdenMutation.isPending}
         >
           {mostrarFormulario ? 'Cerrar formulario' : '+ Nueva orden'}
         </button>
       </header>
 
-      {error && (
+      {mensajeError && (
         <div className="alert alert-danger" role="alert">
-          {error}
+          {mensajeError}
+
           <button
             type="button"
             className="btn btn-sm btn-outline-danger ms-3"
-            onClick={() => void cargarOrdenes()}
+            onClick={() => {
+              setError('')
+              void recargarOrdenes()
+            }}
           >
             Reintentar
           </button>
@@ -179,12 +240,47 @@ export function OrdenesPage() {
 
       {/* Formulario de registro */}
       {mostrarFormulario && (
+        <>
+          {avisoCotizacion && (
+            <div
+              className="alert alert-warning ordenes-aviso-cotizacion"
+              role="alert"
+            >
+              {avisoCotizacion}
+            </div>
+          )}
+          {cotizacionPreseleccionada && !avisoCotizacion && (
+            <div
+              className="alert alert-info ordenes-aviso-cotizacion"
+              role="status"
+            >
+              Cotización {cotizacionPreseleccionada.id} cargada desde
+              Cotizaciones. Elige un vehículo para registrar la orden.
+            </div>
+          )}
         <OrdenForm
-          cotizaciones={cotizacionesAPI}
+          cotizaciones={cotizacionesDisponibles}
           vehiculos={vehiculosAPI}
           cotizacionInicialId={cotizacionIdParam}
           onGuardar={registrarOrden}
           onCancelar={cerrarFormulario}
+        />
+        </>
+      )}
+
+      {/* Detalle de la orden */}
+      {ordenDetalle && (
+        <OrdenDetail
+          orden={ordenDetalle}
+          vehiculo={vehiculosAPI.find(
+            (vehiculo) => vehiculo.id === ordenDetalle.vehiculoId,
+          )}
+          puedeCancelar={esAdministrador}
+          cambiando={actualizarEstadoMutation.isPending}
+          onCambiarEstado={(orden, estado) =>
+            void cambiarEstadoOrden(orden, estado)
+          }
+          onCerrar={cerrarDetalle}
         />
       )}
 
@@ -192,7 +288,7 @@ export function OrdenesPage() {
       <section className="ordenes-listado">
         <h2>Listado de órdenes</h2>
 
-        {cargando ? (
+        {cargandoOrdenes ? (
           <p>Cargando órdenes...</p>
         ) : ordenes.length === 0 ? (
           <div className="ordenes-vacio">
@@ -213,6 +309,7 @@ export function OrdenesPage() {
                   <th>Peso</th>
                   <th>Tarifa</th>
                   <th>Estado</th>
+                  <th>Detalle</th>
                 </tr>
               </thead>
 
@@ -220,7 +317,11 @@ export function OrdenesPage() {
                 {ordenes.map((orden) => (
                   <tr
                     key={orden.id}
-                    className={orden.id === ordenIdParam ? 'table-warning' : undefined}
+                    className={
+                      orden.id === ordenIdParam
+                        ? 'table-warning'
+                        : undefined
+                    }
                   >
                     <td>{orden.codigo}</td>
                     <td>{orden.origen}</td>
@@ -235,28 +336,37 @@ export function OrdenesPage() {
                       >
                         Estado de la orden {orden.codigo}
                       </label>
+
                       <select
                         className="form-select form-select-sm"
                         id={`estado-orden-${orden.id}`}
                         value={orden.estado}
                         disabled={
-                          cambiandoEstadoId === orden.id ||
+                          (actualizarEstadoMutation.isPending &&
+                            actualizarEstadoMutation.variables?.orden.id === orden.id) ||
                           orden.estado === 'Cancelada' ||
                           orden.estado === 'Completada'
                         }
                         onChange={(event) => {
                           const estado = event.currentTarget.value
+
                           if (
-                            (ESTADOS_ORDEN as readonly string[]).includes(estado)
+                            (ESTADOS_ORDEN as readonly string[]).includes(
+                              estado,
+                            )
                           ) {
                             void cambiarEstadoOrden(
-                              orden.id,
+                              orden,
                               estado as EstadoOrden,
                             )
                           }
                         }}
                       >
-                        {ESTADOS_ORDEN.map((estado) => (
+                        {ESTADOS_ORDEN.filter(
+                          (estado) =>
+                            estado === orden.estado ||
+                            estadosSiguientes(orden.estado).includes(estado),
+                        ).map((estado) => (
                           <option
                             key={estado}
                             value={estado}
@@ -268,6 +378,15 @@ export function OrdenesPage() {
                           </option>
                         ))}
                       </select>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-outline-primary"
+                        onClick={() => abrirDetalle(orden.id)}
+                      >
+                        Ver detalle
+                      </button>
                     </td>
                   </tr>
                 ))}

@@ -1,8 +1,8 @@
 
-import type { Orden, OrdenBorrador } from './ordenes.types'
-import type { CotizacionParaOrden } from './ordenes.types'
-import type { Vehiculo } from '../../integrante3/vehiculos/vehiculo.types'
-import { buscarTarifa } from '../../integrante3/vehiculos/tarifas'
+import type { Orden, OrdenBorrador } from './ordenes.types.ts'
+import type { CotizacionParaOrden } from './ordenes.types.ts'
+import type { Vehiculo } from '../../integrante3/vehiculos/vehiculo.types.ts'
+import { buscarTarifa } from '../../integrante3/vehiculos/tarifas.ts'
 
 export interface ResultadoBorradorOrden {
   borrador: OrdenBorrador

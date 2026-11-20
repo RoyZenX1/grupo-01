@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { http } from '../../shared/api/http'
-import type { CotizacionParaOrden } from './ordenes.types'
+import { http } from '../../shared/api/http.ts'
+import type { CotizacionParaOrden } from './ordenes.types.ts'
 
 const cotizacionParaOrdenSchema = z.object({
   id: z.coerce.string().min(1),

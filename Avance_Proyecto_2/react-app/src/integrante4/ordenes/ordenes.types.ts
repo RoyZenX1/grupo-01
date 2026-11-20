@@ -9,6 +9,11 @@ export const ESTADOS_ORDEN = [
 
 export type EstadoOrden = (typeof ESTADOS_ORDEN)[number]
 
+export interface HistorialOrden {
+  estado: EstadoOrden
+  fecha: string
+}
+
 export interface Orden {
   id: string
   codigo: string
@@ -20,6 +25,8 @@ export interface Orden {
   peso: number
   tarifa: number
   estado: EstadoOrden
+  /** Seguimiento de cambios de estado. Las órdenes antiguas no lo tienen. */
+  historial?: HistorialOrden[]
 }
 
 export interface OrdenBorrador {

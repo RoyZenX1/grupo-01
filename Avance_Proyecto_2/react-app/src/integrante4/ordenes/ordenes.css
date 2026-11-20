@@ -100,3 +100,126 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---- Detalle y seguimiento de la orden ---- */
+.ordenes-detalle {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.ordenes-detalle-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ordenes-detalle-cabecera h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.ordenes-estado {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: middle;
+  background: #e9ecef;
+  color: #343a40;
+}
+
+.ordenes-estado-programada { background: #e0e7ff; color: #3730a3; }
+.ordenes-estado-en-ruta { background: #fef3c7; color: #92400e; }
+.ordenes-estado-completada { background: #d1fae5; color: #065f46; }
+.ordenes-estado-cancelada { background: #fee2e2; color: #991b1b; }
+
+.ordenes-seguimiento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.ordenes-seguimiento li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding-top: 4px;
+  color: #6c757d;
+  position: relative;
+}
+
+.ordenes-seguimiento li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: calc(50% + 20px);
+  width: calc(100% - 40px);
+  height: 2px;
+  background: #dee2e6;
+}
+
+.ordenes-seguimiento li.alcanzada:not(:last-child)::after {
+  background: #198754;
+}
+
+.ordenes-seguimiento-punto {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e9ecef;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ordenes-seguimiento li.alcanzada .ordenes-seguimiento-punto {
+  background: #198754;
+  color: #fff;
+}
+
+.ordenes-seguimiento li small {
+  font-size: 12px;
+}
+
+.ordenes-datos h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ordenes-datos dt {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6c757d;
+}
+
+.ordenes-datos dd {
+  margin-bottom: 8px;
+}
+
+.ordenes-aviso-cotizacion {
+  margin-bottom: 16px;
+}
+
+@media (max-width: 480px) {
+  .ordenes-seguimiento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ordenes-seguimiento li::after {
+    display: none;
+  }
+}

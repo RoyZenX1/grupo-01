@@ -1,0 +1,117 @@
+.reportes-graficos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.reportes-graficos-ancho {
+  grid-column: 1 / -1;
+}
+
+.grafico-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.grafico-valor {
+  font-size: 13px;
+  font-weight: 700;
+  fill: #212529;
+}
+
+.grafico-etiqueta {
+  font-size: 11px;
+  fill: #6c757d;
+}
+
+.grafico-dona {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.grafico-svg-dona {
+  max-width: 200px;
+}
+
+.grafico-dona-titulo {
+  font-size: 11px;
+  fill: #6c757d;
+}
+
+.grafico-dona-total {
+  font-size: 14px;
+  font-weight: 700;
+  fill: #212529;
+}
+
+.grafico-leyenda {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.grafico-leyenda li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.grafico-leyenda strong {
+  margin-left: auto;
+}
+
+.grafico-leyenda-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.grafico-rutas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.grafico-rutas-texto {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.grafico-rutas-pista {
+  background: #e9ecef;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.grafico-rutas-barra {
+  height: 100%;
+  min-width: 4px;
+  background: #0d6efd;
+  border-radius: 999px;
+}
+
+.grafico-vacio {
+  color: #6c757d;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .reportes-graficos {
+    grid-template-columns: 1fr;
+  }
+}

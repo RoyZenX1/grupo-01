@@ -20,6 +20,7 @@ import {
   resumirRutas,
 } from './reportes.calculations'
 
+import { ReportesGraficos } from './ReportesGraficos'
 import './reportes.css'
 
 interface ReportesPageProps {
@@ -270,6 +271,8 @@ export function ReportesPage({
           <small>Órdenes en proceso</small>
         </article>
       </section>
+
+      <ReportesGraficos ordenes={ordenesFiltradas} />
 
       <section className="reportes-tabla-seccion">
         <div className="reportes-seccion-titulo">
