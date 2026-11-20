@@ -9,6 +9,7 @@ import { VehiculoDetallePage } from './integrante3/vehiculos/VehiculoDetallePage
 import { VehiculosPage } from './integrante3/vehiculos/VehiculosPage'
 import { ReportesPage } from './integrante4/reportes/reportesPage'
 import { OrdenesPage } from './integrante4/ordenes/OrdenesPage'
+import { ClientesPage } from './integrante1/clientes/ClientesPage'
 import './App.css'
 
 const queryClient = new QueryClient()
@@ -31,12 +32,7 @@ function App() {
             />
             <Route
               path="clientes"
-              element={
-                <PlaceholderPage
-                  title="Clientes"
-                  description="Aquí se incorporará la gestión de clientes."
-                />
-              }
+              element={<ClientesPage />}
             />
             <Route path="vehiculos" element={<VehiculosPage />} />
             <Route

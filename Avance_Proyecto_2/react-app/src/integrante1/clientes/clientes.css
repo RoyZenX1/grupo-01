@@ -1,0 +1,8 @@
+.clientes-page .module-grid {
+  grid-template-columns: minmax(320px, 1fr) minmax(280px, 0.75fr);
+}
+
+.clientes-page .table th[scope='row'] {
+  color: var(--azul);
+  font-weight: 600;
+}
