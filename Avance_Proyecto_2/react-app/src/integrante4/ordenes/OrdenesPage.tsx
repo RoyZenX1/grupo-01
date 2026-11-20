@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
 import { listarVehiculos } from '../../integrante3/vehiculos/vehiculos.api'
 import { listarCotizacionesParaOrden } from './cotizaciones.ordenes.api'
 import { OrdenForm } from './OrdenForm'
@@ -11,10 +12,14 @@ import './ordenes.css'
 
 export function OrdenesPage() {
   const [ordenes, setOrdenes] = useState<Orden[]>([])
-  const [mostrarFormulario, setMostrarFormulario] = useState(false)
+  const [formularioAbierto, setFormularioAbierto] = useState(false)
   const [cargando, setCargando] = useState(true)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const cotizacionIdParam = searchParams.get('cotizacionId')
+  const ordenIdParam = searchParams.get('orden')
+  const mostrarFormulario = formularioAbierto || cotizacionIdParam !== null
 
   // Cargar vehículos desde la API.
   const { data: vehiculosAPI = [] } = useQuery({
@@ -63,7 +68,7 @@ export function OrdenesPage() {
       })
 
       setOrdenes((actuales) => [...actuales, nuevaOrden])
-      setMostrarFormulario(false)
+      cerrarFormulario()
     } catch (err) {
       setError(
         err instanceof Error
@@ -72,6 +77,19 @@ export function OrdenesPage() {
       )
     } finally {
       setGuardando(false)
+    }
+  }
+
+  function abrirFormulario() {
+    setFormularioAbierto(true)
+  }
+
+  function cerrarFormulario() {
+    setFormularioAbierto(false)
+    if (cotizacionIdParam) {
+      const siguientes = new URLSearchParams(searchParams)
+      siguientes.delete('cotizacionId')
+      setSearchParams(siguientes, { replace: true })
     }
   }
 
@@ -86,7 +104,7 @@ export function OrdenesPage() {
         <button
           type="button"
           className="btn btn-primary"
-          onClick={() => setMostrarFormulario(!mostrarFormulario)}
+          onClick={mostrarFormulario ? cerrarFormulario : abrirFormulario}
           disabled={guardando}
         >
           {mostrarFormulario ? 'Cerrar formulario' : '+ Nueva orden'}
@@ -140,8 +158,9 @@ export function OrdenesPage() {
         <OrdenForm
           cotizaciones={cotizacionesAPI}
           vehiculos={vehiculosAPI}
+          cotizacionInicialId={cotizacionIdParam}
           onGuardar={registrarOrden}
-          onCancelar={() => setMostrarFormulario(false)}
+          onCancelar={cerrarFormulario}
         />
       )}
 
@@ -175,7 +194,10 @@ export function OrdenesPage() {
 
               <tbody>
                 {ordenes.map((orden) => (
-                  <tr key={orden.id}>
+                  <tr
+                    key={orden.id}
+                    className={orden.id === ordenIdParam ? 'table-warning' : undefined}
+                  >
                     <td>{orden.codigo}</td>
                     <td>{orden.origen}</td>
                     <td>{orden.destino}</td>

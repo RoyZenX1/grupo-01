@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { CotizacionParaOrden } from './ordenes.types'
 import type { Vehiculo } from '../../integrante3/vehiculos/vehiculo.types'
 import { buscarTarifa } from '../../integrante3/vehiculos/tarifas'
@@ -9,6 +9,7 @@ import type { OrdenBorrador, OrdenWrite } from './ordenes.types'
 interface OrdenFormProps {
   cotizaciones: CotizacionParaOrden[]
   vehiculos: Vehiculo[]
+  cotizacionInicialId?: string | null
   onGuardar: (orden: OrdenWrite) => void
   onCancelar: () => void
 }
@@ -16,6 +17,7 @@ interface OrdenFormProps {
 export function OrdenForm({
   cotizaciones,
   vehiculos,
+  cotizacionInicialId,
   onGuardar,
   onCancelar,
 }: OrdenFormProps) {
@@ -81,6 +83,18 @@ export function OrdenForm({
 
     setError('')
   }
+
+  const cotizacionPreseleccionada = useRef(false)
+
+  useEffect(() => {
+    if (cotizacionPreseleccionada.current || !cotizacionInicialId) return
+    const cotizacion = cotizacionesAprobadas.find(
+      (item) => item.id === cotizacionInicialId,
+    )
+    if (!cotizacion) return
+    cotizacionPreseleccionada.current = true
+    seleccionarCotizacion(cotizacion.id)
+  })
 
   function guardar(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
