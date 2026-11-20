@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { listarVehiculos } from '../../integrante3/vehiculos/vehiculos.api'
+import { useAuth } from '../../integrante5/auth/auth.context'
 import { listarCotizacionesParaOrden } from './cotizaciones.ordenes.api'
 import { OrdenForm } from './OrdenForm'
 import { siguienteCodigoOrden } from './ordenes.calculations'
-import { listarOrdenes, crearOrden } from './ordenes.api'
-import type { Orden, OrdenWrite } from './ordenes.types'
+import { actualizarOrden, listarOrdenes, crearOrden } from './ordenes.api'
+import { ESTADOS_ORDEN } from './ordenes.types'
+import type { EstadoOrden, Orden, OrdenWrite } from './ordenes.types'
 import './ordenes.css'
 
 export function OrdenesPage() {
@@ -16,6 +18,8 @@ export function OrdenesPage() {
   const [cargando, setCargando] = useState(true)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
+  const [cambiandoEstadoId, setCambiandoEstadoId] = useState<string | null>(null)
+  const esAdministrador = useAuth().tieneRol('Administrador')
   const [searchParams, setSearchParams] = useSearchParams()
   const cotizacionIdParam = searchParams.get('cotizacionId')
   const ordenIdParam = searchParams.get('orden')
@@ -77,6 +81,26 @@ export function OrdenesPage() {
       )
     } finally {
       setGuardando(false)
+    }
+  }
+
+  async function cambiarEstadoOrden(id: string, estado: EstadoOrden) {
+    try {
+      setCambiandoEstadoId(id)
+      setError('')
+
+      const actualizada = await actualizarOrden(id, { estado })
+      setOrdenes((actuales) =>
+        actuales.map((orden) => (orden.id === id ? actualizada : orden)),
+      )
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'No se pudo actualizar el estado de la orden.',
+      )
+    } finally {
+      setCambiandoEstadoId(null)
     }
   }
 
@@ -204,7 +228,47 @@ export function OrdenesPage() {
                     <td>{orden.distancia} km</td>
                     <td>{orden.peso} t</td>
                     <td>S/ {orden.tarifa.toFixed(2)}</td>
-                    <td>{orden.estado}</td>
+                    <td>
+                      <label
+                        className="visually-hidden"
+                        htmlFor={`estado-orden-${orden.id}`}
+                      >
+                        Estado de la orden {orden.codigo}
+                      </label>
+                      <select
+                        className="form-select form-select-sm"
+                        id={`estado-orden-${orden.id}`}
+                        value={orden.estado}
+                        disabled={
+                          cambiandoEstadoId === orden.id ||
+                          orden.estado === 'Cancelada' ||
+                          orden.estado === 'Completada'
+                        }
+                        onChange={(event) => {
+                          const estado = event.currentTarget.value
+                          if (
+                            (ESTADOS_ORDEN as readonly string[]).includes(estado)
+                          ) {
+                            void cambiarEstadoOrden(
+                              orden.id,
+                              estado as EstadoOrden,
+                            )
+                          }
+                        }}
+                      >
+                        {ESTADOS_ORDEN.map((estado) => (
+                          <option
+                            key={estado}
+                            value={estado}
+                            disabled={
+                              estado === 'Cancelada' && !esAdministrador
+                            }
+                          >
+                            {estado}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
                   </tr>
                 ))}
               </tbody>
