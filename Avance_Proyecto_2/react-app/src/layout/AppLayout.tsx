@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../integrante5/auth/auth.context'
 
 const navigation = [
   { path: '/dashboard', label: 'Dashboard', icon: '⌂' },
@@ -13,6 +14,13 @@ const navigation = [
 export function AppLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const { pathname } = useLocation()
+  const { usuario, logout } = useAuth()
+  const navigate = useNavigate()
+
+  function cerrarSesion() {
+    logout()
+    navigate('/login', { replace: true })
+  }
   const currentPage = navigation.find(
     ({ path }) => pathname === path || pathname.startsWith(`${path}/`),
   )
@@ -70,11 +78,24 @@ export function AppLayout() {
             <strong>{currentPage?.label ?? 'Página no encontrada'}</strong>
           </nav>
           <div className="app-topbar-context">
-            <span aria-hidden="true" className="app-topbar-avatar">N</span>
+            <span aria-hidden="true" className="app-topbar-avatar">
+              {usuario?.nombre.charAt(0) ?? 'N'}
+            </span>
             <div className="app-topbar-user">
-              <span className="app-topbar-title">NexoCargo</span>
-              <span className="app-topbar-label">Gestión logística</span>
+              <span className="app-topbar-title">
+                {usuario?.nombre ?? 'NexoCargo'}
+              </span>
+              <span className="app-topbar-label">
+                {usuario?.rol ?? 'Gestión logística'}
+              </span>
             </div>
+            <button
+              className="app-logout"
+              type="button"
+              onClick={cerrarSesion}
+            >
+              Salir
+            </button>
           </div>
         </header>
         <div className="app-content" id="contenido" tabIndex={-1}>

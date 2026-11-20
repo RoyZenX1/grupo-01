@@ -3,24 +3,27 @@ import { describe, expect, it } from 'vitest'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { AppLayout } from './AppLayout'
 import { PlaceholderPage } from '../pages/WorkspacePages'
+import { AuthProvider } from '../integrante5/auth/auth.context'
 
 describe('AppLayout', () => {
   it('renders the shared navigation and marks the active section', () => {
     const markup = renderToStaticMarkup(
       <MemoryRouter initialEntries={['/clientes']}>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route
-              path="/clientes"
-              element={
-                <PlaceholderPage
-                  title="Clientes"
-                  description="Gestión de clientes."
-                />
-              }
-            />
-          </Route>
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route
+                path="/clientes"
+                element={
+                  <PlaceholderPage
+                    title="Clientes"
+                    description="Gestión de clientes."
+                  />
+                }
+              />
+            </Route>
+          </Routes>
+        </AuthProvider>
       </MemoryRouter>,
     )
 

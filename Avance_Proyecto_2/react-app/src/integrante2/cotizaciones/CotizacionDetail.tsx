@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { EstadoPill } from '../../shared/components/EstadoPill'
-import type { Cliente } from '../clientes/cliente.types'
+import type { Cliente } from '../../integrante1/clientes/cliente.types'
 import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
 import type { Cotizacion } from './cotizacion.types'
 

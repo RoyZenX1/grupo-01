@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buscarTarifa } from '../vehiculos/tarifas'
+import { buscarTarifa } from '../../integrante3/vehiculos/tarifas'
 import {
   calcularTotales,
   estadoEfectivo,

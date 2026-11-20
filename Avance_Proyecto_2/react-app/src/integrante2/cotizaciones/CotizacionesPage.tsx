@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react'
 import { mensajeError } from '../../shared/api/http'
 import { Encabezado } from '../../shared/components/Encabezado'
 import { EstadoConsulta } from '../../shared/components/EstadoConsulta'
-import { CLIENTES_QUERY_KEY, listarClientes, nombreDeCliente } from '../clientes/clientes.api'
-import { listarOrdenes, ORDENES_QUERY_KEY } from '../ordenes/ordenes.api'
+import { CLIENTES_QUERY_KEY, listarClientes, nombreDeCliente } from '../../integrante1/clientes/clientes.api'
+import { listarOrdenes } from '../../integrante4/ordenes/ordenes.api'
 import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
 import type { CotizacionFormValues } from './cotizacion.schema'
 import { ESTADOS_COTIZACION } from './cotizacion.types'
@@ -23,6 +23,8 @@ import {
   siguienteCodigoCotizacion,
 } from './cotizaciones.api'
 import './cotizaciones.css'
+
+const ORDENES_QUERY_KEY = ['ordenes'] as const
 
 function normalizar(texto: string): string {
   return texto.toLocaleLowerCase('es-PE').normalize('NFD').replace(/[\u0300-\u036f]/g, '')

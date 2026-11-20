@@ -215,6 +215,23 @@
   outline: none;
 }
 
+.app-logout {
+  padding: 7px 14px;
+  border: 1px solid var(--borde);
+  border-radius: 7px;
+  color: var(--azul);
+  background: var(--blanco);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.app-logout:hover {
+  border-color: var(--azul);
+  background: #f1f4f7;
+}
+
 .app-footer {
   padding: 14px clamp(24px, 4vw, 42px);
   border-top: 1px solid var(--borde);

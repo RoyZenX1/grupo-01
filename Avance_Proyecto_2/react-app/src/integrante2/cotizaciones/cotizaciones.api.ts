@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { http } from '../../shared/api/http'
-import { buscarTarifa } from '../vehiculos/tarifas'
+import { buscarTarifa } from '../../integrante3/vehiculos/tarifas'
 import {
   calcularTotales,
   DIAS_VALIDEZ,
