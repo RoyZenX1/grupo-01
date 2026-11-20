@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { normalizarCotizacion, normalizarListaCotizaciones } from './cotizacion.normalizar'
+import { siguienteCodigoCotizacion } from './cotizaciones.api'
 
 // Registros reales del historial de db.json
 const antiguo = {
@@ -53,7 +54,16 @@ describe('normalizarCotizacion', () => {
 
 describe('normalizarListaCotizaciones', () => {
   it('carga todo el historial aunque mezcle formatos', () => {
-    expect(normalizarListaCotizaciones([antiguo, sinRutaNiEstado, mixto, { basura: true }])).toHaveLength(3)
+    const cotizaciones = normalizarListaCotizaciones([
+      antiguo,
+      sinRutaNiEstado,
+      mixto,
+      { basura: true },
+    ])
+
+    expect(cotizaciones).toHaveLength(3)
+    expect(cotizaciones.map(({ codigo }) => codigo)).toEqual(['C002', 'C003', 'C004'])
+    expect(siguienteCodigoCotizacion(cotizaciones)).toBe('C005')
   })
 
   it('falla si la API no devuelve una lista', () => {

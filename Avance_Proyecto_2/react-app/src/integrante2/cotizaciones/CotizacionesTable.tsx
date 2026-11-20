@@ -62,7 +62,7 @@ export function CotizacionesTable({
                 const ocupada = ocupadoId === c.id
                 return (
                   <tr key={c.id}>
-                    <th scope="row">{c.id}</th>
+                    <th scope="row">{c.codigo}</th>
                     <td>{nombreCliente(c)}</td>
                     <td>{c.origen} → {c.destino}</td>
                     <td>{textoFecha(c.fechaEmision)}</td>
@@ -71,7 +71,7 @@ export function CotizacionesTable({
                     <td>
                       {confirmacionId === c.id ? (
                         <div className="table-actions">
-                          <span className="small">¿Eliminar {c.id}?</span>
+                          <span className="small">¿Eliminar {c.codigo}?</span>
                           <button
                             className="btn btn-sm btn-danger"
                             type="button"

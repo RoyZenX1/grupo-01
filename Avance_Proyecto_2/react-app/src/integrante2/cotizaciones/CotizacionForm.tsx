@@ -54,7 +54,7 @@ export function CotizacionForm({
 
   return (
     <section className="workspace-card">
-      <h2>{cotizacion ? `Editar cotización ${cotizacion.id}` : 'Registrar cotización'}</h2>
+      <h2>{cotizacion ? `Editar cotización ${cotizacion.codigo}` : 'Registrar cotización'}</h2>
       <form onSubmit={handleSubmit(onGuardar)} noValidate className="d-grid gap-3">
         <div>
           <label className="form-label" htmlFor="cot-cliente">Cliente</label>

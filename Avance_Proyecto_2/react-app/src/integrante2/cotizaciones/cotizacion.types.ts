@@ -13,6 +13,7 @@ export type EstadoCotizacion = (typeof ESTADOS_COTIZACION)[number]
  */
 export interface Cotizacion {
   id: string
+  codigo: string
   clienteId: string
   /** Nombre guardado en registros antiguos que aún no tienen clienteId. */
   clienteNombre?: string
@@ -33,4 +34,4 @@ export interface Cotizacion {
   estado: EstadoCotizacion
 }
 
-export type CotizacionWrite = Omit<Cotizacion, 'id'>
+export type CotizacionWrite = Omit<Cotizacion, 'id' | 'codigo'>

@@ -71,7 +71,7 @@ export function CotizacionesPage() {
     return cotizaciones.filter((c) => {
       const coincideTexto =
         !texto ||
-        normalizar(`${c.id} ${c.servicio} ${c.origen} ${c.destino} ${nombreCotizacion(clientes, c)}`).includes(texto)
+        normalizar(`${c.codigo} ${c.servicio} ${c.origen} ${c.destino} ${nombreCotizacion(clientes, c)}`).includes(texto)
       return (
         coincideTexto &&
         (!estado || estadoEfectivo(c) === estado) &&
@@ -103,7 +103,7 @@ export function CotizacionesPage() {
   const crearMutation = useMutation({
     mutationFn: (values: CotizacionFormValues) =>
       crearCotizacion({
-        id: siguienteCodigoCotizacion(cotizaciones),
+        codigo: siguienteCodigoCotizacion(cotizaciones),
         ...construirCotizacion(values),
       }),
     onSuccess: actualizarListas,

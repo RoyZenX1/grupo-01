@@ -26,6 +26,7 @@ export type CotizacionFormValues = z.infer<typeof cotizacionFormSchema>
 
 export const cotizacionSchema = z.object({
   id: z.coerce.string().min(1),
+  codigo: z.string().min(1),
   clienteId: z.coerce.string(),
   servicio: z.string(),
   origen: z.string(),

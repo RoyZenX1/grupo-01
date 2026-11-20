@@ -63,6 +63,7 @@ export function normalizarCotizacion(registro: unknown): Cotizacion | null {
 
   return {
     id,
+    codigo: texto(r.codigo) ?? (/^C\d+$/.test(id) ? id : ''),
     clienteId: r.clienteId === undefined || r.clienteId === null ? '' : String(r.clienteId),
     clienteNombre: texto(r.cliente) ?? texto(r.clienteNombre),
     servicio:
@@ -95,8 +96,30 @@ export function normalizarListaCotizaciones(datos: unknown): Cotizacion[] {
   if (!Array.isArray(datos)) {
     throw new Error('La respuesta de cotizaciones no es válida.')
   }
-  return datos.flatMap((registro) => {
+  const cotizaciones = datos.flatMap((registro) => {
     const cotizacion = normalizarCotizacion(registro)
     return cotizacion ? [cotizacion] : []
+  })
+  const codigosUsados = new Set(
+    cotizaciones.map(({ codigo }) => codigo).filter(Boolean),
+  )
+  const siguienteNumero = cotizaciones.reduce((maximo, { codigo }) => {
+    const coincidencia = /^C(\d+)$/.exec(codigo)
+    return coincidencia ? Math.max(maximo, Number(coincidencia[1])) : maximo
+  }, 0)
+  let numero = siguienteNumero + 1
+
+  return cotizaciones.map((cotizacion) => {
+    if (cotizacion.codigo) return cotizacion
+
+    let codigo = `C${String(numero).padStart(3, '0')}`
+    while (codigosUsados.has(codigo)) {
+      numero += 1
+      codigo = `C${String(numero).padStart(3, '0')}`
+    }
+
+    codigosUsados.add(codigo)
+    numero += 1
+    return { ...cotizacion, codigo }
   })
 }

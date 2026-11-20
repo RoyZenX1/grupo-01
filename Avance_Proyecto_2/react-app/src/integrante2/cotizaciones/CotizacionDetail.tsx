@@ -16,10 +16,10 @@ export function CotizacionDetail({ cotizacion: c, cliente, orden, onCerrar }: Co
   const descuento = c.subtotal - c.baseImponible
 
   return (
-    <section className="workspace-card" aria-label={`Detalle de la cotización ${c.id}`}>
+    <section className="workspace-card" aria-label={`Detalle de la cotización ${c.codigo}`}>
       <div className="d-flex justify-content-between align-items-start gap-2">
         <h2>
-          Cotización {c.id} <EstadoPill estado={estado} />
+          Cotización {c.codigo} <EstadoPill estado={estado} />
         </h2>
         <button className="btn btn-sm btn-outline-secondary" type="button" onClick={onCerrar}>
           Cerrar

@@ -21,16 +21,6 @@
       "estado": "Aprobada"
     },
     {
-      "id": "C003",
-      "cliente": "Textil Centro",
-      "origen": "Lima",
-      "destino": "Chorrillos",
-      "distancia": 80,
-      "peso": 3,
-      "tarifa": 150,
-      "estado": "Aprobada"
-    },
-    {
       "id": "C004",
       "cliente": "Pesquera Callao",
       "origen": "Callao",
@@ -38,53 +28,46 @@
       "distancia": 30,
       "peso": 4,
       "tarifa": 180,
+      "estado": "Aprobada"
+    },
+    {
+      "id": "epvVvo9Z62Q",
+      "clienteId": "8",
+      "servicio": "Transporte Lima - Lunahuana",
+      "origen": "Lima",
+      "destino": "Lunahuana",
+      "distancia": 147,
+      "peso": 3,
+      "precioUnitario": 250,
+      "cantidad": 1,
+      "descuentoPorcentaje": 20,
+      "subtotal": 250,
+      "baseImponible": 200,
+      "igv": 36,
+      "total": 236,
+      "fechaEmision": "2026-11-20",
+      "fechaVencimiento": "2026-12-20",
       "estado": "Pendiente"
     },
     {
-      "clienteId": "CUST-004",
-      "productoServicio": "Transporte Ica - Lima",
-      "precioUnitario": 214,
-      "cantidad": 1,
-      "descuentoPorcentaje": 12,
-      "subtotal": 214,
-      "baseImponible": 188.32,
-      "igv": 33.9,
-      "total": 222.22,
-      "fechaEmision": "2026-10-16",
-      "id": "JZM3GaB_2pU"
-    },
-    {
-      "clienteId": "1",
-      "productoServicio": "Tranporte Ica - Arequipa",
-      "precioUnitario": 70,
-      "cantidad": 3,
-      "descuentoPorcentaje": 5,
-      "subtotal": 210,
-      "baseImponible": 199.5,
-      "igv": 35.91,
-      "total": 235.41,
-      "fechaEmision": "2026-10-16",
-      "id": "CtPuJEq6HYE"
-    },
-    {
-      "clienteId": "2",
-      "cliente": "María López",
+      "codigo": "C006",
+      "clienteId": "4",
+      "servicio": "Transporte Lima - Ica",
       "origen": "Lima",
-      "destino": "Callao",
-      "distancia": 2,
-      "peso": 3,
-      "tarifa": 100,
-      "productoServicio": "Transporte Lima - Callao",
-      "precioUnitario": 100,
+      "destino": "Ica",
+      "distancia": 200,
+      "peso": 2,
+      "precioUnitario": 250,
       "cantidad": 1,
-      "descuentoPorcentaje": 1,
-      "subtotal": 100,
-      "baseImponible": 99,
-      "igv": 17.82,
-      "total": 116.82,
-      "fechaEmision": "2026-10-16",
+      "descuentoPorcentaje": 10,
+      "subtotal": 250,
+      "baseImponible": 225,
+      "igv": 40.5,
+      "total": 265.5,
+      "fechaEmision": "2026-11-20",
+      "fechaVencimiento": "2026-12-20",
       "estado": "Pendiente",
-      "id": "at_xYBDyHCY"
+      "id": "w6NIxFxRXOg"
     }
   ],
   "clientes": [
@@ -166,7 +149,8 @@
       "placa": "ABC-123",
       "tipo": "Camión",
       "capacidad": 10,
-      "estado": "Disponible"
+      "estado": "Disponible",
+      "modelo": "Hino"
     },
     {
       "id": "V002",
@@ -174,7 +158,8 @@
       "placa": "DEF-456",
       "tipo": "Furgón",
       "capacidad": 7,
-      "estado": "Reservado"
+      "estado": "Reservado",
+      "modelo": "Changan Van"
     },
     {
       "id": "V003",
@@ -182,7 +167,8 @@
       "placa": "GHI-789",
       "tipo": "Camioneta",
       "capacidad": 3,
-      "estado": "Disponible"
+      "estado": "Ocupado",
+      "modelo": "Toyota"
     },
     {
       "id": "Gaxntv4YNeQ",
@@ -190,7 +176,8 @@
       "placa": "JKL-012",
       "tipo": "Camión",
       "capacidad": 8,
-      "estado": "Disponible"
+      "estado": "Disponible",
+      "modelo": "Hyundai"
     },
     {
       "codigo": "VEH-005",
@@ -198,7 +185,8 @@
       "tipo": "Furgón",
       "capacidad": 5,
       "estado": "Disponible",
-      "id": "u-QADHzpbMU"
+      "id": "u-QADHzpbMU",
+      "modelo": "Foton Gratour"
     },
     {
       "codigo": "VEH-006",
@@ -208,6 +196,15 @@
       "capacidad": 3,
       "estado": "Disponible",
       "id": "5LLLsGzsnh0"
+    },
+    {
+      "codigo": "VEH-007",
+      "placa": "BJD-892",
+      "modelo": "Hyundai H100",
+      "tipo": "Furgón",
+      "capacidad": 2,
+      "estado": "Disponible",
+      "id": "JaCoB4I69lg"
     }
   ],
   "ordenes": [
@@ -232,8 +229,18 @@
       "peso": 5,
       "codigo": "ORD002",
       "tarifa": 150,
-      "estado": "Pendiente",
-      "id": "HjXkYB4FI8M"
+      "estado": "En ruta",
+      "id": "HjXkYB4FI8M",
+      "historial": [
+        {
+          "estado": "Programada",
+          "fecha": "2026-11-20T17:43:19.027Z"
+        },
+        {
+          "estado": "En ruta",
+          "fecha": "2026-11-20T17:43:39.212Z"
+        }
+      ]
     },
     {
       "cotizacionId": "C003",
@@ -244,8 +251,32 @@
       "peso": 3,
       "codigo": "ORD003",
       "tarifa": 180,
+      "estado": "Cancelada",
+      "id": "ASe6_N1xY2E",
+      "historial": [
+        {
+          "estado": "Cancelada",
+          "fecha": "2026-11-20T17:32:49.585Z"
+        }
+      ]
+    },
+    {
+      "cotizacionId": "C004",
+      "vehiculoId": "V003",
+      "origen": "Callao",
+      "destino": "Lima",
+      "distancia": 30,
+      "peso": 3,
+      "codigo": "ORD004",
+      "tarifa": 100,
       "estado": "Pendiente",
-      "id": "ASe6_N1xY2E"
+      "historial": [
+        {
+          "estado": "Pendiente",
+          "fecha": "2026-11-20T17:31:55.142Z"
+        }
+      ],
+      "id": "CMzM0rDmlaY"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

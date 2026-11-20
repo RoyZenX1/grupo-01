@@ -24,7 +24,7 @@ export async function obtenerCotizacion(id: string): Promise<Cotizacion> {
 
 export function siguienteCodigoCotizacion(cotizaciones: Cotizacion[]): string {
   const numeros = cotizaciones
-    .map(({ id }) => /^C(\d+)$/.exec(id))
+    .map(({ codigo }) => /^C(\d+)$/.exec(codigo))
     .filter((m): m is RegExpExecArray => m !== null)
     .map((m) => Number(m[1]))
   const siguiente = numeros.length > 0 ? Math.max(...numeros) + 1 : 1
@@ -69,7 +69,7 @@ export function construirCotizacion(
 }
 
 export async function crearCotizacion(
-  datos: CotizacionWrite & { id: string },
+  datos: CotizacionWrite & { codigo: string },
 ): Promise<Cotizacion> {
   return exigirCotizacion(await http.post('/cotizaciones', datos))
 }
