@@ -5,25 +5,70 @@ interface ClienteDetailProps {
   onCerrar: () => void
 }
 
-export function ClienteDetail({ cliente, onCerrar }: ClienteDetailProps) {
+export function ClienteDetail({
+  cliente,
+  onCerrar,
+}: ClienteDetailProps) {
+  const iniciales = cliente.nombre
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((parte) => parte.charAt(0).toUpperCase())
+    .join('')
+
   return (
-    <section className="workspace-card" aria-label={`Detalle de ${cliente.nombre}`}>
-      <div className="d-flex justify-content-between align-items-start gap-3">
-        <h2>Detalle del cliente</h2>
-        <button className="btn btn-sm btn-outline-secondary" type="button" onClick={onCerrar}>
-          Cerrar
+    <section className="workspace-card cliente-detail-card">
+
+      <div className="cliente-detail-heading">
+        <div>
+          <span className="cliente-detail-etiqueta">
+            INFORMACIÓN DEL CLIENTE
+          </span>
+          <h3>Detalle del cliente</h3>
+        </div>
+
+        <button
+          type="button"
+          className="cliente-detail-cerrar"
+          onClick={onCerrar}
+        >
+          Cerrar ×
         </button>
       </div>
-      <dl className="detail-list">
-        <dt>Nombre</dt>
-        <dd>{cliente.nombre}</dd>
-        <dt>DNI / RUC</dt>
-        <dd>{cliente.identificacion}</dd>
-        <dt>Correo electrónico</dt>
-        <dd>{cliente.email}</dd>
-        <dt>Teléfono</dt>
-        <dd>{cliente.telefono}</dd>
-      </dl>
+
+      <div className="cliente-detail-identidad">
+        <span className="cliente-detail-avatar">
+          {iniciales}
+        </span>
+
+        <div>
+          <h4>{cliente.nombre}</h4>
+          <span>
+            {cliente.identificacion.length === 11
+              ? 'Empresa · RUC'
+              : 'Persona · DNI'}
+          </span>
+        </div>
+      </div>
+
+      <div className="cliente-detail-datos">
+
+        <div>
+          <span>Documento de identidad</span>
+          <strong>{cliente.identificacion}</strong>
+        </div>
+
+        <div>
+          <span>Correo electrónico</span>
+          <strong>{cliente.email}</strong>
+        </div>
+
+        <div>
+          <span>Teléfono</span>
+          <strong>{cliente.telefono}</strong>
+        </div>
+
+      </div>
     </section>
   )
 }

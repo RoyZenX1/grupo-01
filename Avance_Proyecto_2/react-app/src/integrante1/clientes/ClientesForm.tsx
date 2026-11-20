@@ -1,5 +1,7 @@
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+
 import { clienteFormSchema } from './cliente.schema'
 import type { ClienteFormValues } from './cliente.schema'
 import type { Cliente } from './cliente.types'
@@ -37,16 +39,18 @@ export function ClientesForm({
 
   function validarYGuardar(values: ClienteFormValues) {
     clearErrors(['identificacion', 'email'])
+
     const identificacionDuplicada = clientes.some(
       (item) =>
         item.id !== cliente?.id &&
         item.identificacion === values.identificacion,
     )
+
     const emailDuplicado = clientes.some(
       (item) =>
         item.id !== cliente?.id &&
         item.email.toLocaleLowerCase('es-PE') ===
-          values.email.toLocaleLowerCase('es-PE'),
+        values.email.toLocaleLowerCase('es-PE'),
     )
 
     if (identificacionDuplicada) {
@@ -56,6 +60,7 @@ export function ClientesForm({
       })
       return
     }
+
     if (emailDuplicado) {
       setError('email', {
         type: 'validate',
@@ -63,78 +68,147 @@ export function ClientesForm({
       })
       return
     }
+
     onGuardar(values)
   }
 
   return (
-    <section className="workspace-card">
-      <h2>{cliente ? 'Editar cliente' : 'Registrar cliente'}</h2>
-      <form className="d-grid gap-3" onSubmit={handleSubmit(validarYGuardar)} noValidate>
+    <section className="workspace-card clientes-form-card">
+
+      <div className="clientes-form-heading">
+        <span className="clientes-form-icono">＋</span>
+
         <div>
-          <label className="form-label" htmlFor="cliente-nombre">Nombre o razón social</label>
+          <h2>
+            {cliente ? 'Editar cliente' : 'Nuevo cliente'}
+          </h2>
+          <p>
+            {cliente
+              ? 'Actualiza la información del cliente.'
+              : 'Completa los datos para registrar un cliente.'}
+          </p>
+        </div>
+      </div>
+
+      <form
+        className="clientes-form"
+        onSubmit={handleSubmit(validarYGuardar)}
+        noValidate
+      >
+
+        <div className="clientes-campo">
+          <label htmlFor="cliente-nombre">
+            Nombre o razón social
+          </label>
+
           <input
             className={`form-control${errors.nombre ? ' is-invalid' : ''}`}
             id="cliente-nombre"
+            placeholder="Ej. Transportes del Norte"
             autoComplete="name"
             aria-invalid={Boolean(errors.nombre)}
             {...register('nombre')}
           />
-          {errors.nombre && <p className="field-error" role="alert">{errors.nombre.message}</p>}
+
+          {errors.nombre && (
+            <p className="field-error" role="alert">
+              {errors.nombre.message}
+            </p>
+          )}
         </div>
-        <div>
-          <label className="form-label" htmlFor="cliente-identificacion">DNI / RUC</label>
+
+        <div className="clientes-campo">
+          <label htmlFor="cliente-identificacion">
+            DNI / RUC
+          </label>
+
           <input
             className={`form-control${errors.identificacion ? ' is-invalid' : ''}`}
             id="cliente-identificacion"
+            placeholder="Ingresa el número de documento"
             inputMode="numeric"
             aria-invalid={Boolean(errors.identificacion)}
             {...register('identificacion')}
           />
+
           {errors.identificacion && (
-            <p className="field-error" role="alert">{errors.identificacion.message}</p>
+            <p className="field-error" role="alert">
+              {errors.identificacion.message}
+            </p>
           )}
         </div>
-        <div>
-          <label className="form-label" htmlFor="cliente-email">Correo electrónico</label>
+
+        <div className="clientes-campo">
+          <label htmlFor="cliente-email">
+            Correo electrónico
+          </label>
+
           <input
             className={`form-control${errors.email ? ' is-invalid' : ''}`}
             id="cliente-email"
             type="email"
+            placeholder="correo@ejemplo.com"
             autoComplete="email"
             aria-invalid={Boolean(errors.email)}
             {...register('email')}
           />
-          {errors.email && <p className="field-error" role="alert">{errors.email.message}</p>}
+
+          {errors.email && (
+            <p className="field-error" role="alert">
+              {errors.email.message}
+            </p>
+          )}
         </div>
-        <div>
-          <label className="form-label" htmlFor="cliente-telefono">Teléfono</label>
+
+        <div className="clientes-campo">
+          <label htmlFor="cliente-telefono">
+            Teléfono
+          </label>
+
           <input
             className={`form-control${errors.telefono ? ' is-invalid' : ''}`}
             id="cliente-telefono"
+            placeholder="Ej. 987654321"
             inputMode="tel"
             autoComplete="tel"
             aria-invalid={Boolean(errors.telefono)}
             {...register('telefono')}
           />
+
           {errors.telefono && (
-            <p className="field-error" role="alert">{errors.telefono.message}</p>
+            <p className="field-error" role="alert">
+              {errors.telefono.message}
+            </p>
           )}
         </div>
-        <div className="table-actions">
-          <button className="btn btn-primary" type="submit" disabled={guardando}>
-            {guardando ? 'Guardando…' : cliente ? 'Guardar cambios' : 'Registrar cliente'}
+
+        <div className="clientes-form-acciones">
+
+          <button
+            className="clientes-btn-guardar"
+            type="submit"
+            disabled={guardando}
+          >
+            {guardando
+              ? 'Guardando...'
+              : cliente
+                ? 'Guardar cambios'
+                : 'Registrar cliente'}
           </button>
+
           {cliente && (
             <button
-              className="btn btn-outline-secondary"
+              className="clientes-btn-cancelar"
               type="button"
               disabled={guardando}
               onClick={onCancelarEdicion}
             >
-              Cancelar edición
+              Cancelar
             </button>
           )}
+
         </div>
+
       </form>
     </section>
   )

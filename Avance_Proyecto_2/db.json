@@ -104,7 +104,7 @@
     },
     {
       "id": "3",
-      "nombre": "Carlos Torres",
+      "nombre": "Comercial Torres S.A.C.",
       "identificacion": "20123456789",
       "email": "carlos.torres@gmail.com",
       "telefono": "956789123"
@@ -125,9 +125,9 @@
     },
     {
       "id": "6",
-      "nombre": "Carmen Sánchez",
+      "nombre": "Servicios Generales del Perú S.A.C.",
       "identificacion": "20567890123",
-      "email": "carmen.sanchez@gmail.com",
+      "email": "contacto@serviciosgenerales.com",
       "telefono": "945678123"
     },
     {
@@ -146,9 +146,9 @@
     },
     {
       "id": "9",
-      "nombre": "Jorge Castro",
+      "nombre": "Transportes Castro S.A.C.",
       "identificacion": "20456789012",
-      "email": "jorge.castro@gmail.com",
+      "email": "contacto@transportescastro.com",
       "telefono": "956123478"
     },
     {

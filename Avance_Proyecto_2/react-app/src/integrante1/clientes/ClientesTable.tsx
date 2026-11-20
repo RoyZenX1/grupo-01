@@ -11,6 +11,15 @@ interface ClientesTableProps {
   onEliminar: (id: string) => void
 }
 
+function obtenerIniciales(nombre: string) {
+  return nombre
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((parte) => parte.charAt(0).toUpperCase())
+    .join('')
+}
+
 export function ClientesTable({
   clientes,
   sinResultados,
@@ -20,40 +29,76 @@ export function ClientesTable({
   onEliminar,
 }: ClientesTableProps) {
   const [confirmacionId, setConfirmacionId] = useState<string | null>(null)
+
   const esAdministrador = useAuth().tieneRol('Administrador')
 
   return (
-    <section className="workspace-card">
-      <h2>Clientes registrados</h2>
+    <section className="workspace-card clientes-tabla-card">
+      <div className="clientes-tabla-encabezado">
+        <div>
+          <h3>Clientes registrados</h3>
+          <p>Información general de tus clientes.</p>
+        </div>
+      </div>
+
       {clientes.length === 0 ? (
-        <p className="text-secondary mb-0">
-          {sinResultados
-            ? 'Ningún cliente coincide con la búsqueda.'
-            : 'No hay clientes registrados.'}
-        </p>
+        <div className="clientes-vacio">
+          <div className="clientes-vacio-icono">♧</div>
+          <h4>No se encontraron clientes</h4>
+          <p>
+            {sinResultados
+              ? 'Intenta cambiar los criterios de búsqueda.'
+              : 'Todavía no hay clientes registrados.'}
+          </p>
+        </div>
       ) : (
         <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
+          <table className="table clientes-table align-middle mb-0">
             <thead>
               <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">DNI / RUC</th>
-                <th scope="col">Correo</th>
+                <th scope="col">Cliente</th>
+                <th scope="col">Identificación</th>
+                <th scope="col">Correo electrónico</th>
                 <th scope="col">Teléfono</th>
                 <th scope="col">Acciones</th>
               </tr>
             </thead>
+
             <tbody>
               {clientes.map((cliente) => (
                 <tr key={cliente.id}>
-                  <th scope="row">{cliente.nombre}</th>
-                  <td>{cliente.identificacion}</td>
+                  <td>
+                    <div className="cliente-identidad">
+                      <span className="cliente-avatar">
+                        {obtenerIniciales(cliente.nombre)}
+                      </span>
+
+                      <div>
+                        <strong>{cliente.nombre}</strong>
+                        <small>
+                          {cliente.identificacion.length === 11
+                            ? 'Empresa'
+                            : 'Persona'}
+                        </small>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <span className="cliente-documento">
+                      {cliente.identificacion}
+                    </span>
+                  </td>
+
                   <td>{cliente.email}</td>
+
                   <td>{cliente.telefono}</td>
+
                   <td>
                     {confirmacionId === cliente.id ? (
-                      <div className="table-actions">
-                        <span className="small">¿Eliminar este cliente?</span>
+                      <div className="cliente-confirmacion">
+                        <span>¿Eliminar?</span>
+
                         <button
                           className="btn btn-sm btn-danger"
                           type="button"
@@ -63,36 +108,44 @@ export function ClientesTable({
                             setConfirmacionId(null)
                           }}
                         >
-                          Confirmar
+                          {eliminandoId === cliente.id
+                            ? 'Eliminando...'
+                            : 'Sí'}
                         </button>
+
                         <button
-                          className="btn btn-sm btn-outline-secondary"
+                          className="btn btn-sm btn-light"
                           type="button"
                           onClick={() => setConfirmacionId(null)}
                         >
-                          Cancelar
+                          No
                         </button>
                       </div>
                     ) : (
-                      <div className="table-actions">
+                      <div className="cliente-acciones">
                         <button
-                          className="btn btn-sm btn-outline-secondary"
+                          className="cliente-btn-ver"
                           type="button"
+                          title="Ver detalle"
                           onClick={() => onVer(cliente)}
                         >
                           Ver
                         </button>
+
                         <button
-                          className="btn btn-sm btn-outline-primary"
+                          className="cliente-btn-editar"
                           type="button"
+                          title="Editar cliente"
                           onClick={() => onEditar(cliente)}
                         >
                           Editar
                         </button>
+
                         {esAdministrador && (
                           <button
-                            className="btn btn-sm btn-outline-danger"
+                            className="cliente-btn-eliminar"
                             type="button"
+                            title="Eliminar cliente"
                             disabled={eliminandoId === cliente.id}
                             onClick={() => setConfirmacionId(cliente.id)}
                           >
