@@ -93,15 +93,19 @@ export function DashboardPage() {
 
   const estadosOrden = useMemo(() => resumirEstados(ordenes), [ordenes])
 
-  const estadosCotizacion = useMemo(
-    () =>
-      ESTADOS_COTIZACION.map((estado) => ({
+  const estadosCotizacion = useMemo(() => {
+    const total = cotizaciones.length
+    return ESTADOS_COTIZACION.map((estado) => {
+      const cantidad = cotizaciones.filter(
+        (c) => estadoEfectivo(c) === estado,
+      ).length
+      return {
         estado,
-        cantidad: cotizaciones.filter((c) => estadoEfectivo(c) === estado)
-          .length,
-      })),
-    [cotizaciones],
-  )
+        cantidad,
+        porcentaje: total === 0 ? 0 : (cantidad / total) * 100,
+      }
+    })
+  }, [cotizaciones])
 
   return (
     <main className="workspace-page dashboard-page">
@@ -149,10 +153,17 @@ export function DashboardPage() {
         <div className="dashboard-grid">
           <section className="workspace-card" aria-labelledby="dashboard-cotizaciones">
             <h2 id="dashboard-cotizaciones">Cotizaciones por estado</h2>
-            {estadosCotizacion.map(({ estado, cantidad }) => (
+            {estadosCotizacion.map(({ estado, cantidad, porcentaje }) => (
               <div className="dashboard-fila" key={estado}>
                 <span>{estado}</span>
-                <strong>{cantidad}</strong>
+                <span className="dashboard-fila-valor">
+                  <span className="dashboard-barra" aria-hidden="true">
+                    <i style={{ width: `${porcentaje}%` }} />
+                  </span>
+                  <strong>
+                    {cantidad} <small>({porcentaje.toFixed(0)}%)</small>
+                  </strong>
+                </span>
               </div>
             ))}
             <p className="dashboard-nota">
@@ -166,9 +177,15 @@ export function DashboardPage() {
             {estadosOrden.map((item) => (
               <div className="dashboard-fila" key={item.estado}>
                 <span>{item.estado}</span>
-                <strong>
-                  {item.cantidad} · {formatearMoneda(item.monto)}
-                </strong>
+                <span className="dashboard-fila-valor">
+                  <span className="dashboard-barra" aria-hidden="true">
+                    <i style={{ width: `${item.porcentaje}%` }} />
+                  </span>
+                  <strong>
+                    {item.cantidad} · {formatearMoneda(item.monto)}{' '}
+                    <small>({item.porcentaje.toFixed(0)}%)</small>
+                  </strong>
+                </span>
               </div>
             ))}
             <p className="dashboard-nota">

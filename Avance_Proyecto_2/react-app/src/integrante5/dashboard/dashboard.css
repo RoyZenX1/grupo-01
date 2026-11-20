@@ -56,6 +56,34 @@
   white-space: nowrap;
 }
 
+.dashboard-fila-valor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dashboard-barra {
+  width: 80px;
+  height: 6px;
+  flex: none;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--borde);
+}
+
+.dashboard-barra i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--naranja);
+}
+
+.dashboard-fila strong small {
+  color: var(--gris);
+  font-weight: 600;
+}
+
 .dashboard-nota {
   margin: 14px 0 0;
   color: var(--gris);
