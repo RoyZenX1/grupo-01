@@ -21,7 +21,7 @@ import {
 } from './reportes.calculations'
 
 import { ReportesGraficos } from './ReportesGraficos'
-import './reportes.css'
+import './Reportes.css'
 
 interface ReportesPageProps {
   ordenes?: Orden[]
