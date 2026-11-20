@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAuth } from '../../integrante5/auth/auth.context'
 import type { Cliente } from './cliente.types'
 
 interface ClientesTableProps {
@@ -19,6 +20,7 @@ export function ClientesTable({
   onEliminar,
 }: ClientesTableProps) {
   const [confirmacionId, setConfirmacionId] = useState<string | null>(null)
+  const esAdministrador = useAuth().tieneRol('Administrador')
 
   return (
     <section className="workspace-card">
@@ -87,14 +89,16 @@ export function ClientesTable({
                         >
                           Editar
                         </button>
-                        <button
-                          className="btn btn-sm btn-outline-danger"
-                          type="button"
-                          disabled={eliminandoId === cliente.id}
-                          onClick={() => setConfirmacionId(cliente.id)}
-                        >
-                          Eliminar
-                        </button>
+                        {esAdministrador && (
+                          <button
+                            className="btn btn-sm btn-outline-danger"
+                            type="button"
+                            disabled={eliminandoId === cliente.id}
+                            onClick={() => setConfirmacionId(cliente.id)}
+                          >
+                            Eliminar
+                          </button>
+                        )}
                       </div>
                     )}
                   </td>

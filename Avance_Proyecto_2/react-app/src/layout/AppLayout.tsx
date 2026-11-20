@@ -1,27 +1,36 @@
 import { useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../integrante5/auth/auth.context'
+import type { RolUsuario } from '../integrante5/auth/auth.types'
 
-const navigation = [
+const navigation: {
+  path: string
+  label: string
+  icon: string
+  roles?: RolUsuario[]
+}[] = [
   { path: '/dashboard', label: 'Dashboard', icon: '⌂' },
   { path: '/clientes', label: 'Clientes', icon: '♙' },
   { path: '/vehiculos', label: 'Vehículos', icon: '▤' },
   { path: '/cotizaciones', label: 'Cotizaciones', icon: '▣' },
   { path: '/ordenes', label: 'Órdenes', icon: '➜' },
-  { path: '/reportes', label: 'Reportes', icon: '▦' },
+  { path: '/reportes', label: 'Reportes', icon: '▦', roles: ['Administrador'] },
 ]
 
 export function AppLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const { pathname } = useLocation()
-  const { usuario, logout } = useAuth()
+  const { usuario, logout, tieneRol } = useAuth()
   const navigate = useNavigate()
 
   function cerrarSesion() {
     logout()
     navigate('/login', { replace: true })
   }
-  const currentPage = navigation.find(
+  const itemsVisibles = navigation.filter(
+    (item) => !item.roles || tieneRol(...item.roles),
+  )
+  const currentPage = itemsVisibles.find(
     ({ path }) => pathname === path || pathname.startsWith(`${path}/`),
   )
 
@@ -52,7 +61,7 @@ export function AppLayout() {
         </NavLink>
 
         <nav id="app-navigation">
-          {navigation.map(({ path, label, icon }) => (
+          {itemsVisibles.map(({ path, label, icon }) => (
             <NavLink
               key={path}
               className={({ isActive }) =>

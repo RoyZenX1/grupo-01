@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react'
-import type { Usuario } from './auth.types'
+import type { RolUsuario, Usuario } from './auth.types'
 import { USUARIOS_DEMO } from './usuarios.demo'
 
 const CLAVE_SESION = 'nexocargo.sesion'
@@ -15,6 +15,7 @@ interface AuthContextValue {
   usuario: Usuario | null
   login: (email: string, password: string) => Promise<Usuario>
   logout: () => void
+  tieneRol: (...roles: RolUsuario[]) => boolean
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -64,9 +65,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUsuario(null)
   }, [])
 
+  const tieneRol = useCallback(
+    (...roles: RolUsuario[]) =>
+      usuario !== null && roles.includes(usuario.rol),
+    [usuario],
+  )
+
   const valor = useMemo(
-    () => ({ usuario, login, logout }),
-    [usuario, login, logout],
+    () => ({ usuario, login, logout, tieneRol }),
+    [usuario, login, logout, tieneRol],
   )
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>

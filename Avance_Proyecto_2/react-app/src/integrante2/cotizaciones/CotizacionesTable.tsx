@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { EstadoPill } from '../../shared/components/EstadoPill'
+import { useAuth } from '../../integrante5/auth/auth.context'
 import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
 import type { Cotizacion, EstadoCotizacion } from './cotizacion.types'
 
@@ -29,6 +30,7 @@ export function CotizacionesTable({
   onEliminar,
 }: CotizacionesTableProps) {
   const [confirmacionId, setConfirmacionId] = useState<string | null>(null)
+  const esAdministrador = useAuth().tieneRol('Administrador')
 
   return (
     <section className="workspace-card">
@@ -95,22 +97,26 @@ export function CotizacionesTable({
                               <button className="btn btn-sm btn-outline-primary" type="button" onClick={() => onEditar(c)}>
                                 Editar
                               </button>
-                              <button
-                                className="btn btn-sm btn-success"
-                                type="button"
-                                disabled={ocupada}
-                                onClick={() => onCambiarEstado(c.id, 'Aprobada')}
-                              >
-                                Aprobar
-                              </button>
-                              <button
-                                className="btn btn-sm btn-outline-danger"
-                                type="button"
-                                disabled={ocupada}
-                                onClick={() => onCambiarEstado(c.id, 'Rechazada')}
-                              >
-                                Rechazar
-                              </button>
+                              {esAdministrador && (
+                                <>
+                                  <button
+                                    className="btn btn-sm btn-success"
+                                    type="button"
+                                    disabled={ocupada}
+                                    onClick={() => onCambiarEstado(c.id, 'Aprobada')}
+                                  >
+                                    Aprobar
+                                  </button>
+                                  <button
+                                    className="btn btn-sm btn-outline-danger"
+                                    type="button"
+                                    disabled={ocupada}
+                                    onClick={() => onCambiarEstado(c.id, 'Rechazada')}
+                                  >
+                                    Rechazar
+                                  </button>
+                                </>
+                              )}
                             </>
                           )}
                           {estado === 'Aprobada' && !orden && (
@@ -123,15 +129,17 @@ export function CotizacionesTable({
                               Ver {orden.codigo}
                             </Link>
                           )}
-                          <button
-                            className="btn btn-sm btn-outline-danger"
-                            type="button"
-                            disabled={Boolean(orden) || ocupada}
-                            title={orden ? 'Ya tiene una orden asociada' : undefined}
-                            onClick={() => setConfirmacionId(c.id)}
-                          >
-                            Eliminar
-                          </button>
+                          {esAdministrador && (
+                            <button
+                              className="btn btn-sm btn-outline-danger"
+                              type="button"
+                              disabled={Boolean(orden) || ocupada}
+                              title={orden ? 'Ya tiene una orden asociada' : undefined}
+                              onClick={() => setConfirmacionId(c.id)}
+                            >
+                              Eliminar
+                            </button>
+                          )}
                         </div>
                       )}
                     </td>

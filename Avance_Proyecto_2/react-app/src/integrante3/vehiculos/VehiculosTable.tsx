@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../integrante5/auth/auth.context'
 import { esEstadoVehiculo, ESTADOS_VEHICULO } from './vehiculo.types'
 import type { EstadoVehiculo, Vehiculo } from './vehiculo.types'
 
@@ -21,6 +22,7 @@ export function VehiculosTable({
   onEliminar,
 }: VehiculosTableProps) {
   const [confirmacionId, setConfirmacionId] = useState<string | null>(null)
+  const esAdministrador = useAuth().tieneRol('Administrador')
 
   function confirmarEliminacion(id: string) {
     onEliminar(id)
@@ -118,14 +120,16 @@ export function VehiculosTable({
                           >
                             Editar
                           </button>
-                          <button
-                            className="btn btn-sm btn-outline-danger"
-                            type="button"
-                            disabled={eliminandoId === vehiculo.id}
-                            onClick={() => setConfirmacionId(vehiculo.id)}
-                          >
-                            Eliminar
-                          </button>
+                          {esAdministrador && (
+                            <button
+                              className="btn btn-sm btn-outline-danger"
+                              type="button"
+                              disabled={eliminandoId === vehiculo.id}
+                              onClick={() => setConfirmacionId(vehiculo.id)}
+                            >
+                              Eliminar
+                            </button>
+                          )}
                         </div>
                       )}
                     </td>
