@@ -2,6 +2,8 @@ import type { Cotizacion, EstadoCotizacion } from './cotizacion.types'
 
 export const TASA_IGV = 0.18
 export const DIAS_VALIDEZ = 30
+/** Fecha usada para cotizaciones antiguas que no registraron vencimiento. */
+export const SIN_VENCIMIENTO = '9999-12-31'
 
 export function redondear(valor: number): number {
   return Math.round((valor + Number.EPSILON) * 100) / 100
@@ -70,4 +72,10 @@ export function puedeConvertirseEnOrden(
   cotizacion: Pick<Cotizacion, 'estado' | 'fechaVencimiento'>,
 ): boolean {
   return estadoEfectivo(cotizacion) === 'Aprobada'
+}
+
+/** Texto de una fecha para mostrar en tablas y detalles. */
+export function textoFecha(fecha: string): string {
+  if (!fecha) return '—'
+  return fecha === SIN_VENCIMIENTO ? 'Sin vencimiento' : fecha
 }

@@ -14,6 +14,8 @@ export type EstadoCotizacion = (typeof ESTADOS_COTIZACION)[number]
 export interface Cotizacion {
   id: string
   clienteId: string
+  /** Nombre guardado en registros antiguos que aún no tienen clienteId. */
+  clienteNombre?: string
   servicio: string
   origen: string
   destino: string
