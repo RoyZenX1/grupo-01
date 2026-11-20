@@ -3,7 +3,8 @@ import { useMemo, useState } from 'react'
 import { mensajeError } from '../../shared/api/http'
 import { Encabezado } from '../../shared/components/Encabezado'
 import { EstadoConsulta } from '../../shared/components/EstadoConsulta'
-import { CLIENTES_QUERY_KEY, listarClientes, nombreDeCliente } from '../../integrante1/clientes/clientes.api'
+import type { Cliente } from '../../integrante1/clientes/cliente.types'
+import { CLIENTES_QUERY_KEY, listarClientes } from '../../integrante1/clientes/clientes.api'
 import { listarOrdenes } from '../../integrante4/ordenes/ordenes.api'
 import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
 import type { CotizacionFormValues } from './cotizacion.schema'
@@ -26,6 +27,15 @@ import './cotizaciones.css'
 
 const ORDENES_QUERY_KEY = ['ordenes'] as const
 
+/** Nombre del cliente: el registrado en Clientes; si no existe, el que guardó la cotización antigua. */
+function nombreCotizacion(clientes: Cliente[], c: Cotizacion): string {
+  return (
+    clientes.find((cliente) => cliente.id === c.clienteId)?.nombre ??
+    c.clienteNombre ??
+    (c.clienteId ? `Cliente ${c.clienteId}` : 'Sin cliente')
+  )
+}
+
 function normalizar(texto: string): string {
   return texto.toLocaleLowerCase('es-PE').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
@@ -46,7 +56,7 @@ export function CotizacionesPage() {
   const clientes = useMemo(() => clientesQuery.data ?? [], [clientesQuery.data])
   const ordenes = useMemo(() => ordenesQuery.data ?? [], [ordenesQuery.data])
 
-  const nombreCliente = (id: string) => nombreDeCliente(clientes, id)
+  const nombreCliente = (c: Cotizacion) => nombreCotizacion(clientes, c)
 
   const ordenPorCotizacion = useMemo(() => {
     const mapa = new Map<string, { id: string; codigo: string }>()
@@ -61,7 +71,7 @@ export function CotizacionesPage() {
     return cotizaciones.filter((c) => {
       const coincideTexto =
         !texto ||
-        normalizar(`${c.id} ${c.servicio} ${c.origen} ${c.destino} ${nombreDeCliente(clientes, c.clienteId)}`).includes(texto)
+        normalizar(`${c.id} ${c.servicio} ${c.origen} ${c.destino} ${nombreCotizacion(clientes, c)}`).includes(texto)
       return (
         coincideTexto &&
         (!estado || estadoEfectivo(c) === estado) &&
@@ -126,9 +136,9 @@ export function CotizacionesPage() {
 
   const errorMutacion =
     crearMutation.error ?? editarMutation.error ?? estadoMutation.error ?? eliminarMutation.error
-  const consultaCargando =
-    cotizacionesQuery.isLoading || clientesQuery.isLoading || ordenesQuery.isLoading
-  const consultaError = cotizacionesQuery.error ?? clientesQuery.error ?? ordenesQuery.error
+  // Las órdenes solo sirven para enlazar «Ver orden»: si fallan, la página igual carga.
+  const consultaCargando = cotizacionesQuery.isLoading || clientesQuery.isLoading
+  const consultaError = cotizacionesQuery.error ?? clientesQuery.error
   const ocupadoId = estadoMutation.isPending
     ? estadoMutation.variables.id
     : eliminarMutation.isPending
@@ -169,6 +179,13 @@ export function CotizacionesPage() {
             <p className="kpi-value">{formatearMoneda(resumen.montoAprobado)}</p>
           </article>
         </section>
+
+        {ordenesQuery.isError && (
+          <div className="alert alert-warning" role="status">
+            No se pudieron cargar las órdenes, por eso no se muestran los enlaces a órdenes ya
+            generadas: {mensajeError(ordenesQuery.error)}
+          </div>
+        )}
 
         {errorMutacion && (
           <div className="alert alert-danger" role="alert">

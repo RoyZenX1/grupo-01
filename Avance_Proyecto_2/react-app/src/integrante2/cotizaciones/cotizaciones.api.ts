@@ -1,4 +1,3 @@
-import { z } from 'zod'
 import { http } from '../../shared/api/http'
 import { buscarTarifa } from '../../integrante3/vehiculos/tarifas'
 import {
@@ -7,7 +6,7 @@ import {
   hoyISO,
   sumarDias,
 } from './cotizacion.calculations'
-import { cotizacionSchema } from './cotizacion.schema'
+import { exigirCotizacion, normalizarListaCotizaciones } from './cotizacion.normalizar'
 import type { CotizacionFormValues } from './cotizacion.schema'
 import type { Cotizacion, CotizacionWrite, EstadoCotizacion } from './cotizacion.types'
 
@@ -16,11 +15,11 @@ export const COTIZACIONES_QUERY_KEY = ['cotizaciones'] as const
 const recurso = (id: string) => `/cotizaciones/${encodeURIComponent(id)}`
 
 export async function listarCotizaciones(): Promise<Cotizacion[]> {
-  return z.array(cotizacionSchema).parse(await http.get('/cotizaciones'))
+  return normalizarListaCotizaciones(await http.get('/cotizaciones'))
 }
 
 export async function obtenerCotizacion(id: string): Promise<Cotizacion> {
-  return cotizacionSchema.parse(await http.get(recurso(id)))
+  return exigirCotizacion(await http.get(recurso(id)))
 }
 
 export function siguienteCodigoCotizacion(cotizaciones: Cotizacion[]): string {
@@ -72,14 +71,14 @@ export function construirCotizacion(
 export async function crearCotizacion(
   datos: CotizacionWrite & { id: string },
 ): Promise<Cotizacion> {
-  return cotizacionSchema.parse(await http.post('/cotizaciones', datos))
+  return exigirCotizacion(await http.post('/cotizaciones', datos))
 }
 
 export async function actualizarCotizacion(
   id: string,
   cambios: Partial<CotizacionWrite>,
 ): Promise<Cotizacion> {
-  return cotizacionSchema.parse(await http.patch(recurso(id), cambios))
+  return exigirCotizacion(await http.patch(recurso(id), cambios))
 }
 
 export async function cambiarEstadoCotizacion(

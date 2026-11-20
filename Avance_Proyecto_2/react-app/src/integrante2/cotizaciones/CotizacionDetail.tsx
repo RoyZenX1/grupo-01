@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { EstadoPill } from '../../shared/components/EstadoPill'
 import type { Cliente } from '../../integrante1/clientes/cliente.types'
-import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
+import { estadoEfectivo, formatearMoneda, textoFecha } from './cotizacion.calculations'
 import type { Cotizacion } from './cotizacion.types'
 
 interface CotizacionDetailProps {
@@ -29,7 +29,7 @@ export function CotizacionDetail({ cotizacion: c, cliente, orden, onCerrar }: Co
       <div className="row">
         <dl className="detail-list col-12 col-lg-6">
           <dt>Cliente</dt>
-          <dd>{cliente ? `${cliente.nombre} (${cliente.identificacion})` : `Cliente ${c.clienteId}`}</dd>
+          <dd>{cliente ? `${cliente.nombre} (${cliente.identificacion})` : (c.clienteNombre ?? `Cliente ${c.clienteId}`)}</dd>
           <dt>Servicio</dt>
           <dd>{c.servicio}</dd>
           <dt>Ruta</dt>
@@ -37,9 +37,9 @@ export function CotizacionDetail({ cotizacion: c, cliente, orden, onCerrar }: Co
           <dt>Carga</dt>
           <dd>{c.peso} t</dd>
           <dt>Emisión</dt>
-          <dd>{c.fechaEmision}</dd>
+          <dd>{textoFecha(c.fechaEmision)}</dd>
           <dt>Vence</dt>
-          <dd>{c.fechaVencimiento}</dd>
+          <dd>{textoFecha(c.fechaVencimiento)}</dd>
         </dl>
         <dl className="detail-list col-12 col-lg-6">
           <dt>Tarifa unitaria</dt>

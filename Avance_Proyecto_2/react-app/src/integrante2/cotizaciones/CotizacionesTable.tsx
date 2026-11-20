@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { EstadoPill } from '../../shared/components/EstadoPill'
 import { useAuth } from '../../integrante5/auth/auth.context'
-import { estadoEfectivo, formatearMoneda } from './cotizacion.calculations'
+import { estadoEfectivo, formatearMoneda, textoFecha } from './cotizacion.calculations'
 import type { Cotizacion, EstadoCotizacion } from './cotizacion.types'
 
 interface CotizacionesTableProps {
   cotizaciones: Cotizacion[]
   sinResultados: boolean
-  nombreCliente: (clienteId: string) => string
+  nombreCliente: (cotizacion: Cotizacion) => string
   /** cotizacionId → id de la orden vigente que se generó con ella. */
   ordenPorCotizacion: Map<string, { id: string; codigo: string }>
   ocupadoId: string | null
@@ -63,9 +63,9 @@ export function CotizacionesTable({
                 return (
                   <tr key={c.id}>
                     <th scope="row">{c.id}</th>
-                    <td>{nombreCliente(c.clienteId)}</td>
+                    <td>{nombreCliente(c)}</td>
                     <td>{c.origen} → {c.destino}</td>
-                    <td>{c.fechaEmision}</td>
+                    <td>{textoFecha(c.fechaEmision)}</td>
                     <td className="text-end">{formatearMoneda(c.total)}</td>
                     <td><EstadoPill estado={estado} /></td>
                     <td>
