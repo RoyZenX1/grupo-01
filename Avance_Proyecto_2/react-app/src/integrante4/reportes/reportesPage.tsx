@@ -1,34 +1,24 @@
 
 import { useMemo, useState } from 'react'
-import type {
-  EstadoOrden,
-  Orden,
-  OrdenOrdenamiento,
-} from './reportes.types'
-
-import {
-  ESTADOS_ORDEN,
-  calcularTarifaPromedio,
-  calcularTotalTarifas,
-  contarCotizacionesVinculadas,
-  contarOrdenesEnCurso,
-  contarRutasUnicas,
-  filtrarOrdenes,
-  ordenarOrdenes,
-  resumirCotizaciones,
-  resumirEstados,
-  resumirRutas,
-} from './reportes.calculations'
-
+import type { EstadoOrden, Orden, OrdenOrdenamiento } from './reportes.types'
+import type { CotizacionParaOrden } from '../ordenes/ordenes.types'
+import type { Vehiculo } from '../../integrante3/vehiculos/vehiculo.types'
+import {ESTADOS_ORDEN,calcularTarifaPromedio,calcularTotalTarifas,contarCotizacionesVinculadas,contarOrdenesEnCurso,contarRutasUnicas,filtrarOrdenes,ordenarOrdenes,resumirCotizaciones,resumirEstados,resumirRutas,} from './reportes.calculations'
 import { ReportesGraficos } from './ReportesGraficos'
 import './Reportes.css'
 
+
+
 interface ReportesPageProps {
-  ordenes?: Orden[]
-  cargando?: boolean
-  error?: string | null
-  onReintentar?: () => void
+  ordenes: Orden[]
+  cotizaciones: CotizacionParaOrden[]
+  vehiculos: Vehiculo[]
+  cargando: boolean
+  error: string | null
+  onReintentar: () => void
 }
+
+
 
 const formatoMoneda = (valor: number) =>
   new Intl.NumberFormat('es-PE', {
@@ -37,9 +27,11 @@ const formatoMoneda = (valor: number) =>
   }).format(valor)
 
 export function ReportesPage({
-  ordenes = [],
-  cargando = false,
-  error = null,
+  ordenes,
+  cotizaciones,
+  vehiculos,
+  cargando,
+  error,
   onReintentar,
 }: ReportesPageProps) {
   const [texto, setTexto] = useState('')
@@ -301,24 +293,44 @@ export function ReportesPage({
             </thead>
 
             <tbody>
-              {ordenesFiltradas.map((orden) => (
-                <tr key={orden.id}>
-                  <td>{orden.codigo}</td>
-                  <td>{orden.cotizacionId}</td>
-                  <td>{orden.vehiculoId}</td>
-                  <td>
-                    {orden.origen} → {orden.destino}
-                  </td>
-                  <td>{orden.distancia} km</td>
-                  <td>{orden.peso} t</td>
-                  <td>{formatoMoneda(orden.tarifa)}</td>
-                  <td>
-                    <span className={`estado-orden estado-${orden.estado.toLowerCase().replaceAll(' ', '-')}`}>
-                      {orden.estado}
-                    </span>
-                  </td>
-                </tr>
-              ))}
+              {ordenesFiltradas.map((orden) => {
+                const cotizacion = cotizaciones.find(
+                  (item) => item.id === orden.cotizacionId,
+                )
+                const vehiculo = vehiculos.find(
+                  (item) => item.id === orden.vehiculoId,
+                )
+
+                return (
+                  <tr key={orden.id}>
+                    <td>{orden.codigo}</td>
+                    <td>
+                      {orden.cotizacionId}
+                      {cotizacion && (
+                        <small className="d-block text-secondary">
+                          {cotizacion.estado}
+                        </small>
+                      )}
+                    </td>
+                    <td>
+                      {vehiculo
+                        ? `${vehiculo.codigo} · ${vehiculo.placa}`
+                        : orden.vehiculoId}
+                    </td>
+                    <td>
+                      {orden.origen} → {orden.destino}
+                    </td>
+                    <td>{orden.distancia} km</td>
+                    <td>{orden.peso} t</td>
+                    <td>{formatoMoneda(orden.tarifa)}</td>
+                    <td>
+                      <span className={`estado-orden estado-${orden.estado.toLowerCase().replaceAll(' ', '-')}`}>
+                        {orden.estado}
+                      </span>
+                    </td>
+                  </tr>
+                )
+              })}
 
               {ordenesFiltradas.length === 0 && !cargando && (
                 <tr>
