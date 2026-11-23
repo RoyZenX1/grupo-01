@@ -42,6 +42,7 @@ export type OrdenWrite = Omit<Orden, 'id'>
 
 export interface CotizacionParaOrden {
   id: string
+  codigo?: string
   estado: string
   origen: string
   destino: string

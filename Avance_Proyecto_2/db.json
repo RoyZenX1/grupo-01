@@ -66,7 +66,7 @@
       "total": 265.5,
       "fechaEmision": "2026-11-20",
       "fechaVencimiento": "2026-12-20",
-      "estado": "Pendiente",
+      "estado": "Aprobada",
       "id": "w6NIxFxRXOg"
     }
   ],
@@ -176,7 +176,7 @@
       "placa": "JKL-012",
       "tipo": "Camión",
       "capacidad": 8,
-      "estado": "Disponible",
+      "estado": "Ocupado",
       "modelo": "Hyundai"
     },
     {
@@ -277,6 +277,46 @@
         }
       ],
       "id": "CMzM0rDmlaY"
+    },
+    {
+      "cotizacionId": "w6NIxFxRXOg",
+      "vehiculoId": "JaCoB4I69lg",
+      "origen": "Lima",
+      "destino": "Ica",
+      "distancia": 200,
+      "peso": 2,
+      "codigo": "ORD005",
+      "tarifa": 250,
+      "estado": "Cancelada",
+      "historial": [
+        {
+          "estado": "Pendiente",
+          "fecha": "2026-11-23T15:38:46.748Z"
+        },
+        {
+          "estado": "Cancelada",
+          "fecha": "2026-11-23T16:11:39.165Z"
+        }
+      ],
+      "id": "0GrDJJEN5XU"
+    },
+    {
+      "cotizacionId": "w6NIxFxRXOg",
+      "vehiculoId": "Gaxntv4YNeQ",
+      "origen": "Lima",
+      "destino": "Ica",
+      "distancia": 200,
+      "peso": 2,
+      "codigo": "ORD006",
+      "tarifa": 250,
+      "estado": "Pendiente",
+      "historial": [
+        {
+          "estado": "Pendiente",
+          "fecha": "2026-11-23T16:13:19.504Z"
+        }
+      ],
+      "id": "WfT9kacgOqA"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

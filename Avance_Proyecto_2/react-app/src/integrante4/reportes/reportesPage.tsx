@@ -303,15 +303,15 @@ export function ReportesPage({
 
                 return (
                   <tr key={orden.id}>
-                    <td>{orden.codigo}</td>
-                    <td>
-                      {orden.cotizacionId}
-                      {cotizacion && (
-                        <small className="d-block text-secondary">
-                          {cotizacion.estado}
-                        </small>
-                      )}
-                    </td>
+                  <td>{orden.codigo}</td>
+                  <td>
+                    {cotizacion?.codigo || orden.cotizacionId}
+                    {cotizacion && (
+                  <small className="d-block text-secondary">
+                    {cotizacion.estado}
+                  </small>
+                )}
+                </td>
                     <td>
                       {vehiculo
                         ? `${vehiculo.codigo} · ${vehiculo.placa}`

@@ -8,15 +8,12 @@ import { listarCotizacionesParaOrden } from './cotizaciones.ordenes.api.ts'
 import { OrdenDetail } from './OrdenDetail.tsx'
 import { OrdenForm } from './OrdenForm.tsx'
 import { estadosSiguientes } from './ordenes.estados.ts'
-import {
-  VEHICULOS_QUERY_KEY,
-  useCambiarEstadoOrden,
-  useCrearOrden,
-  useOrdenes,
-} from './ordenes.queries.ts'
+import {VEHICULOS_QUERY_KEY,useCambiarEstadoOrden,useCrearOrden,useOrdenes,} from './ordenes.queries.ts'
 import { ESTADOS_ORDEN } from './ordenes.types.ts'
 import type { EstadoOrden, Orden, OrdenWrite } from './ordenes.types.ts'
 import './ordenes.css'
+
+
 
 export function OrdenesPage() {
   const [formularioAbierto, setFormularioAbierto] = useState(false)
