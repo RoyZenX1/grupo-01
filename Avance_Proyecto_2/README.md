@@ -10,7 +10,7 @@
 
 * **Nombre del Integrante 1** -
 * **Nombre del Integrante 2** -  
-* **Nombre del Integrante 3** -  
+* **Nombre del Integrante 3** -  Suzan Mullisaca Aguilar - U24223948
 * **Nombre del Integrante 4** - 
 * **Nombre del Integrante 5** -  Roy Quiquia Cordova -  U25302277
 
