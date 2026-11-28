@@ -1,0 +1,30 @@
+{
+  "name": "portal-talleres-s15",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "api": "node api/server.mjs",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test api/server.test.mjs"
+  },
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-router-dom": "7.9.5",
+    "react-hook-form": "7.66.0",
+    "@hookform/resolvers": "5.2.2",
+    "zod": "4.1.12",
+    "@tanstack/react-query": "5.90.5",
+    "bootstrap": "5.3.8"
+  },
+  "devDependencies": {
+    "vite": "7.2.2",
+    "@vitejs/plugin-react": "5.1.0",
+    "typescript": "5.9.3",
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2"
+  }
+}

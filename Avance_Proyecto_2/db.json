@@ -47,7 +47,7 @@
       "total": 236,
       "fechaEmision": "2026-11-20",
       "fechaVencimiento": "2026-12-20",
-      "estado": "Pendiente"
+      "estado": "Aprobada"
     },
     {
       "codigo": "C006",
@@ -140,6 +140,13 @@
       "identificacion": "89123456",
       "email": "daniela.flores@gmail.com",
       "telefono": "987123456"
+    },
+    {
+      "nombre": "Suzan Mullisaca",
+      "identificacion": "67563434",
+      "email": "suzan0407s@hotmail.com",
+      "telefono": "943456456",
+      "id": "3PNl5Ne7w3A"
     }
   ],
   "vehiculos": [
@@ -176,7 +183,7 @@
       "placa": "JKL-012",
       "tipo": "Camión",
       "capacidad": 8,
-      "estado": "Ocupado",
+      "estado": "Disponible",
       "modelo": "Hyundai"
     },
     {
@@ -194,7 +201,7 @@
       "modelo": "Hilux",
       "tipo": "Camión",
       "capacidad": 3,
-      "estado": "Disponible",
+      "estado": "Ocupado",
       "id": "5LLLsGzsnh0"
     },
     {
@@ -203,8 +210,44 @@
       "modelo": "Hyundai H100",
       "tipo": "Furgón",
       "capacidad": 2,
-      "estado": "Disponible",
+      "estado": "Ocupado",
       "id": "JaCoB4I69lg"
+    },
+    {
+      "codigo": "VEH-008",
+      "placa": "BDV-325",
+      "modelo": "Toyota",
+      "tipo": "Camioneta",
+      "capacidad": 2,
+      "estado": "Disponible",
+      "id": "pvVUCOD6-d8"
+    },
+    {
+      "codigo": "VEH-009",
+      "placa": "BGD-146",
+      "modelo": "Volvo",
+      "tipo": "Camión",
+      "capacidad": 5,
+      "estado": "Disponible",
+      "id": "bZDrEX0wIrY"
+    },
+    {
+      "codigo": "VEH-010",
+      "placa": "CJF-235",
+      "modelo": "Hino Serie",
+      "tipo": "Camión",
+      "capacidad": 7,
+      "estado": "Disponible",
+      "id": "9wLKTiKpV2s"
+    },
+    {
+      "codigo": "VEH-011",
+      "placa": "CDG-235",
+      "modelo": "Nissan",
+      "tipo": "Camioneta",
+      "capacidad": 3,
+      "estado": "Disponible",
+      "id": "IJJHSCjCxLs"
     }
   ],
   "ordenes": [
@@ -279,30 +322,26 @@
       "id": "CMzM0rDmlaY"
     },
     {
-      "cotizacionId": "w6NIxFxRXOg",
-      "vehiculoId": "JaCoB4I69lg",
+      "cotizacionId": "epvVvo9Z62Q",
+      "vehiculoId": "5LLLsGzsnh0",
       "origen": "Lima",
-      "destino": "Ica",
-      "distancia": 200,
-      "peso": 2,
+      "destino": "Lunahuana",
+      "distancia": 147,
+      "peso": 3,
       "codigo": "ORD005",
       "tarifa": 250,
-      "estado": "Cancelada",
+      "estado": "Pendiente",
       "historial": [
         {
           "estado": "Pendiente",
-          "fecha": "2026-11-23T15:38:46.748Z"
-        },
-        {
-          "estado": "Cancelada",
-          "fecha": "2026-11-23T16:11:39.165Z"
+          "fecha": "2026-11-23T16:32:24.649Z"
         }
       ],
-      "id": "0GrDJJEN5XU"
+      "id": "HvCEQa1OMFM"
     },
     {
       "cotizacionId": "w6NIxFxRXOg",
-      "vehiculoId": "Gaxntv4YNeQ",
+      "vehiculoId": "JaCoB4I69lg",
       "origen": "Lima",
       "destino": "Ica",
       "distancia": 200,
@@ -313,10 +352,10 @@
       "historial": [
         {
           "estado": "Pendiente",
-          "fecha": "2026-11-23T16:13:19.504Z"
+          "fecha": "2026-11-23T18:56:18.662Z"
         }
       ],
-      "id": "WfT9kacgOqA"
+      "id": "HHU5VmeGWl4"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

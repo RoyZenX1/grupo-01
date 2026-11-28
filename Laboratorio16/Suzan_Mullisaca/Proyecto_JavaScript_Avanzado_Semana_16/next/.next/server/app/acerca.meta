@@ -1,0 +1,34 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/acerca/layout,_N_T_/acerca/page,_N_T_/acerca"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/acerca/__PAGE__"
+  ],
+  "prefetchHints": {
+    "hints": 64,
+    "slots": {
+      "children": {
+        "hints": 96,
+        "slots": {
+          "children": {
+            "hints": 160,
+            "slots": null
+          }
+        }
+      }
+    }
+  },
+  "routeCache": {
+    "key": "/route-cache/APP_PAGE/de1517b30e681ece139619447b52519c2fa7d695bc7e7700b5bac4aabd10129e/$/acerca",
+    "owner": {
+      "kind": "APP_PAGE",
+      "sourceRoute": "/acerca/page"
+    },
+    "isFallback": false
+  }
+}

@@ -1,0 +1,29 @@
+1:"/_next/static/chunks/08mika-44sn50.js"
+2:"LoadingBoundaryProvider"
+3:I[39756,["$1"],"$2"]
+4:"$Sreact.fragment"
+5:I[22016,["$1"],""]
+6:I[39756,["$1"],"default"]
+7:I[37457,["$1"],"default"]
+e:I[97367,["$1"],"OutletBoundary"]
+f:"$Sreact.suspense"
+12:"ViewportBoundary"
+13:I[97367,["$1"],"$12"]
+14:"MetadataBoundary"
+15:I[97367,["$1"],"$14"]
+:HL["/_next/static/chunks/0yrdngc5exmfj.css","style"]
+9:X
+c:X
+c:C
+d:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$4","c",{"children":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":"$0:t:t:d:r:props:children:props:children:1:props:children:props:children:props:children:2:props:notFound:0:1:props:style","children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":"$0:t:t:d:r:props:children:props:children:1:props:children:props:children:props:children:2:props:notFound:0:1:props:children:props:children:1:props:style","children":404}],["$","div",null,{"style":"$0:t:t:d:r:props:children:props:children:1:props:children:props:children:props:children:2:props:notFound:0:1:props:children:props:children:2:props:style","children":["$","h2",null,{"style":"$0:t:t:d:r:props:children:props:children:1:props:children:props:children:props:children:2:props:notFound:0:1:props:children:props:children:2:props:children:props:style","children":"This page could not be found."}]}]]}]}]],null,["$","$Le",null,{"children":["$","$f",null,{"name":"Next.MetadataOutlet","children":"$@10"}]}]]}],"p":"$@11","v":null,"s":"$9"}}]]
+a:[["children",{"s":"/_not-found","h":96,"d":{"r":["$","$4","c",{"children":[null,["$","$L6",null,{"parallelRouterKey":"children","template":["$","$L7",null,{}]}]]}],"p":"$@b","v":"$c","s":"$9"},"c":"$Qd"}]]
+0:{"t":{"t":{"s":"","h":84,"d":{"r":["$","$L3",null,{"loading":[["$","p","l",{"role":"status","children":"Consultando catálogo en el servidor..."}],[],null],"children":["$","$4","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0yrdngc5exmfj.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/08mika-44sn50.js","async":true}]],["$","html",null,{"lang":"es","children":["$","body",null,{"children":["$","main",null,{"children":[["$","p",null,{"className":"eyebrow","children":"UTP · NEXT.JS"}],["$","nav",null,{"aria-label":"Principal","children":[["$","$L5",null,{"href":"/","children":"Catálogo"}]," · ",["$","$L5",null,{"href":"/acerca","children":"Acerca del portal"}]]}],["$","$L6",null,{"parallelRouterKey":"children","template":["$","$L7",null,{}],"notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]]}]]}]}]}]]}]}],"p":"$@8","v":null,"s":"$9"},"c":"$Qa"},"h":{"r":["$","$4","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L13",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","$L15",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$f",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Talleres | Next.js"}]]}]}],null]}],null]}],"p":"$@16","v":null,"s":"$9"}},"a":"$@17","u":"$@18","b":"ENuif3OUP8N8Y-Z4Mpg5v"}
+10:null
+9:300
+18:true
+9:C
+17:0
+b:"$undefined"
+8:"$undefined"
+16:"$undefined"
+11:"$undefined"

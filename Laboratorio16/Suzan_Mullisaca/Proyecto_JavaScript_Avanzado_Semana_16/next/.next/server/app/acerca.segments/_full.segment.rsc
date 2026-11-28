@@ -1,0 +1,23 @@
+1:"/_next/static/chunks/08mika-44sn50.js"
+2:"LoadingBoundaryProvider"
+3:I[39756,["$1"],"$2"]
+4:"$Sreact.fragment"
+5:I[22016,["$1"],""]
+6:I[39756,["$1"],"default"]
+7:I[37457,["$1"],"default"]
+b:I[97367,["$1"],"OutletBoundary"]
+c:"$Sreact.suspense"
+e:"ViewportBoundary"
+f:I[97367,["$1"],"$e"]
+11:"MetadataBoundary"
+12:I[97367,["$1"],"$11"]
+14:I[68027,["$1"],"default",1]
+:HL["/_next/static/chunks/0yrdngc5exmfj.css","style"]
+9:X
+a:[["children",{"s":"__PAGE__","h":512,"d":{"r":["$","$4","c",{"children":[[["$","h1",null,{"children":"Acerca del portal"}],["$","p",null,{"children":"Dos interfaces, una API REST y un catálogo compartido."}]],null,["$","$Lb",null,{"children":["$","$c",null,{"name":"Next.MetadataOutlet","children":"$@d"}]}]]}],"p":false,"v":null}}]]
+8:[["children",{"s":"acerca","h":512,"d":{"r":["$","$4","c",{"children":[null,["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],"p":false,"v":"$9"},"c":"$Qa"}]]
+0:{"P":null,"c":["","acerca"],"q":"","i":false,"t":{"t":{"s":"","h":532,"d":{"r":["$","$L3",null,{"loading":[["$","p","l",{"role":"status","children":"Consultando catálogo en el servidor..."}],[],null],"children":["$","$4","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0yrdngc5exmfj.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/08mika-44sn50.js","async":true,"nonce":"$undefined"}]],["$","html",null,{"lang":"es","children":["$","body",null,{"children":["$","main",null,{"children":[["$","p",null,{"className":"eyebrow","children":"UTP · NEXT.JS"}],["$","nav",null,{"aria-label":"Principal","children":[["$","$L5",null,{"href":"/","children":"Catálogo"}]," · ",["$","$L5",null,{"href":"/acerca","children":"Acerca del portal"}]]}],["$","$L6",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L7",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]]}]}],"p":false,"v":null},"c":"$Q8"},"h":{"r":["$","$4","h",{"children":[null,["$","$Lf",null,{"children":"$L10"}],["$","$L12",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$c",null,{"name":"Next.Metadata","children":"$L13"}]}],null]}],null]}],"p":false,"v":null}},"m":"$undefined","G":["$14",[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0yrdngc5exmfj.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]]],"S":true,"r":"$undefined","s":"$undefined","a":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"ENuif3OUP8N8Y-Z4Mpg5v"}
+9:C
+10:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+d:null
+13:[["$","title","0",{"children":"Talleres | Next.js"}]]

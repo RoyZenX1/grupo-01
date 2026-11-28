@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../app/loading.jsx"],"sourcesContent":["export default function Loading() {\n  return <p role=\"status\">Consultando catálogo en el servidor...</p>;\n}\n"],"names":["Loading","role"],"mappings":"wEAAe,SAASA,EACtB,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,IAAA,CAAEC,KAAK,kBAAS,0CAC1B"}
