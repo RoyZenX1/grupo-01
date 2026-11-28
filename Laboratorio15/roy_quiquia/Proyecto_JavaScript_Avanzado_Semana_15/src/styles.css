@@ -1,0 +1,8 @@
+:root { --bs-primary: #2452a1; }
+body { background: #f5f7fb; color: #172b4d; }
+.portal-header { background: #112b51; color: white; }
+.portal-header a { color: white; text-decoration: none; }
+.portal-header .active { text-decoration: underline; text-underline-offset: .35rem; }
+.brand { font-weight: 700; font-size: 1.25rem; }
+.form-panel { max-width: 38rem; }
+:focus-visible { outline: 3px solid #ca7b00; outline-offset: 3px; }
